@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/04 12:16:45 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/04 12:48:35 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	ca
+	char	*line;
 
 	if (argc > 1)
 		return (EXIT_FAILURE);
-	readline("input");
+	argv[0] = argv[0];
+	envp[0] = envp[0];
+	line = readline("minishell: ");
+	printf("Line: %s\n", line);
+	rl_clear_history();
+	free(line);
+	return (EXIT_SUCCESS);
 }

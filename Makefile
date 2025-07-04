@@ -1,28 +1,43 @@
-NAME = minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
+#    Updated: 2025/07/04 13:43:39 by vtrofyme         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRC = minishell_main.c
+NAME 		= minishell
 
-SRCSDIR = src
-OBJDIR = obj
+SRC 		= minishell_main.c
 
-SRCS = $(addprefix $(SRCSDIR)/, $(SRC))
+SRCSDIR		= src
+OBJDIR		= obj
+INCLUDE		= include
 
-OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
-CFLAGS = -Wall -Wextra -Werror -g
+OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+
+CFLAGS		= -Wall -Wextra -Werror -g
+
+INCLUDES	= -I$(INCLUDE)
 
 RM = rm -f
 
 all: $(NAME)
 
 $(NAME): $(LIBRARY) $(OBJDIR) $(OBJS)
-	cc $(OBJS) $(LIBRARY) -o $(NAME)
+	cc $(OBJS) $(LIBRARY) $(INCLUDES) -o $(NAME)
 
 $(BONUSNAME): $(BONUSOBJS) $(LIBRARY)
 	cc $(BONUSOBJS) $(LIBRARY) -o $(BONUSNAME)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c
-	cc $(CFLAGS) -c $< -o $@
+	cc $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)

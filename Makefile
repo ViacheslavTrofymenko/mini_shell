@@ -6,7 +6,7 @@
 #    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/04 13:43:39 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/04 13:58:11 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(LIBRARY) $(OBJDIR) $(OBJS)
-	cc $(OBJS) $(LIBRARY) $(INCLUDES) -o $(NAME)
+	cc $(OBJS) $(LIBRARY) $(INCLUDES) -lreadline -o $(NAME)
 
 $(BONUSNAME): $(BONUSOBJS) $(LIBRARY)
 	cc $(BONUSOBJS) $(LIBRARY) -o $(BONUSNAME)

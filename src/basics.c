@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   basics.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/04 16:43:38 by ikulik           ###   ########.fr       */
+/*   Created: 2025/07/04 16:37:57 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/04 16:41:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
+#include "minishell.h"
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int		diff;
 
-
-
-int		ft_strcmp(const char *s1, const char *s2);
-void	get_cmd_line(void);
-
-#endif
+	diff = 0;
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+		{
+			diff = (unsigned char)*s1 - (unsigned char)*s2;
+			return (diff);
+		}
+		s1++;
+		s2++;
+	}
+	return (diff);
+}

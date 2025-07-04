@@ -1,4 +1,16 @@
-NAME = minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
+#    Updated: 2025/07/04 14:59:17 by ikulik           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME 		= minishell
 
 SRC 		= minishell_main.c
 
@@ -18,7 +30,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(LIBRARY) $(OBJDIR) $(OBJS)
-	cc $(OBJS) $(LIBRARY) -o $(NAME) $(MFLAGS)
+	cc $(OBJS) $(LIBRARY) $(INCLUDES) -lreadline -o $(NAME)
 
 $(BONUSNAME): $(BONUSOBJS) $(LIBRARY)
 	cc $(BONUSOBJS) $(LIBRARY) -o $(BONUSNAME)

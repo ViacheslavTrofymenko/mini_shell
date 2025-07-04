@@ -1,22 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/04 12:16:45 by ikulik           ###   ########.fr       */
+/*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/04 12:13:01 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	main(int argc, char **argv, char **envp)
-{
-	ca
-
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	readline("input");
-}

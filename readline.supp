@@ -12,18 +12,3 @@
 	fun:*
 	obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
 }
-{
-	suppress_readline_chain
-	Memcheck:Leak
-	match-leak-kinds: reachable
-	fun:*
-	fun:readline
-	obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
-}
-{
-	suppress_tinfo_chain
-	Memcheck:Leak
-	match-leak-kinds: reachable
-	fun:*
-	obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
-}

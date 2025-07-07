@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   basics.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/07 13:23:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/07/04 16:37:57 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/04 16:41:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char *myfunc(void)
-{
-	char *line;
-line = readline("minishell: ");
-	return (line);
 
-int	main(int argc, char **argv, char **envp)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	envp[0] = envp[0];
-	get_cmd_line();
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	int		diff;
+
+	diff = 0;
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+		{
+			diff = (unsigned char)*s1 - (unsigned char)*s2;
+			return (diff);
+		}
+		s1++;
+		s2++;
+	}
+	return (diff);
 }
-
-

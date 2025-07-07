@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/04 13:58:11 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/04 16:47:49 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= minishell
 
-SRC 		= minishell_main.c
+SRC 		= minishell_main.c prompter.c basics.c
 
 SRCSDIR		= src
 OBJDIR		= obj
@@ -22,8 +22,8 @@ SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
 OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-CFLAGS		= -Wall -Wextra -Werror -g
-
+CFLAGS = -Wall -Wextra -Werror -g
+MFLAGS = -lreadline
 INCLUDES	= -I$(INCLUDE)
 
 RM = rm -f

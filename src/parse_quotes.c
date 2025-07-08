@@ -6,11 +6,22 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 12:59:09 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/07 16:56:03 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/08 17:09:17 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Splits string into NULL-terminated array of
+ * partitions. qts->types contains types ', " or normal.
+ * Unclosed quotes are considered regular chars.
+ *
+ * @param shell	Metadata struct
+ * @param str	Input string
+ * @param qts	Quotes-parsing struct
+ * @return		Pointer to the array of strings
+ */
 
 static void	create_string(t_shell *shell, int index, int type);
 static void	handle_quote(t_shell *shell, int index, char quote_type, int mode);
@@ -32,7 +43,6 @@ static void	count_parts(t_shell *shell, char *str)
 	int			ind;
 
 	ind = 0;
-
 	qts = &(shell->qts);
 	qts->q_flag = Q_NORMAL;
 	qts->num_splits = 0;
@@ -96,7 +106,8 @@ static void	handle_quote(t_shell *shell, int index, char quote_type, int mode)
 		qts->q_flag = Q_NORMAL;
 		qts->ind_strt = index + 1;
 	}
-
+	else if (qts->q_flag == Q_NORMAL)
+		qts->q_flag = quote_type;
 }
 
 static void	create_string(t_shell *shell, int index, int type)
@@ -107,7 +118,7 @@ static void	create_string(t_shell *shell, int index, int type)
 	qts = &(shell->qts);
 	size = index - qts->ind_strt + 2;
 	if (type != Q_NORMAL)
-		size -= 2;
+		size--;
 	qts->result[qts->ind_line] = (char *)malloc(size * sizeof(char));
 	if (qts->result[qts->ind_line] == NULL)
 		crit_except(shell, EXIT_FAILURE);
@@ -118,6 +129,8 @@ static void	create_string(t_shell *shell, int index, int type)
 		ft_strlcpy(qts->result[qts->ind_line], &(qts->str[qts->ind_strt + 1]),
 			size - 1);
 	qts->types[qts->ind_line] = type;
-	qts->ind_strt = index + 1;
+	qts->ind_strt = index;
+	if (type != Q_NORMAL)
+		qts->ind_strt += 1;
 	(qts->ind_line)++;
 }

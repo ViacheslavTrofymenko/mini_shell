@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 12:59:09 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/08 17:09:17 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:50:09 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ char	**parse_quotes(t_shell *shell, char *str)
 {
 	if (str == NULL)
 		return (NULL);
+	shell->qts.q_marker_str = malloc(((ft_strlen(str)) + 1) * sizeof(char));
+	shell->qts.q_marker_prt = malloc(((ft_strlen(str)) + 1) * sizeof(int));
+	if (shell->qts.q_marker_str == NULL || shell->qts.q_marker_prt == NULL)
+		crit_except(shell, EXIT_FAILURE);
 	count_parts(shell, str);
 	assign_parts(shell, str);
 	return (shell->qts.result);
@@ -118,7 +122,7 @@ static void	create_string(t_shell *shell, int index, int type)
 	qts = &(shell->qts);
 	size = index - qts->ind_strt + 2;
 	if (type != Q_NORMAL)
-		size--;
+		size -= 2;
 	qts->result[qts->ind_line] = (char *)malloc(size * sizeof(char));
 	if (qts->result[qts->ind_line] == NULL)
 		crit_except(shell, EXIT_FAILURE);
@@ -127,7 +131,11 @@ static void	create_string(t_shell *shell, int index, int type)
 			size - 1);
 	else
 		ft_strlcpy(qts->result[qts->ind_line], &(qts->str[qts->ind_strt + 1]),
-			size - 1);
+			size);
+	ft_memset(&(shell->qts.q_marker_str[qts->ind_strt]), type,
+		index - qts->ind_strt + 1);
+	ft_intset(&(shell->qts.q_marker_prt[qts->ind_strt]), qts->ind_line,
+		index - qts->ind_strt + 1);
 	qts->types[qts->ind_line] = type;
 	qts->ind_strt = index;
 	if (type != Q_NORMAL)

@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:37:57 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/08 18:59:21 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/11 18:54:40 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ void	ft_intset(int	*arr, int c, int n)
 		arr[index] = c;
 		index++;
 	}
+}
+
+int	ft_is_space(char c)
+{
+	if (c == ' ' || (9 <= c && c <= 13))
+		return (0);
+	return (1);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)

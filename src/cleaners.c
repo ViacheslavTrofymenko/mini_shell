@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:08:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 20:08:19 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:56:16 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	clean_cmds(t_shell *shell);
 static void	clean_cmd(t_cmd *cmd);
+static void	clean_double_arr(char **arr, int size);
+static void	safe_free(void *s);
 
 void	crit_except(t_shell *data, int error_code)
 {
@@ -53,20 +55,35 @@ static void	clean_cmd(t_cmd *cmd)
 	index = 0;
 	if (cmd == NULL)
 		return ;
-	if (cmd->line != NULL)
-		free(cmd->line);
-	if (cmd->q_type != NULL)
-		free(cmd->q_type);
-	if (cmd->split_type != NULL)
-		free(cmd->split_type);
-	if (cmd->splits != NULL)
+	safe_free(cmd->line);
+	safe_free(cmd->q_type);
+	safe_free(cmd->split_type);
+	safe_free(cmd->split_io);
+	safe_free(cmd->in_types);
+	safe_free(cmd->out_types);
+	clean_double_arr(cmd->splits, cmd->num_splits);
+	clean_double_arr(cmd->in_names, cmd->num_input);
+	clean_double_arr(cmd->out_names, cmd->num_output);
+}
+
+static void	clean_double_arr(char **arr, int size)
+{
+	int	index;
+
+	index = 0;
+	if (arr == NULL)
+		return ;
+	while (index < size)
 	{
-		while (index < cmd->num_splits)
-		{
-			if (cmd->splits[index] != NULL)
-				free(cmd->splits[index]);
-			index++;
-		}
-		free(cmd->splits);
+		if (arr[index] != NULL)
+			free(arr[index]);
+		index++;
 	}
+	free(arr);
+}
+
+static void	safe_free(void *s)
+{
+	if (s != NULL)
+		free(s);
 }

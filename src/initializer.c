@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:59 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 20:05:25 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:36:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	initialize_cmds(t_shell *shell)
 {
 	int	index;
 
-	index = 0;
-	while (index < shell->num_cmds)
+	index = -1;
+	while (++index < shell->num_cmds)
 	{
 		shell->cmds[index].args = NULL;
 		shell->cmds[index].cmd_path = NULL;
@@ -34,12 +34,19 @@ void	initialize_cmds(t_shell *shell)
 		shell->cmds[index].error = 0;
 		shell->cmds[index].line = NULL;
 		shell->cmds[index].q_type = NULL;
+		shell->cmds[index].in_names = NULL;
+		shell->cmds[index].in_types = NULL;
+		shell->cmds[index].out_names = NULL;
+		shell->cmds[index].out_types = NULL;
+		shell->cmds[index].split_io = NULL;
+		shell->cmds[index].num_input = 0;
+		shell->cmds[index].num_output = 0;
 		shell->cmds[index].access_status = 0;
 		shell->cmds[index].num_splits = 0;
 		shell->cmds[index].ind_arg = 0;
 		shell->cmds[index].ind_start = 0;
 		shell->cmds[index].len = 0;
-		index++;
+		shell->cmds[index].er_synt_char = '\0';
 	}
 }
 
@@ -52,7 +59,7 @@ void	nullify_array(char	**arr, int size)
 		return ;
 	while (index < size)
 	{
-		*arr = NULL;
+		arr[index] = NULL;
 		index++;
 	}
 }

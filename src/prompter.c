@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 19:59:00 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 18:33:46 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,24 @@ void	get_cmd_line(t_shell *shell)
 		printf("Num of cmds:%d\n", shell->num_cmds);
 		print_cmds(shell);
 		count_splits(shell, &(shell->cmds[0]));
-		printf("Args: %d\n", shell->cmds[0].num_splits);
+		printf("Splits: %d\n", shell->cmds[0].num_splits);
 		cmd_split(shell, &(shell->cmds[0]));
 		for (int i=0;i<shell->cmds[0].num_splits; i++)
 			printf("%s ", shell->cmds[0].splits[i]);
+		printf("\n");
+		asign_sources(shell, &(shell->cmds[0]));
+		printf("Number of inputs:%d\n", shell->cmds[0].num_input);
+		for (int i=0;i<shell->cmds[0].num_input; i++)
+			printf("%s ", shell->cmds[0].in_names[i]);
+		printf("\n");
+		printf("Number of outputs:%d\n", shell->cmds[0].num_output);
+		for (int i=0;i<shell->cmds[0].num_output; i++)
+			printf("%s ", shell->cmds[0].out_names[i]);
+		printf("\n");
+		create_args(shell, &(shell->cmds[0]));
+		printf("Number of args: %d\n", shell->cmds[0].num_args);
+		for (int i=0;i<shell->cmds[0].num_args; i++)
+			printf("%s ", shell->cmds[0].args[i]);
 		printf("\n");
 		crit_except(shell, 0);
 		line = readline("minishell: ");

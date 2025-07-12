@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:37:57 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 18:54:40 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 14:48:16 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,29 @@ int	ft_strcmp(const char *s1, const char *s2)
 		diff = (unsigned char)*s1 - (unsigned char)*s2;
 		return (diff);
 	}
+	return (diff);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	int		diff;
+	size_t	index;
+
+	diff = 0;
+	index = 0;
+	while (*s1 && *s2 && index < n)
+	{
+		if (*s1 != *s2)
+		{
+			diff = (unsigned char)*s1 - (unsigned char)*s2;
+			return (diff);
+		}
+		s1++;
+		s2++;
+		index++;
+	}
+	if (index < n)
+		diff = (unsigned char)*s1 - (unsigned char)*s2;
 	return (diff);
 }
 

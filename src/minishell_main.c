@@ -6,16 +6,11 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/12 22:08:09 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/12 22:15:12 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char *myfunc(void)
-{
-	char *line;
-line = readline("minishell: ");
-	return (line);
 
 int	main(int argc, char **argv, char **envp)
 {

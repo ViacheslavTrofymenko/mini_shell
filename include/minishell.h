@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 18:23:36 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 23:07:33 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <unistd.h>
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -102,5 +105,7 @@ void	asign_sources(t_shell *shell, t_cmd *cmd);
 void	count_sources(t_cmd *cmd);
 void	alloc_source_arrays(t_shell *shell, t_cmd *cmd);
 void	create_args(t_shell *shell, t_cmd *cmd);
+// execute cmds
+void	execute_cmds(t_shell *shell)
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/12 17:33:15 by ikulik           ###   ########.fr        #
+#    Updated: 2025/07/12 23:30:28 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME 		= minishell
 
 SRC 		= minishell_main.c prompter.c basics.c parse_quotes.c cleaners.c\
 			initializer.c parse_commands.c parse_arguments_1.c parse_arguments_2.c\
+			execute.c
 
 
 SRCSDIR		= src
@@ -24,7 +25,7 @@ SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
 OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g
 MFLAGS = -lreadline
 INCLUDES	= -I$(INCLUDE)
 

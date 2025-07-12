@@ -22,6 +22,7 @@
 # define Q_NORMAL ' '
 # define Q_SINGLE '\''
 # define Q_DOUBLE '\"'
+# define Q_DOLLAR '$'
 # define PIPE '|'
 # define ER_MALLOC 2
 # define ER_SYNTAX 4
@@ -41,15 +42,15 @@ typedef struct s_one_cmd
 	char	*line;
 	char	*q_type;
 	char	*cmd_path;
+	char	**envp;
+	char	**splits;
 	char	**args;
 	char	**in_names;
 	char	**out_names;
 	char	*in_types;
 	char	*out_types;
-	char	**splits;
 	char	*split_type;
 	char	*split_io;
-	char	**envp;
 	char	er_synt_char;
 	int		num_output;
 	int		num_input;

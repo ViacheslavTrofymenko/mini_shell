@@ -85,3 +85,29 @@ void	create_args(t_shell *shell, t_cmd *cmd)
 	}
 	cmd->args[cmd->num_args] = NULL;
 }
+
+void	expand_dollars(t_shell *shell, t_cmd *cmd)
+{
+	char	*temp;
+	int		index;
+
+	index = 0;
+	temp = cmd->line;
+	while (cmd->line[index])
+	{
+		if (cmd->line[index] == Q_DOLLAR && cmd->q_type[index] != Q_SINGLE)
+		{
+			cmd->ind_start = index;
+			replace_variable(shell, cmd);
+		}
+		index++;
+	}
+}
+
+/*void	replace_variable(t_shell *shell, t_cmd *cmd)
+{
+	int	index;
+
+	index = cmd->ind_start;
+	while (ft)
+}*/

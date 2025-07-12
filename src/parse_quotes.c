@@ -53,9 +53,6 @@ void	mark_quotes(t_shell *shell, char *str)
 
 static void	handle_quote(t_shell *shell, int index, char quote_type)
 {
-	t_qoutes	*qts;
-
-	qts = &(shell->qts);
 	if (shell->qts.q_flag == Q_NORMAL)
 	{
 		shell->qts.q_marker_str[index] = quote_type;

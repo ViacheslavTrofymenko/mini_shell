@@ -19,9 +19,6 @@ static void	safe_free(void *s);
 
 void	crit_except(t_shell *data, int error_code)
 {
-	int	index;
-
-	index = 0;
 	if (data->qts.str != NULL)
 		free(data->qts.str);
 	if (data->qts.q_marker_str != NULL)
@@ -50,9 +47,6 @@ static void	clean_cmds(t_shell *shell)
 
 static void	clean_cmd(t_cmd *cmd)
 {
-	int	index;
-
-	index = 0;
 	if (cmd == NULL)
 		return ;
 	safe_free(cmd->line);

@@ -6,13 +6,15 @@
 #    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/04 16:47:49 by ikulik           ###   ########.fr        #
+#    Updated: 2025/07/12 17:33:15 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= minishell
 
-SRC 		= minishell_main.c prompter.c basics.c
+SRC 		= minishell_main.c prompter.c basics.c parse_quotes.c cleaners.c\
+			initializer.c parse_commands.c parse_arguments_1.c parse_arguments_2.c\
+
 
 SRCSDIR		= src
 OBJDIR		= obj

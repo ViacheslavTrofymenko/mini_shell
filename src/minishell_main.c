@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/07 13:23:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/12 09:10:39 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ line = readline("minishell: ");
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_shell	shell;
+
 	if (argc > 1)
 		return (EXIT_FAILURE);
 	argv[0] = argv[0];
-	envp[0] = envp[0];
-	get_cmd_line();
+	initialize_shell(&shell, envp);
+	get_cmd_line(&shell);
 	rl_clear_history();
 	return (EXIT_SUCCESS);
 }

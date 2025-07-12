@@ -6,14 +6,15 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/04 18:39:55 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/11 19:59:00 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	print_cmds(t_shell *shell);
 
-void	get_cmd_line(void)
+void	get_cmd_line(t_shell *shell)
 {
 	char	*line;
 
@@ -24,9 +25,34 @@ void	get_cmd_line(void)
 		printf("Line read: %s\n", line);
 		add_history(line);
 		rl_on_new_line();
-		free(line);
+		mark_quotes(shell, line);
+		printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
+		create_cmd_vars(shell, line);
+		printf("Num of cmds:%d\n", shell->num_cmds);
+		print_cmds(shell);
+		count_splits(shell, &(shell->cmds[0]));
+		printf("Args: %d\n", shell->cmds[0].num_splits);
+		cmd_split(shell, &(shell->cmds[0]));
+		for (int i=0;i<shell->cmds[0].num_splits; i++)
+			printf("%s ", shell->cmds[0].splits[i]);
+		printf("\n");
+		crit_except(shell, 0);
 		line = readline("minishell: ");
 	}
 	free(line);
+}
+
+static void	print_cmds(t_shell *shell)
+{
+	int	index;
+
+	index = 0;
+	if (shell->cmds == NULL)
+		return ;
+	while (index < shell->num_cmds)
+	{
+		printf("Cmd %d: %s\nQts_l: %s\n", index, shell->cmds[index].line, shell->cmds[index].q_type);
+		index++;
+	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/12 22:15:12 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/13 01:36:43 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,3 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	return (EXIT_SUCCESS);
 }
-
-

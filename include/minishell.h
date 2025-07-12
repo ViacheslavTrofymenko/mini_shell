@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 20:05:32 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 14:22:07 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ typedef struct s_one_cmd
 	char	*q_type;
 	char	*cmd_path;
 	char	**args;
+	char	**in_names;
+	char	**out_names;
 	char	**splits;
 	char	*split_type;
 	char	**envp;
-	int		access_status;
+	int		num_output;
+	int		num_input;
 	int		num_args;
+	int		access_status;
 	int		ind_arg;
 	int		ind_start;
 	int		len;

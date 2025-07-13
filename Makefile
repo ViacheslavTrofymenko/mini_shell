@@ -14,7 +14,7 @@ NAME 		= minishell
 
 SRC 		= minishell_main.c prompter.c basics.c parse_quotes.c cleaners.c\
 			initializer.c parse_commands.c parse_arguments_1.c parse_arguments_2.c\
-
+			exceptors.c
 
 SRCSDIR		= src
 OBJDIR		= obj

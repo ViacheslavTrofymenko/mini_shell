@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-void	skip_quotes(t_cmd *cmd, int *flag_sp, int *index);
-void	form_quoted_string(t_shell *shell, t_cmd *cmd, int *index, int *flag);
-void	form_normal_string(t_shell *shell, t_cmd *cmd, int *flag);
+void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index);
+void	form_quoted_string(t_shell *shell, t_cmd_p *cmd, int *index, int *flag);
+void	form_normal_string(t_shell *shell, t_cmd_p *cmd, int *flag);
 
-void	count_splits(t_shell *shell, t_cmd *cmd)
+void	count_splits(t_shell *shell, t_cmd_p *cmd)
 {
 	int		flag_sp;
 	int		index;
@@ -45,7 +45,7 @@ void	count_splits(t_shell *shell, t_cmd *cmd)
 		crit_except(shell, ER_MALLOC);
 }
 
-void	skip_quotes(t_cmd *cmd, int *flag_sp, int *index)
+void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index)
 {
 	char	q_type;
 
@@ -58,14 +58,14 @@ void	skip_quotes(t_cmd *cmd, int *flag_sp, int *index)
 	*flag_sp = 1;
 }
 
-void	cmd_split(t_shell *shell, t_cmd *cmd)
+void	cmd_split(t_shell *shell, t_cmd_p *cmd)
 {
 	int	flag;
 	int	index;
 
 	index = 0;
 	flag = 1;
-	nullify_array(cmd->splits, cmd->num_splits);
+	nullify_array(cmd->splits, cmd->num_splits + 1);
 	while (cmd->line[index])
 	{
 		if (cmd->q_type[index] != Q_NORMAL)
@@ -87,7 +87,7 @@ void	cmd_split(t_shell *shell, t_cmd *cmd)
 	}
 }
 
-void	form_normal_string(t_shell *shell, t_cmd *cmd, int *flag)
+void	form_normal_string(t_shell *shell, t_cmd_p *cmd, int *flag)
 {
 	cmd->splits[cmd->ind_arg] = malloc((cmd->len + 1) * sizeof(char));
 	if (cmd->splits[cmd->ind_arg] == NULL)
@@ -100,7 +100,7 @@ void	form_normal_string(t_shell *shell, t_cmd *cmd, int *flag)
 	cmd->len = 0;
 }
 
-void	form_quoted_string(t_shell *shell, t_cmd *cmd, int *index, int *flag)
+void	form_quoted_string(t_shell *shell, t_cmd_p *cmd, int *index, int *flag)
 {
 	char	q_type;
 	int		size;

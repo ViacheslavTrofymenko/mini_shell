@@ -90,7 +90,11 @@ void	create_cmd_vars(t_shell *shell, char *str)
 	shell->cmds = malloc ((shell->num_cmds) * sizeof(t_cmd));
 	if (shell->cmds == NULL)
 		crit_except(shell, ER_MALLOC);
-	initialize_cmds(shell);
+	while (index < shell->num_cmds)
+	{
+		initialize_cmd(&(shell->cmds[index]));
+		index++;
+	}
 	while (str[index])
 	{
 		if (str[index] == PIPE && shell->qts.q_marker_str[index] == Q_NORMAL)
@@ -103,20 +107,18 @@ void	create_cmd_vars(t_shell *shell, char *str)
 
 static void	create_cmd(t_shell *shell, char *str, int index)
 {
-	int	ind_cmd;
-
-	ind_cmd = shell->qts.ind_line;
-	(shell->cmds[ind_cmd]).line
+	(shell->cmd_p).line
 		= malloc ((index - shell->qts.ind_strt + 1) * sizeof(char));
-	(shell->cmds[ind_cmd]).q_type
+	(shell->cmd_p).q_type
 		= malloc ((index - shell->qts.ind_strt + 1) * sizeof(char));
-	if ((shell->cmds[ind_cmd]).line == NULL
-		|| (shell->cmds[ind_cmd]).q_type == NULL)
+	if ((shell->cmd_p).line == NULL
+		|| (shell->cmd_p).q_type == NULL)
 		crit_except(shell, ER_MALLOC);
-	ft_strlcpy((shell->cmds[ind_cmd]).line, &(str[shell->qts.ind_strt]),
+	ft_strlcpy((shell->cmd_p).line, &(str[shell->qts.ind_strt]),
 		index - shell->qts.ind_strt + 1);
-	ft_strlcpy((shell->cmds[ind_cmd]).q_type, &(shell->qts.q_marker_str[shell
+	ft_strlcpy((shell->cmd_p).q_type, &(shell->qts.q_marker_str[shell
 			->qts.ind_strt]), index - shell->qts.ind_strt + 1);
+	parse_cmd_line(shell, shell->qts.ind_line);
 	shell->qts.ind_strt = index + 1;
 	(shell->qts.ind_line)++;
 }

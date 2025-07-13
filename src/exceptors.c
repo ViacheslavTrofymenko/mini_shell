@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   exceptors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 17:43:08 by ikulik           ###   ########.fr       */
+/*   Created: 2025/07/13 17:43:40 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/13 17:43:40 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	crit_except(t_shell *data, int error_code)
 {
-	t_shell	shell;
-
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	if (data->qts.str != NULL)
+		free(data->qts.str);
+	data->qts.str = NULL;
+	if (data->qts.q_marker_str != NULL)
+		free(data->qts.q_marker_str);
+	data->qts.q_marker_str = NULL;
+	clean_cmd_p(&(data->cmd_p), M_TOTAL);
+	clean_cmds(data);
+	if (error_code != 0)
+		exit (error_code);
 }
-
-

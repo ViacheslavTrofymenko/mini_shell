@@ -12,23 +12,12 @@
 
 #include "minishell.h"
 
-static void	clean_cmds(t_shell *shell);
-static void	clean_cmd(t_cmd *cmd);
+static void	clean_one_cmd(t_cmd *cmd);
 static void	clean_double_arr(char **arr, int size);
-static void	safe_free(void *s);
+static void	safe_free(char **s);
+void		clean_unused_splits(t_cmd_p *cmd);
 
-void	crit_except(t_shell *data, int error_code)
-{
-	if (data->qts.str != NULL)
-		free(data->qts.str);
-	if (data->qts.q_marker_str != NULL)
-		free(data->qts.q_marker_str);
-	clean_cmds(data);
-	if (error_code != 0)
-		exit (error_code);
-}
-
-static void	clean_cmds(t_shell *shell)
+void	clean_cmds(t_shell *shell)
 {
 	int	index;
 
@@ -37,7 +26,7 @@ static void	clean_cmds(t_shell *shell)
 		return ;
 	while (index < shell->num_cmds)
 	{
-		clean_cmd(&(shell->cmds[index]));
+		clean_one_cmd(&(shell->cmds[index]));
 		index++;
 	}
 	free(shell->cmds);
@@ -45,17 +34,52 @@ static void	clean_cmds(t_shell *shell)
 	shell->num_cmds = 0;
 }
 
-static void	clean_cmd(t_cmd *cmd)
+void	clean_cmd_p(t_cmd_p *cmd, int mode)
 {
 	if (cmd == NULL)
 		return ;
-	safe_free(cmd->line);
-	safe_free(cmd->q_type);
-	safe_free(cmd->split_type);
-	safe_free(cmd->split_io);
-	safe_free(cmd->in_types);
-	safe_free(cmd->out_types);
-	clean_double_arr(cmd->splits, cmd->num_splits);
+	safe_free(&(cmd->line));
+	safe_free(&(cmd->q_type));
+	safe_free(&(cmd->split_type));
+	if (mode == M_PARTIAL)
+		clean_unused_splits(cmd);
+	safe_free(&(cmd->split_io));
+	if (mode == M_TOTAL)
+	{
+		safe_free(&(cmd->in_types));
+		safe_free(&(cmd->out_types));
+		clean_double_arr(cmd->in_names, cmd->num_input);
+		clean_double_arr(cmd->out_names, cmd->num_output);
+		clean_double_arr(cmd->splits, cmd->num_splits);
+	}
+}
+
+void	clean_unused_splits(t_cmd_p *cmd)
+{
+	int	index;
+
+	index = 0;
+	if (cmd->split_io == NULL)
+		return ;
+	while (index < cmd->num_splits)
+	{
+		if (cmd->split_io[index] == IO_REMOVE)
+		{
+			safe_free(&(cmd->splits[index]));
+			cmd->splits[index] = NULL;
+		}
+		index++;
+	}
+	free(cmd->splits);
+}
+
+static void	clean_one_cmd(t_cmd *cmd)
+{
+	if (cmd == NULL)
+		return ;
+	safe_free(&(cmd->in_types));
+	safe_free(&(cmd->out_types));
+	clean_double_arr(cmd->args, cmd->num_args);
 	clean_double_arr(cmd->in_names, cmd->num_input);
 	clean_double_arr(cmd->out_names, cmd->num_output);
 }
@@ -70,14 +94,17 @@ static void	clean_double_arr(char **arr, int size)
 	while (index < size)
 	{
 		if (arr[index] != NULL)
-			free(arr[index]);
+			safe_free(&(arr[index]));
 		index++;
 	}
 	free(arr);
 }
 
-static void	safe_free(void *s)
+static void	safe_free(char **s)
 {
-	if (s != NULL)
-		free(s);
+	if (s != NULL && *s != NULL)
+	{
+		free(*s);
+		*s = NULL;
+	}
 }

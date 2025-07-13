@@ -12,9 +12,9 @@
 
 NAME 		= minishell
 
-SRC 		= minishell_main.c prompter.c basics.c parse_quotes.c cleaners.c\
-			initializer.c parse_commands.c parse_arguments_1.c parse_arguments_2.c\
-			exceptors.c
+SRC 		= minishell_main.c prompter.c basics.c initializer.c cleaners.c\
+			exceptors.c parse_quotes.c parse_split_command.c parse_stream_names.c\
+			parse_arguments.c
 
 SRCSDIR		= src
 OBJDIR		= obj
@@ -24,8 +24,8 @@ SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
 OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-CFLAGS = -Wall -Wextra -Werror -g
-MFLAGS = -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g
+MFLAGS		= -lreadline
 INCLUDES	= -I$(INCLUDE)
 
 RM = rm -f

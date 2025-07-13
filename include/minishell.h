@@ -124,6 +124,6 @@ void	count_sources(t_cmd_p *cmd);
 void	asign_sources(t_shell *shell, t_cmd_p *cmd);
 void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd);
 void	create_args(t_shell *shell, t_cmd_p *cmd);
-void	parse_cmd_line(t_shell *shell, int index);
+void	parse_cmd(t_shell *shell, int index);
 
 #endif

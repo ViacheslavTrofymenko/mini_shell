@@ -118,7 +118,7 @@ static void	create_cmd(t_shell *shell, char *str, int index)
 		index - shell->qts.ind_strt + 1);
 	ft_strlcpy((shell->cmd_p).q_type, &(shell->qts.q_marker_str[shell
 			->qts.ind_strt]), index - shell->qts.ind_strt + 1);
-	parse_cmd_line(shell, shell->qts.ind_line);
+	parse_cmd(shell, shell->qts.ind_line);
 	shell->qts.ind_strt = index + 1;
 	(shell->qts.ind_line)++;
 }

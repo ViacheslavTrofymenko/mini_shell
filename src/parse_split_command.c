@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index);
-void	form_quoted_string(t_shell *shell, t_cmd_p *cmd, int *index, int *flag);
-void	form_normal_string(t_shell *shell, t_cmd_p *cmd, int *flag);
+static void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index);
+static void	form_qted_str(t_shell *shell, t_cmd_p *cmd, int *index, int *flag);
+static void	form_normal_str(t_shell *shell, t_cmd_p *cmd, int *flag);
 
 void	count_splits(t_shell *shell, t_cmd_p *cmd)
 {
@@ -22,8 +22,8 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 	int		index;
 
 	flag_sp = 1;
-	index = 0;
-	while (cmd->line[index])
+	index = -1;
+	while (cmd->line[++index])
 	{
 		if (cmd->q_type[index] != Q_NORMAL)
 		{
@@ -37,7 +37,6 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 		}
 		if (ft_is_space(cmd->line[index]) == 0)
 			flag_sp = 1;
-		index++;
 	}
 	cmd->splits = malloc((cmd->num_splits + 1) * sizeof(char *));
 	cmd->split_type = malloc((cmd->num_splits + 1) * sizeof(char));
@@ -45,17 +44,20 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 		crit_except(shell, ER_MALLOC);
 }
 
-void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index)
+static void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index)
 {
 	char	q_type;
 
 	q_type = cmd->q_type[*index];
-	(*index)++;
-	while (cmd->line[*index] && cmd->line[*index] != q_type)
+	if (q_type != Q_NORMAL)
+	{
 		(*index)++;
-	(*index)++;
-	(cmd->num_splits)++;
-	*flag_sp = 1;
+		while (cmd->line[*index] && cmd->line[*index] != q_type)
+			(*index)++;
+		(*index)++;
+		(cmd->num_splits)++;
+		*flag_sp = 1;
+	}
 }
 
 void	cmd_split(t_shell *shell, t_cmd_p *cmd)
@@ -70,7 +72,7 @@ void	cmd_split(t_shell *shell, t_cmd_p *cmd)
 	{
 		if (cmd->q_type[index] != Q_NORMAL)
 		{
-			form_quoted_string(shell, cmd, &index, &flag);
+			form_qted_str(shell, cmd, &index, &flag);
 			continue ;
 		}
 		if (flag == 1 && ft_is_space(cmd->line[index]))
@@ -82,12 +84,12 @@ void	cmd_split(t_shell *shell, t_cmd_p *cmd)
 			(cmd->len)++;
 		if ((flag == 0 && ft_is_space(cmd->line[index]) == 0)
 			|| cmd->line[index + 1] == '\0')
-			form_normal_string(shell, cmd, &flag);
+			form_normal_str(shell, cmd, &flag);
 		index++;
 	}
 }
 
-void	form_normal_string(t_shell *shell, t_cmd_p *cmd, int *flag)
+static void	form_normal_str(t_shell *shell, t_cmd_p *cmd, int *flag)
 {
 	cmd->splits[cmd->ind_arg] = malloc((cmd->len + 1) * sizeof(char));
 	if (cmd->splits[cmd->ind_arg] == NULL)
@@ -100,14 +102,14 @@ void	form_normal_string(t_shell *shell, t_cmd_p *cmd, int *flag)
 	cmd->len = 0;
 }
 
-void	form_quoted_string(t_shell *shell, t_cmd_p *cmd, int *index, int *flag)
+static void	form_qted_str(t_shell *shell, t_cmd_p *cmd, int *index, int *flag)
 {
 	char	q_type;
 	int		size;
 
 	q_type = cmd->q_type[*index];
 	if (cmd->len > 0)
-		form_normal_string(shell, cmd, flag);
+		form_normal_str(shell, cmd, flag);
 	cmd->ind_start = *index;
 	(*index)++;
 	while (cmd->line[*index] && cmd->line[*index] != q_type)

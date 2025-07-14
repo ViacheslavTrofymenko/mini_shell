@@ -19,35 +19,42 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->envp = envp;
 	shell->qts.q_marker_str = NULL;
 	shell->qts.str = NULL;
+	initialize_cmd_p(&(shell->cmd_p));
 }
 
-void	initialize_cmds(t_shell *shell)
+void	initialize_cmd_p(t_cmd_p *cmd)
 {
-	int	index;
+	cmd->args = NULL;
+	cmd->line = NULL;
+	cmd->q_type = NULL;
+	cmd->in_names = NULL;
+	cmd->in_types = NULL;
+	cmd->out_names = NULL;
+	cmd->out_types = NULL;
+	cmd->splits = NULL;
+	cmd->split_io = NULL;
+	cmd->num_input = 0;
+	cmd->num_output = 0;
+	cmd->num_splits = 0;
+	cmd->num_args = 0;
+	cmd->ind_arg = 0;
+	cmd->ind_start = 0;
+	cmd->len = 0;
+	cmd->er_synt_char = '\0';
+	cmd->error = 0;
+}
 
-	index = -1;
-	while (++index < shell->num_cmds)
-	{
-		shell->cmds[index].args = NULL;
-		shell->cmds[index].cmd_path = NULL;
-		shell->cmds[index].envp = shell->envp;
-		shell->cmds[index].error = 0;
-		shell->cmds[index].line = NULL;
-		shell->cmds[index].q_type = NULL;
-		shell->cmds[index].in_names = NULL;
-		shell->cmds[index].in_types = NULL;
-		shell->cmds[index].out_names = NULL;
-		shell->cmds[index].out_types = NULL;
-		shell->cmds[index].split_io = NULL;
-		shell->cmds[index].num_input = 0;
-		shell->cmds[index].num_output = 0;
-		shell->cmds[index].access_status = 0;
-		shell->cmds[index].num_splits = 0;
-		shell->cmds[index].ind_arg = 0;
-		shell->cmds[index].ind_start = 0;
-		shell->cmds[index].len = 0;
-		shell->cmds[index].er_synt_char = '\0';
-	}
+void	initialize_cmd(t_cmd *cmd)
+{
+	cmd->args = NULL;
+	cmd->in_names = NULL;
+	cmd->in_types = NULL;
+	cmd->out_names = NULL;
+	cmd->out_types = NULL;
+	cmd->num_input = 0;
+	cmd->num_output = 0;
+	cmd->er_synt_char = '\0';
+	cmd->error = 0;
 }
 
 void	nullify_array(char	**arr, int size)

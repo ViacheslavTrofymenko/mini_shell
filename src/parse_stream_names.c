@@ -12,18 +12,16 @@
 
 #include "minishell.h"
 
-void	next_input_split(t_shell *shell, t_cmd *cmd, int index, int ind_input);
-void	next_output_split(t_shell *shell, t_cmd *cmd, int index, int ind_input);
-void	create_output_name(t_shell *shell, t_cmd *cmd, int index);
-void	create_input_name(t_shell *shell, t_cmd *cmd, int index);
+void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input);
+void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input);
+void	create_output_name(t_shell *shell, t_cmd_p *cmd, int index);
+void	create_input_name(t_shell *shell, t_cmd_p *cmd, int index);
 
-void	asign_sources(t_shell *shell, t_cmd *cmd)
+void	asign_sources(t_shell *shell, t_cmd_p *cmd)
 {
 	int	index;
 
 	index = 0;
-	count_sources(cmd);
-	alloc_source_arrays(shell, cmd);
 	cmd->ind_arg = 0;
 	cmd->ind_start = 0;
 	while (index < cmd->num_splits)
@@ -38,7 +36,7 @@ void	asign_sources(t_shell *shell, t_cmd *cmd)
 	}
 }
 
-void	create_input_name(t_shell *shell, t_cmd *cmd, int index)
+void	create_input_name(t_shell *shell, t_cmd_p *cmd, int index)
 {
 	int			start;
 	int			size;
@@ -66,7 +64,7 @@ void	create_input_name(t_shell *shell, t_cmd *cmd, int index)
 	(cmd->ind_start)++;
 }
 
-void	next_input_split(t_shell *shell, t_cmd *cmd, int index, int ind_input)
+void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input)
 {
 	int	len;
 
@@ -86,7 +84,7 @@ void	next_input_split(t_shell *shell, t_cmd *cmd, int index, int ind_input)
 	cmd->split_io[index + 1] = IO_REMOVE;
 }
 
-void	create_output_name(t_shell *shell, t_cmd *cmd, int index)
+void	create_output_name(t_shell *shell, t_cmd_p *cmd, int index)
 {
 	int			start;
 	int			size;
@@ -114,7 +112,7 @@ void	create_output_name(t_shell *shell, t_cmd *cmd, int index)
 	(cmd->ind_arg)++;
 }
 
-void	next_output_split(t_shell *shell, t_cmd *cmd, int index, int ind_output)
+void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_output)
 {
 	int	len;
 

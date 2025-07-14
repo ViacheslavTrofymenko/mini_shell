@@ -20,7 +20,6 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	argv[0] = argv[0];
 	initialize_shell(&shell, envp);
-	printf("compare: %d\n", ft_strncmp("<avc", "<", 1));
 	get_cmd_line(&shell);
 	rl_clear_history();
 	return (EXIT_SUCCESS);

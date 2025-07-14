@@ -6,15 +6,15 @@
 #    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/14 12:35:07 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/14 13:44:07 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= minishell
 
-SRC 		= minishell_main.c prompter.c basics.c parse_quotes.c cleaners.c\
-			initializer.c parse_commands.c parse_arguments_1.c parse_arguments_2.c\
-			execute.c
+SRC 		= minishell_main.c prompter.c basics.c initializer.c cleaners.c\
+			exceptors.c parse_quotes.c parse_split_command.c parse_stream_names.c\
+			parse_arguments.c			execute.c
 
 
 SRCSDIR		= src
@@ -25,8 +25,8 @@ SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
 OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-CFLAGS = -Wall -Werror -Wextra -g3
-MFLAGS = -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g
+MFLAGS		= -lreadline
 INCLUDES	= -I$(INCLUDE)
 
 RM = rm -f

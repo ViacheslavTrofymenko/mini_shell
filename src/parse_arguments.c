@@ -12,7 +12,22 @@
 
 #include "minishell.h"
 
-void	count_sources(t_cmd *cmd)
+static void	copy_from_temp_to_cmd(t_shell *shell, int index);
+
+void	parse_cmd(t_shell *shell, int index)
+{
+	count_splits(shell, &(shell->cmd_p));
+	cmd_split(shell, &(shell->cmd_p));
+	count_sources(&(shell->cmd_p));
+	alloc_source_arrays(shell, &(shell->cmd_p));
+	asign_sources(shell, &(shell->cmd_p));
+	create_args(shell, &(shell->cmd_p));
+	copy_from_temp_to_cmd(shell, index);
+	clean_cmd_p(&(shell->cmd_p), M_PARTIAL);
+	initialize_cmd_p(&(shell->cmd_p));
+}
+
+void	count_sources(t_cmd_p *cmd)
 {
 	int	index;
 
@@ -27,9 +42,10 @@ void	count_sources(t_cmd *cmd)
 			(cmd->num_output)++;
 		index++;
 	}
+	printf("Counted sources: %d %d\n", cmd->num_input, cmd->num_output);
 }
 
-void	alloc_source_arrays(t_shell *shell, t_cmd *cmd)
+void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd)
 {
 	int	index;
 
@@ -57,7 +73,7 @@ void	alloc_source_arrays(t_shell *shell, t_cmd *cmd)
 		cmd->split_io[index] = IO_KEEP;
 }
 
-void	create_args(t_shell *shell, t_cmd *cmd)
+void	create_args(t_shell *shell, t_cmd_p *cmd)
 {
 	int	index;
 
@@ -84,4 +100,18 @@ void	create_args(t_shell *shell, t_cmd *cmd)
 		index++;
 	}
 	cmd->args[cmd->num_args] = NULL;
+}
+
+static void	copy_from_temp_to_cmd(t_shell *shell, int index)
+{
+	shell->cmds[index].args = shell->cmd_p.args;
+	shell->cmds[index].in_names = shell->cmd_p.in_names;
+	shell->cmds[index].out_names = shell->cmd_p.out_names;
+	shell->cmds[index].in_types = shell->cmd_p.in_types;
+	shell->cmds[index].out_types = shell->cmd_p.out_types;
+	shell->cmds[index].num_args = shell->cmd_p.num_args;
+	shell->cmds[index].num_input = shell->cmd_p.num_input;
+	shell->cmds[index].num_output = shell->cmd_p.num_output;
+	shell->cmds[index].error = shell->cmd_p.error;
+	shell->cmds[index].er_synt_char = shell->cmd_p.er_synt_char;
 }

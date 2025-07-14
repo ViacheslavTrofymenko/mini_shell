@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 13:43:15 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:54:21 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@
 # define IO_KEEP 0
 # define M_TOTAL 1
 # define M_PARTIAL 0
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}				t_list;
 
 typedef struct s_one_cmd
 {

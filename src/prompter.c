@@ -6,13 +6,11 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 13:15:01 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:57:54 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static void	print_cmds(t_shell *shell);
 
 void	get_cmd_line(t_shell *shell)
 {
@@ -45,18 +43,3 @@ void	get_cmd_line(t_shell *shell)
 	}
 	free(line);
 }
-
-/*static void	print_cmds(t_shell *shell)
-{
-	int	index;
-
-	index = 0;
-	if (shell->cmds == NULL)
-		return ;
-	while (index < shell->num_cmds)
-	{
-		printf("Cmd %d: %s\nQts_l: %s\n", index, shell->cmds[index].line, shell->cmds[index].q_type);
-		index++;
-	}
-}*/
-

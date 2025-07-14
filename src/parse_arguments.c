@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_arguments_1.c                                :+:      :+:    :+:   */
+/*   parse_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 18:26:31 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/14 14:14:24 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,5 @@ static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 	shell->cmds[index].num_output = shell->cmd_p.num_output;
 	shell->cmds[index].error = shell->cmd_p.error;
 	shell->cmds[index].er_synt_char = shell->cmd_p.er_synt_char;
+	shell->cmds[index].envp = shell->envp;
 }

@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 20:18:29 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:20:23 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,49 @@ char	*ft_check_command(char **path_list, char *cmd);
 void	ft_free_str_array(char **str);
 char	*ft_get_path_command(char **cmd, char **envp);
 
+void	handle_heredocs(t_shell *shell)
+{
+	int		fd;
+	int		i;
+	int		j;
+	char	*tmp_filename;
+	char	*line;
+
+	i = 0;
+	while (i < shell->num_cmds)
+	{
+		j = 0;
+		while (j < shell->cmds[i].num_input)
+		{
+			if (shell->cmds[i].in_types[j] == IO_DOUBLE)
+			{
+				tmp_filename = ft_strjoin("/tmp/.heredoc_", shell->cmds[i].in_names[j]);
+				fd = open(tmp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+				if (fd < 0)
+					exit(ft_error(1, tmp_filename));
+				while (1)
+				{
+					line = readline("> ");
+					if (!line || ft_strcmp(line, shell->cmds[i].in_names[j]) == 0)
+						break ;
+					write(fd, line, ft_strlen(line));
+					write(fd, "\n", 1);
+					free(line);
+				}
+				free(line);
+				close(fd);
+				free(shell->cmds[i].in_names[j]);
+				shell->cmds[i].in_names[j] = tmp_filename;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	execute_cmds(t_shell *shell)
 {
+	handle_heredocs(shell);
 	if (shell->num_cmds == 1)
 		exec_one_cmd(shell);
 	else
@@ -37,11 +78,25 @@ static void	apply_redirs(t_cmd *cmd)
 	i = -1;
 	while (++i < cmd->num_input)
 	{
-		fd = open(cmd->in_names[i], O_RDONLY);
-		if (fd < 0)
-			exit(ft_error(1, cmd->in_names[i]));
-		dup2(fd, STDIN_FILENO);
-		close(fd);
+		if (cmd->in_types[i] == IO_SINGLE)
+		{
+			fd = open(cmd->in_names[i], O_RDONLY);
+			if (fd < 0)
+				exit(ft_error(1, cmd->in_names[i]));
+			if (dup2(fd, STDIN_FILENO) < 0)
+				exit(ft_error(1, "dup2 input"));
+			close(fd);
+		}
+		else if (cmd->in_types[i] == IO_DOUBLE)
+		{
+			fd = open(cmd->in_names[i], O_RDONLY);
+			if (fd < 0)
+				exit(ft_error(1, "heredoc temp file"));
+			if (dup2(fd, STDIN_FILENO) < 0)
+				exit(ft_error(1, "dup2 heredoc"));
+			close(fd);
+			unlink(cmd->in_names[i]);
+		}
 	}
 	i = -1;
 	while (++i < cmd->num_output)
@@ -53,6 +108,8 @@ static void	apply_redirs(t_cmd *cmd)
 		if (fd < 0)
 			exit(ft_error(1, cmd->out_names[i]));
 		dup2(fd, STDOUT_FILENO);
+		if (dup2(fd, STDOUT_FILENO) < 0)
+			exit(ft_error(1, "dup2 output"));
 		close(fd);
 	}
 }

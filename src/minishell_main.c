@@ -5,17 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 09:10:39 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/07/14 12:32:00 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char *myfunc(void)
-{
-	char *line;
-line = readline("minishell: ");
-	return (line);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -25,9 +20,8 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	argv[0] = argv[0];
 	initialize_shell(&shell, envp);
+	printf("compare: %d\n", ft_strncmp("<avc", "<", 1));
 	get_cmd_line(&shell);
 	rl_clear_history();
 	return (EXIT_SUCCESS);
 }
-
-

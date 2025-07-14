@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:40:47 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/11 20:10:55 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/12 17:46:06 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	form_normal_string(t_shell *shell, t_cmd *cmd, int index, int *flag)
 		crit_except(shell, ER_MALLOC);
 	ft_strlcpy(cmd->splits[cmd->ind_arg],
 		&(cmd->line[cmd->ind_start]), cmd->len + 1);
-	cmd->split_type[shell->qts.ind_line] = Q_NORMAL;
+	cmd->split_type[cmd->ind_arg] = Q_NORMAL;
 	(cmd->ind_arg)++;
 	*flag = 1;
 	cmd->len = 0;

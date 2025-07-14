@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/13 01:52:03 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/13 02:01:40 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_error(int num, char *str)
 	if (num == 2)
 	{
 		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not a found\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	return (1);
 }
@@ -143,10 +143,7 @@ static void	exec_one_cmd(t_cmd *cmd)
 
 	pid = fork();
 	if (pid == 0)
-	{
-		apply_redirs(cmd);
 		exec_or_exit(cmd);
-	}
 	else if (pid > 0)
 		waitpid(pid, NULL, 0);
 	else

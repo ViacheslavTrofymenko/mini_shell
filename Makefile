@@ -6,7 +6,7 @@
 #    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/12 23:30:28 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/14 12:35:07 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
 
 OBJS		= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-CFLAGS = -g
+CFLAGS = -Wall -Werror -Wextra -g3
 MFLAGS = -lreadline
 INCLUDES	= -I$(INCLUDE)
 
@@ -33,11 +33,9 @@ RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(LIBRARY) $(OBJDIR) $(OBJS)
-	cc $(OBJS) $(LIBRARY) $(INCLUDES) -lreadline -o $(NAME)
-
-$(BONUSNAME): $(BONUSOBJS) $(LIBRARY)
-	cc $(BONUSOBJS) $(LIBRARY) -o $(BONUSNAME)
+$(NAME): $(OBJDIR) $(OBJS)
+	$(MAKE) -C libft
+	cc $(OBJS) $(LIBRARY) $(INCLUDES) -lreadline -L libft -lft -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c
 	cc $(CFLAGS) -c $< -o $@ $(INCLUDES)
@@ -46,9 +44,11 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
 clean:
+	$(MAKE) -C libft clean
 	$(RM) $(OBJS) $(BONUSOBJS)
 
 fclean: clean
+	$(MAKE) -C libft fclean
 	$(RM) $(NAME) $(BONUSNAME)
 
 re: fclean all

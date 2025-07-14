@@ -6,13 +6,14 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/13 01:46:03 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:40:14 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -32,12 +33,6 @@
 # define IO_DOUBLE 1
 # define IO_REMOVE 1
 # define IO_KEEP 0
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}				t_list;
 
 typedef struct s_one_cmd
 {
@@ -107,10 +102,5 @@ void	alloc_source_arrays(t_shell *shell, t_cmd *cmd);
 void	create_args(t_shell *shell, t_cmd *cmd);
 // execute cmds
 void	execute_cmds(t_shell *shell);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_strdup(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

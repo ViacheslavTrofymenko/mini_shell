@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/13 02:01:40 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:16:02 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,76 +16,10 @@ static void	apply_redirs(t_cmd *cmd);
 static void	exec_or_exit(t_cmd *cmd);
 static void	exec_one_cmd(t_cmd *cmd);
 static void	exec_pipe_cmds(t_shell *shell);
-
-int	ft_error(int num, char *str)
-{
-	if (num == 1)
-		perror(str);
-	if (num == 2)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
-	return (1);
-}
-
-char	*ft_check_command(char **path_list, char *cmd)
-{
-	int		i;
-	char	*path_fin;
-	char	*path_mid;
-
-	i = 0;
-	while (path_list[i])
-	{
-		path_mid = ft_strjoin(path_list[i], "/");
-		path_fin = ft_strjoin(path_mid, cmd);
-		free(path_mid);
-		if (access(path_fin, X_OK) == 0)
-			return (path_fin);
-		free(path_fin);
-		i++;
-	}
-	return (NULL);
-}
-
-void	ft_free_str_array(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-char	*ft_get_path_command(char **cmd, char **envp)
-{
-	int		i;
-	char	**path_list;
-	char	*path_command;
-
-	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
-		return (NULL);
-	if (ft_strchr(cmd[0], '/'))
-		if (access(cmd[0], X_OK) == 0)
-			return (ft_strdup(cmd[0]));
-	i = -1;
-	while (envp[++i])
-	{
-		if (!ft_strncmp("PATH=", envp[i], 5))
-		{
-			path_list = ft_split(envp[i] + 5, ':');
-			path_command = ft_check_command(path_list, cmd[0]);
-			ft_free_str_array(path_list);
-			return (path_command);
-		}
-	}
-	return (NULL);
-}
+int	ft_error(int num, char *str);
+char	*ft_check_command(char **path_list, char *cmd);
+void	ft_free_str_array(char **str);
+char	*ft_get_path_command(char **cmd, char **envp);
 
 void	execute_cmds(t_shell *shell)
 {
@@ -190,4 +124,74 @@ static void	exec_pipe_cmds(t_shell *shell)
 	}
 	while (waitpid(-1, NULL, 0) != -1)
 		continue ;
+}
+
+int	ft_error(int num, char *str)
+{
+	if (num == 1)
+		perror(str);
+	if (num == 2)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	return (1);
+}
+
+char	*ft_check_command(char **path_list, char *cmd)
+{
+	int		i;
+	char	*path_fin;
+	char	*path_mid;
+
+	i = 0;
+	while (path_list[i])
+	{
+		path_mid = ft_strjoin(path_list[i], "/");
+		path_fin = ft_strjoin(path_mid, cmd);
+		free(path_mid);
+		if (access(path_fin, X_OK) == 0)
+			return (path_fin);
+		free(path_fin);
+		i++;
+	}
+	return (NULL);
+}
+
+void	ft_free_str_array(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+char	*ft_get_path_command(char **cmd, char **envp)
+{
+	int		i;
+	char	**path_list;
+	char	*path_command;
+
+	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
+		return (NULL);
+	if (ft_strchr(cmd[0], '/'))
+		if (access(cmd[0], X_OK) == 0)
+			return (ft_strdup(cmd[0]));
+	i = -1;
+	while (envp[++i])
+	{
+		if (!ft_strncmp("PATH=", envp[i], 5))
+		{
+			path_list = ft_split(envp[i] + 5, ':');
+			path_command = ft_check_command(path_list, cmd[0]);
+			ft_free_str_array(path_list);
+			return (path_command);
+		}
+	}
+	return (NULL);
 }

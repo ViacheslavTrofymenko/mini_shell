@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 17:40:47 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 14:02:47 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/14 16:52:37 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 
 	flag_sp = 1;
 	index = -1;
+	cmd->ind_start = 0;
 	while (cmd->line[++index])
 	{
-		if (cmd->q_type[index] != Q_NORMAL)
+		if ((cmd->q_type[index] != Q_NORMAL) || ft_is_mol(cmd->line[index]))
 		{
 			skip_quotes(cmd, &flag_sp, &index);
 			continue ;
@@ -38,6 +39,7 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 		if (ft_is_space(cmd->line[index]) == 0)
 			flag_sp = 1;
 	}
+	printf("Splits: %d\n", cmd->num_splits);
 	cmd->splits = malloc((cmd->num_splits + 1) * sizeof(char *));
 	cmd->split_type = malloc((cmd->num_splits + 1) * sizeof(char));
 	if (cmd->splits == NULL || cmd->split_type == NULL)
@@ -55,8 +57,21 @@ static void	skip_quotes(t_cmd_p *cmd, int *flag_sp, int *index)
 		while (cmd->line[*index] && cmd->line[*index] != q_type)
 			(*index)++;
 		(*index)++;
-		(cmd->num_splits)++;
 		*flag_sp = 1;
+		(cmd->num_splits)++;
+	}
+	else
+	{
+		if ((*index > 0) && ft_is_space(cmd->line[*index - 1]))
+			(cmd->num_splits)++;
+		while (cmd->line[*index] && cmd->line[*index] != cmd->line[*index + 1]
+			&& ft_is_spec(cmd->line[*index + 1]))
+		{
+			if (cmd->er_synt_char == '\0')
+				cmd->er_synt_char = cmd->line[*index];
+			(*index)++;
+		}
+		*flag_sp = 0;
 	}
 }
 

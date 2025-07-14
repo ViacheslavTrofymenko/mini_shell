@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 13:57:17 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:43:22 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ static void	exec_pipe_cmds(t_shell *shell)
 				dup2(pipe_fd[1], STDOUT_FILENO);
 				close(pipe_fd[1]);
 			}
-			apply_redirs(&shell->cmds[i]);
 			exec_or_exit(&shell->cmds[i]);
 		}
 		if (prev_fd != -1)

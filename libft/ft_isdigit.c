@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 12:32:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/04/08 13:18:41 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/04/08 13:18:44 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_isdigit(int c)
 {
-	t_shell	shell;
-
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	if (c >= 48 && c <= 57)
+		return (2048);
+	return (0);
 }

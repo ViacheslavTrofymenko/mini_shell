@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 12:32:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/04/14 12:57:50 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/04/14 12:57:53 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_shell	shell;
-
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	if (!lst || !f)
+		return ;
+	while (lst != NULL)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }

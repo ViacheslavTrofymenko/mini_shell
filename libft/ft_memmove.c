@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 12:32:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/04/08 15:28:21 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/04/08 15:28:23 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	t_shell	shell;
+	unsigned char	*c_src;
+	unsigned char	*c_dest;
+	size_t			i;
 
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	c_src = (unsigned char *) src;
+	c_dest = (unsigned char *) dest;
+	i = 0;
+	if (!dest && !src)
+		return (0);
+	if (c_dest > c_src)
+	{
+		while (n-- > 0)
+		{
+			c_dest[n] = c_src[n];
+		}
+	}
+	else
+	{
+		while (i < n)
+		{
+			c_dest[i] = c_src[i];
+			i++;
+		}
+	}
+	return (dest);
 }

@@ -3,20 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 18:23:36 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/14 13:54:21 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <unistd.h>
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -32,12 +36,6 @@
 # define IO_KEEP 0
 # define M_TOTAL 1
 # define M_PARTIAL 0
-
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}				t_list;
 
 typedef struct s_one_cmd
 {
@@ -56,7 +54,7 @@ typedef struct s_one_cmd
 }			t_cmd;
 
 typedef struct s_cmd_parser
-{	
+{
 	char	*line;
 	char	*q_type;
 	char	**splits;
@@ -125,5 +123,7 @@ void	asign_sources(t_shell *shell, t_cmd_p *cmd);
 void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd);
 void	create_args(t_shell *shell, t_cmd_p *cmd);
 void	parse_cmd(t_shell *shell, int index);
+// execute cmds
+void	execute_cmds(t_shell *shell);
 
 #endif

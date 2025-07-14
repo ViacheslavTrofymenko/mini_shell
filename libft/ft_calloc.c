@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 12:32:00 by vtrofyme         ###   ########.fr       */
+/*   Created: 2025/04/11 19:13:17 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/04/11 19:13:19 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	t_shell	shell;
+	size_t	i;
+	size_t	total_size;
+	char	*ptr;
 
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	if (nmemb != 0 && size != 0)
+	{
+		if (nmemb > SIZE_MAX / size)
+			return (NULL);
+		total_size = nmemb * size;
+	}
+	else
+		total_size = 0;
+	ptr = malloc(total_size);
+	if (ptr)
+	{
+		i = 0;
+		while (i < total_size)
+		{
+			ptr[i] = '\0';
+			i++;
+		}
+	}
+	return ((void *)ptr);
 }

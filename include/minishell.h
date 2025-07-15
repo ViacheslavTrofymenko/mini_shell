@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 13:54:21 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:18:39 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <unistd.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <unistd.h>
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -94,18 +94,11 @@ typedef struct s_shell_metadata
 	char		**envp;
 }				t_shell;
 
+int		ft_is_mol(char c);
+int		ft_is_spec(char c);
 int		ft_strcmp(const char *s1, const char *s2);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-void	*ft_memset(void *s, char c, size_t n);
-size_t	ft_strlen(const char *s);
 int		ft_is_space(char c);
-int		ft_isdigit(int c);
 int		ft_isalnum_(int c);
-void	ft_intset(int	*arr, int c, int n);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-t_list	*ft_lstnew(void *content);
 void	get_cmd_line(t_shell *shell);
 void	mark_quotes(t_shell *shell, char *str);
 void	crit_except(t_shell *data, int error_code);

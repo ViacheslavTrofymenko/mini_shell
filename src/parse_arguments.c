@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 14:14:24 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:22:02 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	count_sources(t_cmd_p *cmd)
 			(cmd->num_output)++;
 		index++;
 	}
-	printf("Counted sources: %d %d\n", cmd->num_input, cmd->num_output);
 }
 
 void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd)

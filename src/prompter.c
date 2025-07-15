@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 13:57:54 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:28:16 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	get_cmd_line(t_shell *shell)
 		for (int i=0;i<shell->cmds[0].num_args; i++)
 			printf("%s ", shell->cmds[0].args[i]);
 		printf("\n");
-		execute_cmds(shell);
+		//execute_cmds(shell);
 		crit_except(shell, 0);
 		line = readline("minishell: ");
 	}

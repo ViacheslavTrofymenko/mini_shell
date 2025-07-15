@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/14 21:20:23 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:25:48 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	handle_heredocs(t_shell *shell)
 				tmp_filename = ft_strjoin("/tmp/.heredoc_", shell->cmds[i].in_names[j]);
 				fd = open(tmp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 				if (fd < 0)
-					exit(ft_error(1, tmp_filename));
+					crit_except(shell, ft_error(1, tmp_filename));
 				while (1)
 				{
 					line = readline("> ");
@@ -63,8 +63,12 @@ void	handle_heredocs(t_shell *shell)
 
 void	execute_cmds(t_shell *shell)
 {
+	int i;
+
 	handle_heredocs(shell);
-	if (shell->num_cmds == 1)
+	if (!shell->cmds[0].args || !shell->cmds[0].args[0])
+		return ;
+	else if (shell->num_cmds == 1)
 		exec_one_cmd(shell);
 	else
 		exec_pipe_cmds(shell);

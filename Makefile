@@ -12,9 +12,11 @@
 
 NAME 		= minishell
 
-SRC 		= minishell_main.c prompter.c basics.c initializer.c cleaners.c\
-			exceptors.c parse_quotes.c parse_split_command.c parse_stream_names.c\
-			parse_arguments.c			execute.c
+SRC 		= minishell_main.c prompter.c basics_simple.c initializer.c cleaners.c\
+			exceptors.c parse_quotes.c parse_cmd.c parse_stream_names.c\
+			parse_pipes.c parse_split_cmd.c parse_dollar.c execute.c \
+			basics_variables.c
+
 
 
 SRCSDIR		= src

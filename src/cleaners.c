@@ -40,7 +40,6 @@ void	clean_cmd_p(t_cmd_p *cmd, int mode)
 		return ;
 	safe_free(&(cmd->line));
 	safe_free(&(cmd->q_type));
-	safe_free(&(cmd->split_type));
 	if (mode == M_PARTIAL)
 		clean_unused_splits(cmd);
 	safe_free(&(cmd->split_io));
@@ -68,9 +67,11 @@ void	clean_unused_splits(t_cmd_p *cmd)
 			safe_free(&(cmd->splits[index]));
 			cmd->splits[index] = NULL;
 		}
+		safe_free(&(cmd->split_qs[index]));
 		index++;
 	}
 	free(cmd->splits);
+	free(cmd->split_qs);
 }
 
 static void	clean_one_cmd(t_cmd *cmd)

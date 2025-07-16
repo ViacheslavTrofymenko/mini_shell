@@ -27,6 +27,18 @@ void	parse_cmd(t_shell *shell, int index)
 	initialize_cmd_p(&(shell->cmd_p));
 }
 
+/*
+ *  FOR DEBUG PURPOSES
+ * 	for(int j=0; j<shell->cmd_p.num_splits; j++)
+		printf("\"%s\" ", shell->cmd_p.splits[j]);
+	printf("\n");
+	for(int i=0; i<shell->cmd_p.num_splits; i++)
+		printf("\"%s\" ", shell->cmd_p.split_qs[i]);
+	printf("\n");
+	if (shell->cmds[0].er_synt_char != '\0')
+		printf("Syntax error: %c\n", shell->cmds[0].er_synt_char);
+ */
+
 void	count_sources(t_cmd_p *cmd)
 {
 	int	index;
@@ -35,10 +47,10 @@ void	count_sources(t_cmd_p *cmd)
 	while (index < cmd->num_splits)
 	{
 		if (ft_strncmp(cmd->splits[index], "<", 1) == 0
-			&& cmd->split_type[index] == Q_NORMAL)
+			&& cmd->split_qs[index][0] == Q_NORMAL)
 			(cmd->num_input)++;
 		if (ft_strncmp(cmd->splits[index], ">", 1) == 0
-			&& cmd->split_type[index] == Q_NORMAL)
+			&& cmd->split_qs[index][0] == Q_NORMAL)
 			(cmd->num_output)++;
 		index++;
 	}
@@ -112,6 +124,7 @@ static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 	shell->cmds[index].num_input = shell->cmd_p.num_input;
 	shell->cmds[index].num_output = shell->cmd_p.num_output;
 	shell->cmds[index].error = shell->cmd_p.error;
-	shell->cmds[index].er_synt_char = shell->cmd_p.er_synt_char;
 	shell->cmds[index].envp = shell->envp;
+	if (shell->cmd_p.error & ER_SYNTAX)
+		correct_syntax_error(shell, index);
 }

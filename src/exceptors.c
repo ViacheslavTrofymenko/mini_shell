@@ -25,3 +25,15 @@ void	crit_except(t_shell *data, int error_code)
 	if (error_code != 0)
 		exit (error_code);
 }
+
+void	correct_syntax_error(t_shell *shell, int index)
+{
+	shell->cmds[index].er_synt_char = *(shell->cmd_p.er_synt_char);
+	if (*(shell->cmd_p.er_synt_char) == '\0')
+	{
+		if (index < shell->num_cmds - 1)
+			shell->cmds[index].er_synt_char = '|';
+		else
+			shell->cmds[index].er_synt_char = '\n';
+	}
+}

@@ -20,7 +20,6 @@ void	get_cmd_line(t_shell *shell)
 	add_history(line);
 	while (ft_strcmp(line, "exit") != 0)
 	{
-		printf("Line read: %s\n", line);
 		add_history(line);
 		rl_on_new_line();
 		mark_quotes(shell, line);

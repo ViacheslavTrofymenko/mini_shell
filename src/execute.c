@@ -63,8 +63,6 @@ void	handle_heredocs(t_shell *shell)
 
 void	execute_cmds(t_shell *shell)
 {
-	int i;
-
 	handle_heredocs(shell);
 	if (!shell->cmds[0].args || !shell->cmds[0].args[0])
 		return ;

@@ -49,8 +49,8 @@ int	ft_isalnum_(int c)
 int	ft_is_space(char c)
 {
 	if (c == ' ' || (9 <= c && c <= 13))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	ft_is_mol(char c)
@@ -65,4 +65,34 @@ int	ft_is_spec(char c)
 		return (1);
 	return (0);
 }
+void	ft_strcpy(char *dest, char *src)
+{
+	int	index;
 
+	index = 0;	
+	if (dest == NULL || src == NULL)
+		return ;
+	while (src[index] && dest[index])
+	{
+		dest[index] = src[index];
+		index++;
+	}
+	if (dest[index])
+		dest[index] = src[index];
+}
+
+char	*safe_strdup(t_shell *shell, char *str)
+{
+	int		len;
+	char	*temp;
+
+	if (str == NULL)
+		return (NULL);
+	len = ft_strlen(str);
+	temp = malloc((len + 1) * sizeof(char));
+	if (temp == NULL)
+		crit_except(shell, ER_MALLOC);
+	ft_strlcpy(temp, str, len + 1);
+	free(str);
+	return (temp);
+}

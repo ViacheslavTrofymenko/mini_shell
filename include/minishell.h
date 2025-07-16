@@ -36,6 +36,7 @@
 # define IO_KEEP 0
 # define M_TOTAL 1
 # define M_PARTIAL 0
+# define V_NFOUND -1
 
 typedef struct s_one_cmd
 {
@@ -58,7 +59,7 @@ typedef struct s_cmd_parser
 	char	*line;
 	char	*q_type;
 	char	**splits;
-	char	*split_type;
+	char	**split_qs;
 	char	*split_io;
 	char	**args;
 	char	**in_names;
@@ -68,7 +69,7 @@ typedef struct s_cmd_parser
 	int		num_output;
 	int		num_input;
 	int		num_args;
-	char	er_synt_char;
+	char	*er_synt_char;
 	int		num_splits;
 	int		ind_arg;
 	int		ind_start;
@@ -92,6 +93,9 @@ typedef struct s_shell_metadata
 	t_cmd_p		cmd_p;
 	int			num_cmds;
 	char		**envp;
+	char		**vars;
+	int			size_env;
+	int			size_vars;
 }				t_shell;
 
 int		ft_is_mol(char c);
@@ -99,15 +103,19 @@ int		ft_is_spec(char c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_is_space(char c);
 int		ft_isalnum_(int c);
-void	get_cmd_line(t_shell *shell);
-void	mark_quotes(t_shell *shell, char *str);
+void	ft_strcpy(char *dest, char *src);
+// initializers and utilities
+char	*safe_strdup(t_shell *shell, char *str);
 void	crit_except(t_shell *data, int error_code);
 void	initialize_shell(t_shell *shell, char **envp);
 void	initialize_cmd_p(t_cmd_p *cmd);
 void	initialize_cmd(t_cmd *cmd);
+void	nullify_array(char	**arr, int size);
+//parsing functions
+void	get_cmd_line(t_shell *shell);
+void	mark_quotes(t_shell *shell, char *str);
 void	clean_cmd_p(t_cmd_p *cmd, int mode);
 void	clean_cmds(t_shell *shell);
-void	nullify_array(char	**arr, int size);
 void	create_cmd_vars(t_shell *shell, char *str);
 void	count_splits(t_shell *shell, t_cmd_p *cmd);
 void	cmd_split(t_shell *shell, t_cmd_p *cmd);
@@ -116,7 +124,14 @@ void	asign_sources(t_shell *shell, t_cmd_p *cmd);
 void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd);
 void	create_args(t_shell *shell, t_cmd_p *cmd);
 void	parse_cmd(t_shell *shell, int index);
+void	correct_syntax_error(t_shell *shell, int index);
 // execute cmds
 void	execute_cmds(t_shell *shell);
+//variable manipulation
+int		find_var_index(char **arr, char *var, int size, int len);
+void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size);
+void	take_out_var(char **arr, char *var, int size, int len);
+char	*get_var_value(char **arr, char *var, int size, int len);
+void	replace_variable(t_shell *shell, char **str, char *q_str, int start);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 22:17:37 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/13 22:17:37 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 16:27:30 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	insert_in_str(t_shell *shell, char **str, int len, int start)
 	find = get_var_value(shell->envp, &(*str[start + 1]), shell->size_env, len);
 	if (find == NULL)
 		find = get_var_value(shell->vars, &(*str[start + 1]),
-			shell->size_vars, len);
+				shell->size_vars, len);
 	if (find == NULL)
 		len_ins = 0;
 	else

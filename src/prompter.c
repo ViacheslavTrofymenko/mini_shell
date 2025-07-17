@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 16:28:16 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:15:58 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,22 @@ void	get_cmd_line(t_shell *shell)
 	{
 		add_history(line);
 		rl_on_new_line();
+		//replace_var_in_arr(shell, shell->vars, line, &(shell->size_vars));
+		for (int i=0;i<shell->size_vars; i++)
+			printf("%s ", shell->vars[i]);
 		mark_quotes(shell, line);
 		printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
 		create_cmd_vars(shell, line);
-		printf("Num of cmds:%d\n", shell->num_cmds);
-		printf("Number of inputs:%d\n", shell->cmds[0].num_input);
-		for (int i=0;i<shell->cmds[0].num_input; i++)
-			printf("%s ", shell->cmds[0].in_names[i]);
+		printf("Number of files:%d\n", shell->cmds[0].num_files);
+		for (int i=0;i<shell->cmds[0].num_files; i++)
+			printf("%s ", shell->cmds[0].f_names[i]);
+		printf("\nFile types:%d\n", shell->cmds[0].num_files);
+		for (int i=0;i<shell->cmds[0].num_files; i++)
+			printf("%d ", shell->cmds[0].rw_type[i]);
+		printf("\nFile modes:%d\n", shell->cmds[0].num_files);
+			for (int i=0;i<shell->cmds[0].num_files; i++)
+				printf("%d ", shell->cmds[0].f_mode[i]);
 		printf("\nNumber of outputs:%d\n", shell->cmds[0].num_output);
-		for (int i=0;i<shell->cmds[0].num_output; i++)
-			printf("%s ", shell->cmds[0].out_names[i]);
 		printf("\nNumber of args: %d\n", shell->cmds[0].num_args);
 		for (int i=0;i<shell->cmds[0].num_args; i++)
 			printf("%s ", shell->cmds[0].args[i]);

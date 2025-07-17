@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaners.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:08:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/13 01:46:16 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:03:09 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ void	clean_cmd_p(t_cmd_p *cmd, int mode)
 	safe_free(&(cmd->split_io));
 	if (mode == M_TOTAL)
 	{
-		safe_free(&(cmd->in_types));
-		safe_free(&(cmd->out_types));
-		clean_double_arr(cmd->in_names, cmd->num_input);
-		clean_double_arr(cmd->out_names, cmd->num_output);
+		safe_free(&(cmd->f_mode));
+		safe_free(&(cmd->rw_type));
+		clean_double_arr(cmd->f_names, cmd->num_files);
 		clean_double_arr(cmd->splits, cmd->num_splits);
 	}
 }
@@ -78,11 +77,10 @@ static void	clean_one_cmd(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return ;
-	safe_free(&(cmd->in_types));
-	safe_free(&(cmd->out_types));
+	safe_free(&(cmd->f_mode));
+	safe_free(&(cmd->rw_type));
 	clean_double_arr(cmd->args, cmd->num_args);
-	clean_double_arr(cmd->in_names, cmd->num_input);
-	clean_double_arr(cmd->out_names, cmd->num_output);
+	clean_double_arr(cmd->f_names, cmd->num_input);
 }
 
 static void	clean_double_arr(char **arr, int size)

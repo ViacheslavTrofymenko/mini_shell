@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/14 13:44:07 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/17 18:14:12 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME 		= minishell
 
 SRC 		= minishell_main.c prompter.c basics_simple.c initializer.c cleaners.c\
 			exceptors.c parse_quotes.c parse_cmd.c parse_stream_names.c\
-			parse_pipes.c parse_split_cmd.c parse_dollar.c execute.c \
+			parse_pipes.c parse_split_cmd.c parse_dollar.c \
 			basics_variables.c
 
 

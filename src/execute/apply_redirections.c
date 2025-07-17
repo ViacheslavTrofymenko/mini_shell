@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:43:17 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/17 15:58:37 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:02:07 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	apply_input_redirs(t_shell *shell, int fd, int i, int j)
 	cmd = &shell->cmds[i];
 	if (cmd->in_types[j] == IO_SINGLE)
 	{
+		if (access(cmd->in_names[j], R_OK) == -1)
+			crit_except(shell, ft_error(1, cmd->in_names[j]));
 		fd = open(cmd->in_names[j], O_RDONLY);
 		if (fd < 0)
 			crit_except(shell, ft_error(1,  cmd->in_names[j]));

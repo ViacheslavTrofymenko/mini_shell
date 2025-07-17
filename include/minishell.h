@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 14:24:34 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:57:33 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define PIPE '|'
 # define ER_MALLOC 2
 # define ER_SYNTAX 4
+# define ER_CMD_NOT_FOUND 127
 # define IO_SINGLE 0
 # define IO_DOUBLE 1
 # define IO_REMOVE 1
@@ -132,7 +133,7 @@ int		ft_error(int num, char *str);
 char	*ft_check_command(char **path_list, char *cmd);
 void	ft_free_str_array(char **str);
 char	*ft_get_path_command(char **cmd, char **envp);
-void	apply_redirs(t_cmd *cmd);
+void	apply_redirs(t_shell *shell, int i);
 void	exec_pipe_cmds(t_shell *shell);
 void	exec_or_exit(t_shell *shell, int i);
 

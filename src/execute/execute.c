@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/17 14:32:06 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 15:57:27 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_or_exit(t_shell *shell, int i)
 	t_cmd	*cmd;
 
 	cmd = &shell->cmds[i];
-	apply_redirs(cmd);
+	apply_redirs(shell, i);
 	path_cmd = ft_get_path_command(cmd->args, cmd->envp);
 	if (path_cmd)
 	{
@@ -39,7 +39,7 @@ void	exec_or_exit(t_shell *shell, int i)
 		free(path_cmd);
 	}
 	ft_error(2, cmd->args[0]);
-	crit_except(shell, 127);
+	crit_except(shell, ER_CMD_NOT_FOUND);
 }
 
 static void	exec_one_cmd(t_shell *shell)

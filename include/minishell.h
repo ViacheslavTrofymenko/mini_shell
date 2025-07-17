@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:05:27 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 19:00:52 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	initialize_shell(t_shell *shell, char **envp);
 void	initialize_cmd_p(t_cmd_p *cmd);
 void	initialize_cmd(t_cmd *cmd);
 void	nullify_array(char	**arr, int size);
+void	clean_double_arr(char **arr, int size);
 //parsing functions
 void	get_cmd_line(t_shell *shell);
 void	mark_quotes(t_shell *shell, char *str);

@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/15 17:09:31 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:24:34 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,15 @@ void	parse_cmd(t_shell *shell, int index);
 void	correct_syntax_error(t_shell *shell, int index);
 // execute cmds
 void	execute_cmds(t_shell *shell);
+void	handle_heredocs(t_shell *shell);
+int		ft_error(int num, char *str);
+char	*ft_check_command(char **path_list, char *cmd);
+void	ft_free_str_array(char **str);
+char	*ft_get_path_command(char **cmd, char **envp);
+void	apply_redirs(t_cmd *cmd);
+void	exec_pipe_cmds(t_shell *shell);
+void	exec_or_exit(t_shell *shell, int i);
+
 //variable manipulation
 int		find_var_index(char **arr, char *var, int size, int len);
 void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size);

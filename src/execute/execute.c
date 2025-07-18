@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/17 15:57:27 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:56:44 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@ void	exec_or_exit(t_shell *shell, int i)
 	t_cmd	*cmd;
 
 	cmd = &shell->cmds[i];
+	if (!cmd || !cmd->args[0] || cmd->args[0][0] == '\0')
+		return ;
 	apply_redirs(shell, i);
-	path_cmd = ft_get_path_command(cmd->args, cmd->envp);
+	path_cmd = ft_get_path_command(shell, i);
 	if (path_cmd)
 	{
 		execve(path_cmd, cmd->args, cmd->envp);
 		free(path_cmd);
 	}
-	ft_error(2, cmd->args[0]);
+	ft_error(cmd->args[0]);
 	crit_except(shell, ER_CMD_NOT_FOUND);
 }
 
@@ -52,5 +54,5 @@ static void	exec_one_cmd(t_shell *shell)
 	else if (pid > 0)
 		waitpid(pid, NULL, 0);
 	else
-		ft_error(1, "fork");
+		ft_perror_custom("fork", errno);
 }

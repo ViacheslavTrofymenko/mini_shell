@@ -6,22 +6,35 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:54 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/17 14:32:38 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:56:26 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_error(int num, char *str)
+int	ft_perror_custom(char *str, int saved_errno)
 {
-	if (num == 1)
-		perror(str);
-	if (num == 2)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
-	return (1);
+	if (!str || str[0] == '\0')
+		str = "unknown";
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(saved_errno), 2);
+	ft_putstr_fd("\n", 2);
+	if (saved_errno == EACCES)
+		return (ER_CMD_NOT_EXEC);
+	else if (saved_errno == ENOENT)
+		return (ER_CMD_NOT_FOUND);
+	else
+		return (1);
+}
+
+int	ft_error(char *str)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	return (ER_CMD_NOT_FOUND);
 }
 
 char	*ft_check_command(char **path_list, char *cmd)
@@ -57,24 +70,28 @@ void	ft_free_str_array(char **str)
 	free(str);
 }
 
-char	*ft_get_path_command(char **cmd, char **envp)
+char	*ft_get_path_command(t_shell *shell, int i)
 {
-	int		i;
+	int		j;
 	char	**path_list;
 	char	*path_command;
+	t_cmd	*cmd;
 
-	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
-		return (NULL);
-	if (ft_strchr(cmd[0], '/'))
-		if (access(cmd[0], X_OK) == 0)
-			return (ft_strdup(cmd[0]));
-	i = -1;
-	while (envp[++i])
+	cmd = &shell->cmds[i];
+	if (ft_strchr(cmd->args[0], '/'))
 	{
-		if (!ft_strncmp("PATH=", envp[i], 5))
+		if (access(cmd->args[0], X_OK) == -1)
+			crit_except(shell, ft_perror_custom(cmd->args[0], errno));
+		else
+			return (ft_strdup(cmd->args[0]));
+	}
+	j = -1;
+	while (cmd->envp && cmd->envp[++j])
+	{
+		if (!ft_strncmp("PATH=", cmd->envp[j], 5))
 		{
-			path_list = ft_split(envp[i] + 5, ':');
-			path_command = ft_check_command(path_list, cmd[0]);
+			path_list = ft_split(cmd->envp[j] + 5, ':');
+			path_command = ft_check_command(path_list, cmd->args[0]);
 			ft_free_str_array(path_list);
 			return (path_command);
 		}

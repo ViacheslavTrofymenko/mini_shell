@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 11:59:14 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:41:37 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	get_cmd_line(t_shell *shell)
 		// 	printf("%s ", shell->cmds[0].args[i]);
 		// printf("\n");
 		execute_cmds(shell);
-		crit_except(shell, 0);
+		// crit_except(shell, 0);
 		line = readline("minishell: ");
 	}
 	free(line);

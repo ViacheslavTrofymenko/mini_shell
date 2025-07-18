@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaners.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:08:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 19:04:18 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 12:11:25 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	clean_one_cmd(t_cmd *cmd)
 	safe_free(&(cmd->f_mode));
 	safe_free(&(cmd->rw_type));
 	clean_double_arr(cmd->args, cmd->num_args);
-	clean_double_arr(cmd->f_names, cmd->num_input);
+	clean_double_arr(cmd->f_names, cmd->num_files);
 }
 
 void	clean_double_arr(char **arr, int size)

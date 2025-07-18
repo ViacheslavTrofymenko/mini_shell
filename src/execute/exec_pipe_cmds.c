@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/17 16:33:46 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:51:21 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_pipe_cmds(t_shell *shell)
 	while (i < shell->num_cmds)
 	{
 		if (i < shell->num_cmds - 1 && pipe(pipe_fd) == -1)
-			crit_except(shell, ft_error(1, "pipe"));
+			crit_except(shell, ft_perror_custom("pipe", errno));
 		pid = fork();
 		if (pid == 0)
 			child_process(shell, prev_fd, pipe_fd, i);

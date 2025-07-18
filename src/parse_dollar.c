@@ -13,30 +13,31 @@
 #include "minishell.h"
 
 static void	insert_in_str(t_shell *shell, char **str, int len, int start);
+void	expand_var(t_shell *shell, char **str, char *q_str, int start);
 
 void	expand_dollars(t_shell *shell, char **str, char *q_str)
 {
 	int		index;
 
 	index = 0;
-	while (*str[index])
+	while ((*str)[index])
 	{
-		if (*str[index] == Q_DOLLAR && q_str[index] != Q_SINGLE)
-			replace_variable(shell, str, q_str, index);
+		if ((*str)[index] == Q_DOLLAR && q_str[index] != Q_SINGLE)
+			expand_var(shell, str, q_str, index);
 		index++;
 	}
 }
 
-void	replace_variable(t_shell *shell, char **str, char *q_str, int start)
+void	expand_var(t_shell *shell, char **str, char *q_str, int start)
 {
 	int		index;
 	int		len;
 
 	index = start + 1;
 	len = 1;
-	if (ft_isdigit(*str[index]) == 0)
+	if (ft_isdigit((*str)[index]) == 0)
 	{
-		while (ft_isalnum_(*str[index]) && q_str[index] == q_str[start])
+		while (ft_isalnum_((*str)[index]) && q_str[index] == q_str[start])
 		{
 			index++;
 			len++;
@@ -44,7 +45,7 @@ void	replace_variable(t_shell *shell, char **str, char *q_str, int start)
 	}
 	else
 		len = 2;
-	insert_in_str(shell, str, len, start);
+	insert_in_str(shell, str, len - 1, start);
 }
 
 static void	insert_in_str(t_shell *shell, char **str, int len, int start)
@@ -54,9 +55,10 @@ static void	insert_in_str(t_shell *shell, char **str, int len, int start)
 	int		len_ins;
 	int		len_str;
 
-	find = get_var_value(shell->envp, &(*str[start + 1]), shell->size_env, len);
+	find = get_var_value(shell->envp,
+			&((*str)[start + 1]), shell->size_env, len);
 	if (find == NULL)
-		find = get_var_value(shell->vars, &(*str[start + 1]),
+		find = get_var_value(shell->vars, &((*str)[start + 1]),
 				shell->size_vars, len);
 	if (find == NULL)
 		len_ins = 0;
@@ -66,10 +68,27 @@ static void	insert_in_str(t_shell *shell, char **str, int len, int start)
 	temp = malloc((len_str - (len + 1) + len_ins + 1) * sizeof(char));
 	if (temp == NULL)
 		crit_except(shell, ER_MALLOC);
-	ft_strlcpy(temp, *str, start + 2);
-	ft_strlcpy(&temp[start], find, len_ins + 1);
-	ft_strlcpy(&(temp[start + len_ins - 1]), &(*str[start + len + 1]),
-		len_str - start - len + 1);
+	ft_strlcpy(temp, *str, start + 1);
+	if (find)
+		ft_strlcpy(&temp[start], find, len_ins + 1);
+	ft_strlcpy(&(temp[start + len_ins]), &((*str)[start + len + 1]),
+		len_str - start - len);
 	free(*str);
 	*str = temp;
+}
+
+int	check_assignment(char *arg, char *q_type)
+{
+	int	index;
+
+	index = 0;	
+	if (arg == NULL)
+		return (0);
+	if (ft_isdigit(arg[0]))
+		return (0);
+	while (ft_isalnum_(arg[index]))
+		index++;
+	if (arg[index] == '=' && q_type[index] == Q_NORMAL && index > 0)
+		return (index);
+	return (0);
 }

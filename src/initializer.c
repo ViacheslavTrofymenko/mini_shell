@@ -18,11 +18,11 @@ void	initialize_shell(t_shell *shell, char **envp)
 {
 	shell->cmds = NULL;
 	shell->num_cmds = 0;
-	shell->envp = envp;
+	shell->envp = NULL;
 	shell->qts.q_marker_str = NULL;
 	shell->qts.str = NULL;
-	initialize_cmd_p(&(shell->cmd_p));
 	create_start_env(shell, envp);
+	initialize_cmd_p(&(shell->cmd_p));
 }
 
 void	initialize_cmd_p(t_cmd_p *cmd)
@@ -75,11 +75,28 @@ void	nullify_array(char	**arr, int size)
 
 static void	create_start_env(t_shell *shell, char **envp)
 {
+	int	size_env;
+
+	size_env = 0;
 	shell->vars = NULL;
 	shell->size_vars = 1;
 	shell->vars = malloc (sizeof(char *));
 	if (shell->vars == NULL)
 		crit_except(shell, ER_MALLOC);
 	shell->vars[0] = NULL;
-	envp++;
+	while(envp[size_env])
+		size_env++;
+	size_env++;
+	shell->envp = malloc(size_env * sizeof(char *));
+	if (shell->envp == NULL)
+		crit_except(shell, ER_MALLOC);
+	shell->size_env = size_env;
+	nullify_array(shell->envp, size_env);
+	size_env--;
+	while (--size_env >= 0)
+	{
+		shell->envp[size_env] = ft_strdup(envp[size_env]);
+		if (shell->envp[size_env] == NULL)
+			crit_except(shell, ER_MALLOC);
+	}
 }

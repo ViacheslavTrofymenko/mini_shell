@@ -22,7 +22,6 @@ void	crit_except(t_shell *data, int error_code)
 	data->qts.q_marker_str = NULL;
 	clean_cmds(data);
 	clean_cmd_p(&(data->cmd_p), M_TOTAL);
-	clean_double_arr(data->vars, data->size_vars);
 	if (error_code != 0)
 		exit (error_code);
 }

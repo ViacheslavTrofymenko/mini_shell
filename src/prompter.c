@@ -15,19 +15,26 @@
 void	get_cmd_line(t_shell *shell)
 {
 	char	*line;
+	int		len;
 
 	line = readline("minishell: ");
-	add_history(line);
 	while (ft_strcmp(line, "exit") != 0)
 	{
 		add_history(line);
 		rl_on_new_line();
-		replace_var_in_arr(shell, &(shell->vars), line, &(shell->size_vars));
+		mark_quotes(shell, line);
+		len = check_assignment(line, shell->qts.q_marker_str);
+		if (len > 0)
+			replace_var_in_arr(shell, &(shell->vars), &(shell->qts.str), &(shell->size_vars));
+		else
+		{
+			expand_dollars(shell, &(shell->qts.str), shell->qts.q_marker_str);
+			printf("Line: %s\n", shell->qts.str);
+		}
 		for (int i=0;i<shell->size_vars; i++)
 			printf("%s ", shell->vars[i]);
 		printf("\n");
-/*		mark_quotes(shell, line);
-		printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
+/*		printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
 		create_cmd_vars(shell, line);
 		printf("Number of files:%d\n", shell->cmds[0].num_files);
 		for (int i=0;i<shell->cmds[0].num_files; i++)
@@ -47,5 +54,7 @@ void	get_cmd_line(t_shell *shell)
 		crit_except(shell, 0);
 		line = readline("minishell: ");
 	}
+	clean_double_arr(shell->vars, shell->size_vars);
+	clean_double_arr(shell->envp, shell->size_env);
 	free(line);
 }

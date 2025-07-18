@@ -81,18 +81,19 @@ void	ft_strcpy(char *dest, char *src)
 		dest[index] = src[index];
 }
 
-char	*safe_strdup(t_shell *shell, char *str)
+char	*safe_strdup(t_shell *shell, char **str)
 {
 	int		len;
 	char	*temp;
 
-	if (str == NULL)
+	if (str == NULL || *str == NULL)
 		return (NULL);
-	len = ft_strlen(str);
+	len = ft_strlen(*str);
 	temp = malloc((len + 1) * sizeof(char));
 	if (temp == NULL)
 		crit_except(shell, ER_MALLOC);
-	ft_strlcpy(temp, str, len + 1);
-	free(str);
+	ft_strlcpy(temp, *str, len + 1);
+	free(*str);
+	*str = NULL;
 	return (temp);
 }

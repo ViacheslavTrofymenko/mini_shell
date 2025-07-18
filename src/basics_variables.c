@@ -25,7 +25,7 @@ int	find_var_index(char **arr, char *var, int size, int len)
 	{
 		if (ft_strncmp(arr[index], var, len) == 0)
 		{
-			if (ft_strlen(arr[index]) >= (size_t)len && arr[index][len] == '=')
+			if (arr[index][len] == '=')
 				return (index);
 		}
 		index++;
@@ -33,18 +33,18 @@ int	find_var_index(char **arr, char *var, int size, int len)
 	return (V_NFOUND);
 }
 
-void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size)
+void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size)
 {
 	int	index;
 	int	len;
 
 	index = 0;
 	len = 0;
-	while (var[len] && var[len] != '=')
+	while ((*var)[len] && (*var)[len] != '=')
 		len++;
-	if (var[len] != '=')
+	if ((*var)[len] != '=')
 		return ;
-	index = find_var_index(*arr, var, *size, len);
+	index = find_var_index(*arr, *var, *size, len);
 	if (index >= 0)
 	{
 		free((*arr)[index]);
@@ -103,5 +103,5 @@ char	*get_var_value(char **arr, char *var, int size, int len)
 		return (NULL);
 	while (arr[ind_find][index] && arr[ind_find][index] != '=')
 		index++;
-	return (&(arr[ind_find][index]));
+	return (&(arr[ind_find][index + 1]));
 }

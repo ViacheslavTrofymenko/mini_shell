@@ -106,7 +106,7 @@ int		ft_is_space(char c);
 int		ft_isalnum_(int c);
 void	ft_strcpy(char *dest, char *src);
 // initializers and utilities
-char	*safe_strdup(t_shell *shell, char *str);
+char	*safe_strdup(t_shell *shell, char **str);
 void	crit_except(t_shell *data, int error_code);
 void	initialize_shell(t_shell *shell, char **envp);
 void	initialize_cmd_p(t_cmd_p *cmd);
@@ -131,9 +131,11 @@ void	correct_syntax_error(t_shell *shell, int index);
 void	execute_cmds(t_shell *shell);
 //variable manipulation
 int		find_var_index(char **arr, char *var, int size, int len);
-void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size);
+void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size);
 void	take_out_var(char **arr, char *var, int size, int len);
 char	*get_var_value(char **arr, char *var, int size, int len);
+void	expand_dollars(t_shell *shell, char **str, char *q_str);
 void	replace_variable(t_shell *shell, char **str, char *q_str, int start);
+int		check_assignment(char *arg, char *q_type);
 
 #endif

@@ -48,6 +48,7 @@ void	clean_cmd_p(t_cmd_p *cmd, int mode)
 		safe_free(&(cmd->rw_type));
 		clean_double_arr(cmd->f_names, cmd->num_files);
 		clean_double_arr(cmd->splits, cmd->num_splits);
+		clean_double_arr(cmd->assign, cmd->num_assign);
 	}
 }
 
@@ -80,6 +81,7 @@ static void	clean_one_cmd(t_cmd *cmd)
 	safe_free(&(cmd->rw_type));
 	clean_double_arr(cmd->args, cmd->num_args);
 	clean_double_arr(cmd->f_names, cmd->num_files);
+	clean_double_arr(cmd->assign, cmd->num_assign);
 }
 
 void	clean_double_arr(char **arr, int size)

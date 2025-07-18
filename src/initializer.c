@@ -37,10 +37,12 @@ void	initialize_cmd_p(t_cmd_p *cmd)
 	cmd->splits = NULL;
 	cmd->split_qs = NULL;
 	cmd->split_io = NULL;
+	cmd->assign = NULL;
 	cmd->num_input = 0;
 	cmd->num_output = 0;
 	cmd->num_splits = 0;
 	cmd->num_args = 0;
+	cmd->num_assign = 0;
 	cmd->ind_arg = 0;
 	cmd->ind_start = 0;
 	cmd->len = 0;

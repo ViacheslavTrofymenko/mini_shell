@@ -57,12 +57,31 @@ static void	handle_quote(t_shell *shell, int *index, char quote_type)
 	{
 		shell->qts.q_marker_str[*index] = quote_type;
 		shell->qts.q_flag = quote_type;
-		ft_strcpy(&(shell->qts.str[*index]), &(shell->qts.str[*index + 1]));
+		//ft_strcpy(&(shell->qts.str[*index]), &(shell->qts.str[*index + 1]));
 	}
 	else if (shell->qts.q_flag == quote_type)
 	{
-		ft_strcpy(&(shell->qts.str[*index]), &(shell->qts.str[*index + 1]));
-		(*index)--;
+		//ft_strcpy(&(shell->qts.str[*index]), &(shell->qts.str[*index + 1]));
+		//(*index)--;
 		shell->qts.q_flag = Q_NORMAL;
+	}
+}
+
+void	remove_quote_marks(char *str, char *q_type)
+{
+	int	index;
+
+	index = 0;
+	if (str == NULL || q_type == NULL)
+		return ;
+	while (str[index])
+	{
+		if (str[index] == q_type[index] && q_type[index] != Q_NORMAL)
+		{
+			ft_strcpy(&(str[index]), &(str[index + 1]));
+			ft_strcpy(&(q_type[index]), &(q_type[index + 1]));
+		}
+		else
+			index++;
 	}
 }

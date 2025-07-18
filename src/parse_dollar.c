@@ -25,13 +25,13 @@ void	expand_dollars(t_shell *shell, char **str, char **q_str)
 	while ((*str)[index])
 	{
 		if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE
-			&& (*str)[index + 1] == Q_QUEST
-			&& (*q_str)[index + 1] == (*q_str)[index])
+			&& (*str)[index + 1] == Q_QUEST)
 			expand_error(shell, str, q_str, index);
 		else if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE)
 			expand_var(shell, str, q_str, index);
 		index++;
 	}
+	remove_quote_marks(*str, *q_str);
 }
 
 void	expand_var(t_shell *shell, char **str, char **q_str, int start)

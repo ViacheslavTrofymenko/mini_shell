@@ -40,6 +40,7 @@
 # define IO_DOUBLE 1
 # define IO_REMOVE 2
 # define IO_KEEP 4
+# define IO_ASSIGN 8
 # define M_TOTAL 1
 # define M_PARTIAL 0
 # define V_NFOUND -1
@@ -48,6 +49,7 @@ typedef struct s_one_cmd
 {
 	char	**envp;
 	char	**args;
+	char	**assign;
 	char	**f_names;
 	char	*f_mode;
 	char	*rw_type;
@@ -55,6 +57,7 @@ typedef struct s_one_cmd
 	int		num_input;
 	int		num_files;
 	int		num_args;
+	int		num_assign;
 	char	er_synt_char;
 	int		error;
 }			t_cmd;
@@ -67,6 +70,7 @@ typedef struct s_cmd_parser
 	char	**split_qs;
 	char	*split_io;
 	char	**args;
+	char	**assign;
 	char	**f_names;
 	char	*f_mode;
 	char	*rw_type;
@@ -74,6 +78,7 @@ typedef struct s_cmd_parser
 	int		num_input;
 	int		num_files;
 	int		num_args;
+	int		num_assign;
 	char	*er_synt_char;
 	int		num_splits;
 	int		ind_arg;
@@ -121,6 +126,7 @@ void	clean_double_arr(char **arr, int size);
 //parsing functions
 void	get_cmd_line(t_shell *shell);
 void	mark_quotes(t_shell *shell, char *str);
+void	remove_quote_marks(char *str, char *q_type);
 void	clean_cmd_p(t_cmd_p *cmd, int mode);
 void	clean_cmds(t_shell *shell);
 void	create_cmd_vars(t_shell *shell, char *str);
@@ -150,7 +156,6 @@ void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size);
 void	take_out_var(char **arr, char *var, int size, int len);
 char	*get_var_value(char **arr, char *var, int size, int len);
 void	expand_dollars(t_shell *shell, char **str, char **q_str);
-void	replace_variable(t_shell *shell, char **str, char *q_str, int start);
 int		check_assignment(char *arg, char *q_type);
 char	*insert_str_to_str(char **str, char *ins, int start, int len);
 

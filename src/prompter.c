@@ -23,7 +23,8 @@ void	get_cmd_line(t_shell *shell)
 		add_history(line);
 		rl_on_new_line();
 		mark_quotes(shell, line);
-/* 		len = check_assignment(line, shell->qts.q_marker_str);
+		printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
+ 		len = check_assignment(line, shell->qts.q_marker_str);
 		if (len > 0)
 			replace_var_in_arr(shell, &(shell->vars), &(shell->qts.str), &(shell->size_vars));
 		else
@@ -33,15 +34,16 @@ void	get_cmd_line(t_shell *shell)
 		}
 		for (int i=0;i<shell->size_vars; i++)
 			printf("%s ", shell->vars[i]);
-		printf("\n"); */
-		//printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
+		printf("\n");
 		create_cmd_vars(shell, line);
-		// printf("Number of files:%d\n", shell->cmds[0].num_files);
-		// for (int i=0;i<shell->cmds[0].num_files; i++)
-		// 	printf("%s ", shell->cmds[0].f_names[i]);
-		// printf("\nFile types:%d\n", shell->cmds[0].num_files);
-		// for (int i=0;i<shell->cmds[0].num_files; i++)
-		// 	printf("%d ", shell->cmds[0].rw_type[i]);
+		//printf("Number of files:%d\n", shell->cmds[0].num_files);
+		//for (int i=0;i<shell->cmds[0].num_files; i++)
+		//	printf("%s ", shell->cmds[0].f_names[i]);
+		//for (int i=0;i<shell->cmds[0].num_files; i++)
+		//	printf("%s ", shell->cmds[0].f_names[i]);
+		//printf("\nFile types:%d\n", shell->cmds[0].num_files);
+		//for (int i=0;i<shell->cmds[0].num_files; i++)
+		//	printf("%d ", shell->cmds[0].rw_type[i]);
 		// printf("\nFile modes:%d\n", shell->cmds[0].num_files);
 		// 	for (int i=0;i<shell->cmds[0].num_files; i++)
 		// 		printf("%d ", shell->cmds[0].f_mode[i]);

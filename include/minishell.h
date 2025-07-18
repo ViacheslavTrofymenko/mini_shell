@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 15:57:33 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/18 10:41:01 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,26 @@
 # define ER_MALLOC 2
 # define ER_SYNTAX 4
 # define ER_CMD_NOT_FOUND 127
+# define IO_INPUT 8
+# define IO_OUTPUT 16
 # define IO_SINGLE 0
 # define IO_DOUBLE 1
-# define IO_REMOVE 1
-# define IO_KEEP 0
+# define IO_REMOVE 2
+# define IO_KEEP 4
 # define M_TOTAL 1
 # define M_PARTIAL 0
 # define V_NFOUND -1
 
 typedef struct s_one_cmd
 {
-	char	*cmd_path;
 	char	**envp;
 	char	**args;
-	char	**in_names;
-	char	**out_names;
-	char	*in_types;
-	char	*out_types;
+	char	**f_names;
+	char	*f_mode;
+	char	*rw_type;
 	int		num_output;
 	int		num_input;
+	int		num_files;
 	int		num_args;
 	char	er_synt_char;
 	int		error;
@@ -63,12 +64,12 @@ typedef struct s_cmd_parser
 	char	**split_qs;
 	char	*split_io;
 	char	**args;
-	char	**in_names;
-	char	**out_names;
-	char	*in_types;
-	char	*out_types;
+	char	**f_names;
+	char	*f_mode;
+	char	*rw_type;
 	int		num_output;
 	int		num_input;
+	int		num_files;
 	int		num_args;
 	char	*er_synt_char;
 	int		num_splits;
@@ -112,6 +113,7 @@ void	initialize_shell(t_shell *shell, char **envp);
 void	initialize_cmd_p(t_cmd_p *cmd);
 void	initialize_cmd(t_cmd *cmd);
 void	nullify_array(char	**arr, int size);
+void	clean_double_arr(char **arr, int size);
 //parsing functions
 void	get_cmd_line(t_shell *shell);
 void	mark_quotes(t_shell *shell, char *str);

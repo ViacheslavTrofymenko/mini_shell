@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_arguments.c                                  :+:      :+:    :+:   */
+/*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 14:22:02 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:07:09 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	count_sources(t_cmd_p *cmd)
 			(cmd->num_output)++;
 		index++;
 	}
+	cmd->num_files = cmd->num_input + cmd->num_output;
 }
 
 void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd)
@@ -61,21 +62,15 @@ void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd)
 	int	index;
 
 	index = -1;
-	if (cmd->num_input > 0)
+	if (cmd->num_files > 0)
 	{
-		cmd->in_names = malloc(cmd->num_input * sizeof(char *));
-		cmd->in_types = malloc(cmd->num_input * sizeof(char));
-		if (cmd->in_names == NULL || cmd->in_types == NULL)
+		cmd->f_names = malloc(cmd->num_files * sizeof(char *));
+		cmd->f_mode = malloc(cmd->num_files * sizeof(char));
+		cmd->rw_type = malloc (cmd->num_files * sizeof(char));
+		if (cmd->f_names == NULL || cmd->f_mode == NULL
+			|| cmd->rw_type == NULL)
 			crit_except(shell, ER_MALLOC);
-		nullify_array(cmd->in_names, cmd->num_input);
-	}
-	if (cmd->num_output > 0)
-	{
-		cmd->out_names = malloc(cmd->num_output * sizeof(char *));
-		cmd->out_types = malloc(cmd->num_output * sizeof(char));
-		if (cmd->out_names == NULL || cmd->out_types == NULL)
-			crit_except(shell, ER_MALLOC);
-		nullify_array(cmd->out_names, cmd->num_output);
+		nullify_array(cmd->f_names, cmd->num_output);
 	}
 	cmd->split_io = malloc(cmd->num_splits * sizeof(char));
 	if (cmd->split_io == NULL)
@@ -116,13 +111,13 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 {
 	shell->cmds[index].args = shell->cmd_p.args;
-	shell->cmds[index].in_names = shell->cmd_p.in_names;
-	shell->cmds[index].out_names = shell->cmd_p.out_names;
-	shell->cmds[index].in_types = shell->cmd_p.in_types;
-	shell->cmds[index].out_types = shell->cmd_p.out_types;
+	shell->cmds[index].f_names = shell->cmd_p.f_names;
+	shell->cmds[index].f_mode = shell->cmd_p.f_mode;
+	shell->cmds[index].rw_type = shell->cmd_p.rw_type;
 	shell->cmds[index].num_args = shell->cmd_p.num_args;
 	shell->cmds[index].num_input = shell->cmd_p.num_input;
 	shell->cmds[index].num_output = shell->cmd_p.num_output;
+	shell->cmds[index].num_files = shell->cmd_p.num_files;
 	shell->cmds[index].error = shell->cmd_p.error;
 	shell->cmds[index].envp = shell->envp;
 	if (shell->cmd_p.error & ER_SYNTAX)

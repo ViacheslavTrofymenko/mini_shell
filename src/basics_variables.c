@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variables.c                                        :+:      :+:    :+:   */
+/*   basics_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:22 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/16 22:02:22 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:53:19 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_var_index(char **arr, char *var, int size, int len)
 	index = 0;
 	if (arr == NULL)
 		return (V_NFOUND);
-	while (index < size)
+	while (index < size - 1)
 	{
 		if (ft_strncmp(arr[index], var, len) == 0)
 		{
@@ -47,13 +47,13 @@ void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size)
 	index = find_var_index(*arr, var, *size, len);
 	if (index >= 0)
 	{
-		free(*arr[index]);
-		*arr[index] = safe_strdup(shell, var);
+		free((*arr)[index]);
+		(*arr)[index] = safe_strdup(shell, var);
 	}
 	else
 	{
 		add_one_slot(shell, arr, size);
-		*arr[*size - 1] = safe_strdup(shell, var);
+		(*arr)[*size - 2] = safe_strdup(shell, var);
 	}
 }
 
@@ -66,9 +66,9 @@ static void	add_one_slot(t_shell *shell, char ***arr, int *size)
 	temp = (char **)malloc((*size + 1) * sizeof(char *));
 	if (temp == NULL)
 		crit_except(shell, ER_MALLOC);
-	while (index < *size)
+	while (index < *size - 1)
 	{
-		temp[index] = *arr[index];
+		temp[index] = (*arr)[index];
 		index++;
 	}
 	temp[*size] = NULL;

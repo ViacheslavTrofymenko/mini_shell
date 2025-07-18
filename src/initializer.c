@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:59 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/14 14:14:00 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:13:45 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	create_start_env(t_shell *shell, char **envp);
 
 void	initialize_shell(t_shell *shell, char **envp)
 {
@@ -20,6 +22,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->qts.q_marker_str = NULL;
 	shell->qts.str = NULL;
 	initialize_cmd_p(&(shell->cmd_p));
+	create_start_env(shell, envp);
 }
 
 void	initialize_cmd_p(t_cmd_p *cmd)
@@ -27,10 +30,9 @@ void	initialize_cmd_p(t_cmd_p *cmd)
 	cmd->args = NULL;
 	cmd->line = NULL;
 	cmd->q_type = NULL;
-	cmd->in_names = NULL;
-	cmd->in_types = NULL;
-	cmd->out_names = NULL;
-	cmd->out_types = NULL;
+	cmd->f_names = NULL;
+	cmd->f_mode = NULL;
+	cmd->rw_type = NULL;
 	cmd->splits = NULL;
 	cmd->split_qs = NULL;
 	cmd->split_io = NULL;
@@ -48,10 +50,9 @@ void	initialize_cmd_p(t_cmd_p *cmd)
 void	initialize_cmd(t_cmd *cmd)
 {
 	cmd->args = NULL;
-	cmd->in_names = NULL;
-	cmd->in_types = NULL;
-	cmd->out_names = NULL;
-	cmd->out_types = NULL;
+	cmd->f_names = NULL;
+	cmd->f_mode = NULL;
+	cmd->rw_type = NULL;
 	cmd->num_input = 0;
 	cmd->num_output = 0;
 	cmd->er_synt_char = '\0';
@@ -70,4 +71,15 @@ void	nullify_array(char	**arr, int size)
 		arr[index] = NULL;
 		index++;
 	}
+}
+
+static void	create_start_env(t_shell *shell, char **envp)
+{
+	shell->vars = NULL;
+	shell->size_vars = 1;
+	shell->vars = malloc (sizeof(char *));
+	if (shell->vars == NULL)
+		crit_except(shell, ER_MALLOC);
+	shell->vars[0] = NULL;
+	envp++;
 }

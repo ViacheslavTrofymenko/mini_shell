@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:18:29 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/16 13:18:29 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:32:33 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	create_cmd_vars(t_shell *shell, char *str)
 		initialize_cmd(&(shell->cmds[index]));
 		index++;
 	}
+	index = 0;
 	while (str[index])
 	{
 		if (str[index] == PIPE && shell->qts.q_marker_str[index] == Q_NORMAL)

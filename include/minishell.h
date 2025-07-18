@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 19:00:52 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 16:27:22 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_shell_metadata
 	char		**vars;
 	int			size_env;
 	int			size_vars;
+	int			last_exit;
 }				t_shell;
 
 int		ft_is_mol(char c);

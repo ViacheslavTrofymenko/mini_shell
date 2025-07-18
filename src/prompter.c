@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:22:25 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:08 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_cmd_line(t_shell *shell)
 		else
 		{
 			expand_dollars(shell, &(shell->qts.str), shell->qts.q_marker_str);
-			printf("Line: %s\n", shell->qts.str);
+			printf("Line: %s|\n", shell->qts.str);
 		}
 		for (int i=0;i<shell->size_vars; i++)
 			printf("%s ", shell->vars[i]);

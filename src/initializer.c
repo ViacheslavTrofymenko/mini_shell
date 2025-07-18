@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:59 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 16:27:45 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 19:43:58 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 {
 	shell->cmds = NULL;
 	shell->num_cmds = 0;
-	shell->last_exit = 0;
+	shell->last_exit = 127;
 	shell->envp = NULL;
 	shell->qts.q_marker_str = NULL;
 	shell->qts.str = NULL;

@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 16:31:31 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 19:33:54 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <errno.h>
+# include <errno.h>
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -29,6 +29,7 @@
 # define Q_DOUBLE '\"'
 # define Q_DOLLAR '$'
 # define PIPE '|'
+# define Q_QUEST '?'
 # define ER_MALLOC 2
 # define ER_SYNTAX 4
 # define ER_CMD_NOT_FOUND 127
@@ -148,8 +149,9 @@ int		find_var_index(char **arr, char *var, int size, int len);
 void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size);
 void	take_out_var(char **arr, char *var, int size, int len);
 char	*get_var_value(char **arr, char *var, int size, int len);
-void	expand_dollars(t_shell *shell, char **str, char *q_str);
+void	expand_dollars(t_shell *shell, char **str, char **q_str);
 void	replace_variable(t_shell *shell, char **str, char *q_str, int start);
 int		check_assignment(char *arg, char *q_type);
+char	*insert_str_to_str(char **str, char *ins, int start, int len);
 
 #endif

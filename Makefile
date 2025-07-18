@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/18 10:40:37 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/18 19:40:59 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC 		= minishell_main.c prompter.c basics_simple.c initializer.c cleaners.c\
 			parse_pipes.c parse_split_cmd.c parse_dollar.c basics_variables.c\
 			execute/execute.c execute/execute_utils.c execute/handle_heredocs.c\
 			execute/apply_redirections.c execute/exec_pipe_cmds.c\
+			parse_dollar_utils.c
 
 SRCSDIR		= src
 OBJDIR		= obj

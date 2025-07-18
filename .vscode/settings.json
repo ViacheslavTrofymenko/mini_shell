@@ -1,7 +1,8 @@
 {
 	"C_Cpp.errorSquiggles": "enabled",
 	"files.associations": {
-		"alloca.h": "c"
+		"alloca.h": "c",
+		"minishell.h": "c"
 	}
 
 }

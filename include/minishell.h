@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 16:27:22 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/18 16:31:31 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <errno.h>
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -30,6 +31,8 @@
 # define PIPE '|'
 # define ER_MALLOC 2
 # define ER_SYNTAX 4
+# define ER_CMD_NOT_FOUND 127
+# define ER_CMD_NOT_EXEC 126
 # define IO_INPUT 8
 # define IO_OUTPUT 16
 # define IO_SINGLE 0
@@ -130,6 +133,16 @@ void	parse_cmd(t_shell *shell, int index);
 void	correct_syntax_error(t_shell *shell, int index);
 // execute cmds
 void	execute_cmds(t_shell *shell);
+void	handle_heredocs(t_shell *shell);
+int		ft_error(char *str);
+int		ft_perror_custom(char *str, int saved_errno);
+char	*ft_check_command(char **path_list, char *cmd);
+void	ft_free_str_array(char **str);
+char	*ft_get_path_command(t_shell *shell, int i);
+void	apply_redirs(t_shell *shell, int i);
+void	exec_pipe_cmds(t_shell *shell);
+void	exec_or_exit(t_shell *shell, int i);
+
 //variable manipulation
 int		find_var_index(char **arr, char *var, int size, int len);
 void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size);

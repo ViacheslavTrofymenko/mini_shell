@@ -37,3 +37,28 @@ void	correct_syntax_error(t_shell *shell, int index)
 			shell->cmds[index].er_synt_char = '\n';
 	}
 }
+
+int	check_syntax_except(t_shell *shell)
+{
+	int	index;
+
+	index = 0;
+	while(index < shell->num_cmds)
+	{
+		if (shell->cmds[index].error & ER_SYNTAX)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			if (shell->cmds[index].er_synt_char == '\n')
+				ft_putendl_fd("newline'", 2);
+			else
+			{
+				ft_putchar_fd(shell->cmds[index].er_synt_char, 2);
+				ft_putendl_fd("'", 2);
+			}
+			shell->last_exit = ER_SYNTAX;
+			return (EXIT_FAILURE);
+		}
+		index++;
+	}
+	return (EXIT_SUCCESS);
+}

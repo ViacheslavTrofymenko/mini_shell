@@ -18,7 +18,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 {
 	shell->cmds = NULL;
 	shell->num_cmds = 0;
-	shell->last_exit = 127;
+	shell->last_exit = 0;
 	shell->envp = NULL;
 	shell->qts.q_marker_str = NULL;
 	shell->qts.str = NULL;
@@ -53,6 +53,7 @@ void	initialize_cmd_p(t_cmd_p *cmd)
 void	initialize_cmd(t_cmd *cmd)
 {
 	cmd->args = NULL;
+	cmd->assign = NULL;
 	cmd->f_names = NULL;
 	cmd->f_mode = NULL;
 	cmd->rw_type = NULL;
@@ -62,44 +63,13 @@ void	initialize_cmd(t_cmd *cmd)
 	cmd->error = 0;
 }
 
-void	nullify_array(char	**arr, int size)
-{
-	int	index;
-
-	index = 0;
-	if (arr == NULL)
-		return ;
-	while (index < size)
-	{
-		arr[index] = NULL;
-		index++;
-	}
-}
-
 static void	create_start_env(t_shell *shell, char **envp)
 {
-	int	size_env;
-
-	size_env = 0;
 	shell->vars = NULL;
 	shell->size_vars = 1;
 	shell->vars = malloc (sizeof(char *));
 	if (shell->vars == NULL)
 		crit_except(shell, ER_MALLOC);
 	shell->vars[0] = NULL;
-	while(envp[size_env])
-		size_env++;
-	size_env++;
-	shell->envp = malloc(size_env * sizeof(char *));
-	if (shell->envp == NULL)
-		crit_except(shell, ER_MALLOC);
-	shell->size_env = size_env;
-	nullify_array(shell->envp, size_env);
-	size_env--;
-	while (--size_env >= 0)
-	{
-		shell->envp[size_env] = ft_strdup(envp[size_env]);
-		if (shell->envp[size_env] == NULL)
-			crit_except(shell, ER_MALLOC);
-	}
+	shell->envp = duplicate_arr(shell, envp, &(shell->size_env));
 }

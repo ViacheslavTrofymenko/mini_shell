@@ -31,7 +31,7 @@ void	expand_dollars(t_shell *shell, char **str, char **q_str)
 			expand_var(shell, str, q_str, index);
 		index++;
 	}
-	remove_quote_marks(*str, *q_str);
+	remove_quote_marks(*str);
 }
 
 void	expand_var(t_shell *shell, char **str, char **q_str, int start)
@@ -44,7 +44,8 @@ void	expand_var(t_shell *shell, char **str, char **q_str, int start)
 	len = 1;
 	if (ft_isdigit((*str)[index]) == 0)
 	{
-		while (ft_isalnum_((*str)[index]) && q_str[index] == q_str[start])
+		while (ft_isalnum_((*str)[index])
+			&& (*q_str)[index] == (*q_str)[start])
 		{
 			index++;
 			len++;
@@ -53,6 +54,8 @@ void	expand_var(t_shell *shell, char **str, char **q_str, int start)
 	else
 		len = 2;
 	find = insert_var(shell, str, len - 1, start);
+	if (find == NULL)
+		crit_except(shell, ER_MALLOC);
 	find = insert_dummy(q_str, find, len - 1, start);
 	if (find == NULL)
 		crit_except(shell, ER_MALLOC);

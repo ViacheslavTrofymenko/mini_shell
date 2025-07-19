@@ -26,9 +26,17 @@ void	asign_sources(t_shell *shell, t_cmd_p *cmd)
 	while (index < cmd->num_splits)
 	{
 		if (cmd->splits[index][0] == '<' && cmd->split_qs[index][0] == Q_NORMAL)
+		{
+			cmd->split_io[index] = IO_REMOVE;
 			create_input_name(shell, cmd, index);
+			(cmd->ind_arg)++;
+		}
 		if (cmd->splits[index][0] == '>' && cmd->split_qs[index][0] == Q_NORMAL)
+		{
+			cmd->split_io[index] = IO_REMOVE;
 			create_output_name(shell, cmd, index);
+			(cmd->ind_arg)++;
+		}
 		index++;
 	}
 }
@@ -41,17 +49,18 @@ void	create_input_name(t_shell *shell, t_cmd_p *cmd, int index)
 	start = 1;
 	cmd->f_mode[cmd->ind_arg] = IO_SINGLE;
 	cmd->rw_type[cmd->ind_arg] = IO_INPUT;
-	cmd->split_io[index] = IO_REMOVE;
 	if (cmd->splits[index][1] == '<' && cmd->split_qs[index][1] == Q_NORMAL)
-	{
 		cmd->f_mode[cmd->ind_arg] = IO_DOUBLE;
-		start = 2;
-	}
+	start += (cmd->f_mode[cmd->ind_arg] == IO_DOUBLE);
 	size = ft_strlen(cmd->splits[index]);
+	if (cmd->f_mode[cmd->ind_arg] == IO_SINGLE)
+		expand_dollars(shell, &(cmd->splits[index]), &(cmd->split_qs[index]));
+	else
+		remove_quote_marks(cmd->splits[index]);
 	if (size > start)
 	{
-		cmd->f_names[cmd->ind_arg] = malloc((size - start + 1)
-				* sizeof(char));
+		size = ft_strlen(cmd->splits[index]);
+		cmd->f_names[cmd->ind_arg] = malloc((size - start + 1) * sizeof(char));
 		if (cmd->f_names[cmd->ind_arg] == NULL)
 			crit_except(shell, ER_MALLOC);
 		ft_strlcpy(cmd->f_names[cmd->ind_arg], &(cmd->splits[index][start]),
@@ -59,7 +68,6 @@ void	create_input_name(t_shell *shell, t_cmd_p *cmd, int index)
 	}
 	else
 		next_input_split(shell, cmd, index, cmd->ind_arg);
-	(cmd->ind_arg)++;
 }
 
 void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input)
@@ -68,6 +76,11 @@ void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input)
 
 	if (index == cmd->num_splits - 1)
 		return ;
+	if (cmd->f_mode[cmd->ind_arg] == IO_SINGLE)
+		expand_dollars(shell, &(cmd->splits[index + 1]),
+		&(cmd->split_qs[index + 1]));
+	else
+		remove_quote_marks(cmd->splits[index + 1]);
 	len = ft_strlen(cmd->splits[index + 1]);
 	cmd->f_names[ind_input] = malloc((len + 1) * sizeof(char));
 	if (cmd->f_names[ind_input] == NULL)
@@ -84,15 +97,15 @@ void	create_output_name(t_shell *shell, t_cmd_p *cmd, int index)
 	start = 1;
 	cmd->f_mode[cmd->ind_arg] = IO_SINGLE;
 	cmd->rw_type[cmd->ind_arg] = IO_OUTPUT;
-	cmd->split_io[index] = IO_REMOVE;
 	if (cmd->splits[index][1] == '>' && cmd->split_qs[index][1] == Q_NORMAL)
-	{
 		cmd->f_mode[cmd->ind_arg] = IO_DOUBLE;
+	if (cmd->f_mode[cmd->ind_arg] == IO_DOUBLE)
 		start = 2;
-	}
 	size = ft_strlen(cmd->splits[index]);
+	expand_dollars(shell, &(cmd->splits[index]), &(cmd->split_qs[index]));
 	if (size > start)
 	{
+		size = ft_strlen(cmd->splits[index]);
 		cmd->f_names[cmd->ind_arg] = malloc((size - start + 1)
 				* sizeof(char));
 		if (cmd->f_names[cmd->ind_arg] == NULL)
@@ -102,7 +115,6 @@ void	create_output_name(t_shell *shell, t_cmd_p *cmd, int index)
 	}
 	else
 		next_output_split(shell, cmd, index, cmd->ind_arg);
-	(cmd->ind_arg)++;
 }
 
 void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_out)
@@ -111,6 +123,8 @@ void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_out)
 
 	if (index == cmd->num_splits - 1)
 		return ;
+	expand_dollars(shell, &(cmd->splits[index + 1]),
+		&(cmd->split_qs[index + 1]));
 	len = ft_strlen(cmd->splits[index + 1]);
 	cmd->f_names[ind_out] = malloc((len + 1) * sizeof(char));
 	if (cmd->f_names[ind_out] == NULL)

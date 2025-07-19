@@ -59,12 +59,7 @@ int	ft_is_mol(char c)
 		return (1);
 	return (0);
 }
-int	ft_is_spec(char c)
-{
-	if (c == '<' || c == '>' || c == '|')
-		return (1);
-	return (0);
-}
+
 void	ft_strcpy(char *dest, char *src)
 {
 	int	index;
@@ -79,21 +74,4 @@ void	ft_strcpy(char *dest, char *src)
 	}
 	if (dest[index])
 		dest[index] = src[index];
-}
-
-char	*safe_strdup(t_shell *shell, char **str)
-{
-	int		len;
-	char	*temp;
-
-	if (str == NULL || *str == NULL)
-		return (NULL);
-	len = ft_strlen(*str);
-	temp = malloc((len + 1) * sizeof(char));
-	if (temp == NULL)
-		crit_except(shell, ER_MALLOC);
-	ft_strlcpy(temp, *str, len + 1);
-	free(*str);
-	*str = NULL;
-	return (temp);
 }

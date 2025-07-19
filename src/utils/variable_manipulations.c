@@ -48,12 +48,14 @@ void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size)
 	if (index >= 0)
 	{
 		free((*arr)[index]);
-		(*arr)[index] = safe_strdup(shell, var);
+		(*arr)[index] = *var;
+		*var = NULL;
 	}
 	else
 	{
 		add_one_slot(shell, arr, size);
-		(*arr)[*size - 2] = safe_strdup(shell, var);
+		(*arr)[*size - 2] = *var;
+		*var = NULL;
 	}
 }
 
@@ -84,9 +86,9 @@ void	take_out_var(char **arr, char *var, int size, int len)
 	index = find_var_index(arr, var, size, len);
 	if (index == V_NFOUND)
 		return ;
+	free(arr[index]);
 	while (index < size - 1)
 	{
-		free(arr[index]);
 		arr[index] = arr[index + 1];
 		index++;
 	}

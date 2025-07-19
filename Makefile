@@ -10,25 +10,42 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		= minishell
+NAME		= minishell
 
-SRC 		= minishell_main.c prompter.c basics_simple.c initializer.c cleaners.c\
-			exceptors.c parse_quotes.c parse_cmd.c parse_stream_names.c\
-			parse_pipes.c parse_split_cmd.c parse_dollar.c basics_variables.c\
-			execute/execute.c execute/execute_utils.c execute/handle_heredocs.c\
-			execute/apply_redirections.c execute/exec_pipe_cmds.c\
-			parse_dollar_utils.c
+MAIN		= minishell_main.c prompter.c
 
+BINS		= export.c
+
+UTIL		= basics_simple.c initializer.c cleaners.c exceptors.c\
+			basics_advanced.c variable_manipulations.c
+
+EXEC		= execute.c execute_utils.c handle_heredocs.c apply_redirections.c\
+			exec_pipe_cmds.c
+
+PARSE		= handle_assignments.c parse_dollar_utils.c parse_quotes.c\
+			parse_cmd.c parse_stream_names.c parse_pipes.c parse_split_cmd.c\
+			parse_dollar.c
+
+PARSEDIR	= src/parse
+EXECDIR		= src/execute
+UTILDIR		= src/utils
+MAINDIR		= src/main
+BINSDIR		= src/builtins
+MAINSRC		= $(addprefix $(MAINDIR)/, $(MAIN))
+BINSRC		= $(addprefix $(BINSDIR)/, $(BINS))
+UTILSRC		= $(addprefix $(UTILDIR)/, $(UTIL))
+EXECSRC		= $(addprefix $(EXECDIR)/, $(EXEC))
+PARSESRC	= $(addprefix $(PARSEDIR)/, $(PARSE))
 SRCSDIR		= src
 OBJDIR		= obj
 INCLUDE		= include
 
-SRCS		= $(addprefix $(SRCSDIR)/, $(SRC))
+SRCS		= $(MAINSRC) $(PARSESRC) $(EXECSRC) $(UTILSRC) $(BINSRC)
 
 OBJS		= $(SRCS:src/%.c=obj/%.o)
 
-CFLAGS		= -Wall -Wextra -Werror -g
-MFLAGS		= -lreadline
+CFLAGS		= -Wall -Wextra -Werror -g3
+MFLAGS		= -lreadline -L libft -lft
 INCLUDES	= -I$(INCLUDE)
 
 RM = rm -rf
@@ -37,7 +54,7 @@ all: $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJS)
 	$(MAKE) -C libft
-	cc $(OBJS) $(LIBRARY) $(INCLUDES) -lreadline -L libft -lft -o $(NAME)
+	cc $(OBJS) $(LIBRARY) $(INCLUDES) $(MFLAGS) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c
 	@mkdir -p $(dir $@)

@@ -21,6 +21,7 @@ void	parse_cmd(t_shell *shell, int index)
 	count_sources(&(shell->cmd_p));
 	alloc_source_arrays(shell, &(shell->cmd_p));
 	asign_sources(shell, &(shell->cmd_p));
+	create_assignments(shell, &(shell->cmd_p));
 	create_args(shell, &(shell->cmd_p));
 	copy_from_temp_to_cmd(shell, index);
 	clean_cmd_p(&(shell->cmd_p), M_PARTIAL);
@@ -84,13 +85,6 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 	int	index;
 
 	index = 0;
-	cmd->num_args = 0;
-	while (index < cmd->num_splits)
-	{
-		if (cmd->split_io[index] == IO_KEEP)
-			(cmd->num_args)++;
-		index++;
-	}
 	cmd->args = malloc((cmd->num_args + 1) * sizeof(char *));
 	if (cmd->args == NULL)
 		crit_except(shell, ER_MALLOC);
@@ -100,6 +94,8 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 	{
 		if (cmd->split_io[index] == IO_KEEP)
 		{
+			expand_dollars(shell, &(cmd->splits[index]),
+				&(cmd->split_qs[index]));
 			cmd->args[cmd->ind_arg] = cmd->splits[index];
 			(cmd->ind_arg)++;
 		}
@@ -111,9 +107,11 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 {
 	shell->cmds[index].args = shell->cmd_p.args;
+	shell->cmds[index].assign = shell->cmd_p.assign;
 	shell->cmds[index].f_names = shell->cmd_p.f_names;
 	shell->cmds[index].f_mode = shell->cmd_p.f_mode;
 	shell->cmds[index].rw_type = shell->cmd_p.rw_type;
+	shell->cmds[index].num_assign = shell->cmd_p.num_assign;
 	shell->cmds[index].num_args = shell->cmd_p.num_args;
 	shell->cmds[index].num_input = shell->cmd_p.num_input;
 	shell->cmds[index].num_output = shell->cmd_p.num_output;

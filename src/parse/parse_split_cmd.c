@@ -34,7 +34,6 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 				(cmd->line[ind]) || ft_is_mol(cmd->line[ind])))))
 			ind++;
 	}
-	printf("Splits: %d\n", cmd->num_splits);
 	cmd->splits = malloc((cmd->num_splits + 1) * sizeof(char *));
 	cmd->split_qs = malloc((cmd->num_splits + 1) * sizeof(char *));
 	if (cmd->splits == NULL || cmd->split_qs == NULL)

@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 static void	clean_one_cmd(t_cmd *cmd);
-static void	safe_free(char **s);
 void		clean_unused_splits(t_cmd_p *cmd);
 
 void	clean_cmds(t_shell *shell)
@@ -100,11 +99,4 @@ void	clean_double_arr(char **arr, int size)
 	free(arr);
 }
 
-static void	safe_free(char **s)
-{
-	if (s != NULL && *s != NULL)
-	{
-		free(*s);
-		*s = NULL;
-	}
-}
+

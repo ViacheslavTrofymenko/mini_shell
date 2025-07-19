@@ -1,4 +1,5 @@
 {
+	##valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 	suppress_readline_leaks
 	Memcheck:Leak
 	match-leak-kinds: reachable

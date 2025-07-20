@@ -24,7 +24,6 @@ void	crit_except(t_shell *shell, int error_code)
 		clean_double_arr(shell->vars, shell->size_vars);
 		clean_double_arr(shell->envp, shell->size_env);
 		safe_free(&(shell->prompt));
-		safe_free(&(shell->cmd_line));
 		exit (error_code);
 	}
 }

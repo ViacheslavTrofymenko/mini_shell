@@ -12,19 +12,33 @@
 
 #include "minishell.h"
 
-void	crit_except(t_shell *data, int error_code)
+void	crit_except(t_shell *shell, int error_code)
 {
-	if (data->qts.str != NULL)
-		free(data->qts.str);
-	data->qts.str = NULL;
-	if (data->qts.q_marker_str != NULL)
-		free(data->qts.q_marker_str);
-	data->qts.q_marker_str = NULL;
-	safe_free(&(data->prompt));
-	clean_cmds(data);
-	clean_cmd_p(&(data->cmd_p), M_TOTAL);
+	safe_free(&(shell->qts.str));
+	safe_free(&(shell->qts.q_marker_str));
+	safe_free(&(shell->prompt));
+	clean_cmds(shell);
+	clean_cmd_p(&(shell->cmd_p), M_TOTAL);
 	if (error_code != 0)
+	{
+		clean_double_arr(shell->vars, shell->size_vars);
+		clean_double_arr(shell->envp, shell->size_env);
+		safe_free(&(shell->prompt));
+		safe_free(&(shell->cmd_line));
 		exit (error_code);
+	}
+}
+
+void	main_clean_exit(t_shell *shell)
+{
+	clean_double_arr(shell->vars, shell->size_vars);
+	clean_double_arr(shell->envp, shell->size_env);
+	safe_free(&(shell->prompt));
+	safe_free(&(shell->cmd_line));
+	safe_free(&(shell->qts.q_marker_str));
+	clean_cmds(shell);
+	clean_cmd_p(&(shell->cmd_p), M_TOTAL);
+	exit (shell->last_exit);
 }
 
 void	correct_syntax_error(t_shell *shell, int index)

@@ -17,16 +17,14 @@ static char	*make_fancy_prompt(t_shell *shell);
 
 void	get_cmd_line(t_shell *shell)
 {
-	char	*line;
-
 	shell->prompt = make_fancy_prompt(shell);
-	line = readline(shell->prompt);
+	shell->cmd_line = readline(shell->prompt);
 	while (1/*ft_strcmp(line, "exit") != 0*/)
 	{
-		add_history(line);
+		add_history(shell->cmd_line);
 		rl_on_new_line();
-		mark_quotes(shell, line);
-		create_cmd_vars(shell, line);
+		mark_quotes(shell, shell->cmd_line);
+		create_cmd_vars(shell, shell->cmd_line);
 		if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "export") == 0)
 			bin_export(shell, shell->cmds[0].args);
 		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
@@ -37,12 +35,8 @@ void	get_cmd_line(t_shell *shell)
 			schedule_jobs(shell);
 		crit_except(shell, 0);
 		shell->prompt = make_fancy_prompt(shell);
-		line = readline(shell->prompt);
+		shell->cmd_line = readline(shell->prompt);
 	}
-	clean_double_arr(shell->vars, shell->size_vars);
-	clean_double_arr(shell->envp, shell->size_env);
-	free(shell->prompt);
-	free(line);
 }
 
 static void	schedule_jobs(t_shell *shell)

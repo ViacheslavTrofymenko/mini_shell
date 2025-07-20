@@ -111,6 +111,7 @@ typedef struct s_shell_metadata
 	char		**envp;
 	char		**vars;
 	char		*prompt;
+	char		*cmd_line;
 	int			size_env;
 	int			size_vars;
 	int			last_exit;
@@ -125,6 +126,7 @@ void	ft_strcpy(char *dest, char *src);
 char	*safe_strdup(t_shell *shell, char *str);
 void	safe_free(char **s);
 void	crit_except(t_shell *data, int error_code);
+void	main_clean_exit(t_shell *shell);
 void	initialize_shell(t_shell *shell, char **envp);
 void	initialize_cmd_p(t_cmd_p *cmd);
 void	initialize_cmd(t_cmd *cmd);

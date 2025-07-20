@@ -18,6 +18,7 @@ void	bin_exit(t_shell *shell, char **args)
 {
 	int	index;
 
+	index = 0;
 	while (args[index])
 		index++;
 	ft_putendl_fd("exit", 1);
@@ -37,10 +38,9 @@ void	bin_exit(t_shell *shell, char **args)
 			ft_putstr_fd(": numeric argument required\n" , STDERR_FILENO);
 			crit_except(shell, ER_SYNTAX);
 		}
-		crit_except(shell, (unsigned char)ft_atoi(args[1]));
+		shell->last_exit = (unsigned char)ft_atoi(args[1]);
 	}
-	else if (index == 1)
-		crit_except(shell, shell->last_exit);
+	main_clean_exit(shell);
 }
 
 static int	is_number(char *str)

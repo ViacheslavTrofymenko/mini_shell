@@ -78,9 +78,9 @@ void	transform_env(t_shell *shell, t_cmd *cmd)
 		if (find_var_index(shell->envp, cmd->assign[index],
 			shell->size_env, len) >= 0)
 			replace_var_in_arr(shell, &(shell->envp),
-					&(cmd->assign[index]), &(shell->size_env));
+					cmd->assign[index], &(shell->size_env));
 		replace_var_in_arr(shell, &(shell->vars),
-					&(cmd->assign[index]), &(shell->size_vars));
+					cmd->assign[index], &(shell->size_vars));
 		index++;
 	}
 }

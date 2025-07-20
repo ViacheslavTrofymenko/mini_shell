@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <errno.h>
+# define BUFFER_SIZE 300
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
 # define Q_NORMAL ' '
@@ -43,7 +44,12 @@
 # define IO_ASSIGN 8
 # define M_TOTAL 1
 # define M_PARTIAL 0
+# define M_ADDEQUAL 1
+# define M_AS_IS 0
 # define V_NFOUND -1
+# define C_GRN   "\x1B[32m"
+# define C_BLU   "\x1B[34m"
+# define C_RESET "\x1B[0m"
 
 typedef struct s_one_cmd
 {
@@ -104,6 +110,7 @@ typedef struct s_shell_metadata
 	int			num_cmds;
 	char		**envp;
 	char		**vars;
+	char		*prompt;
 	int			size_env;
 	int			size_vars;
 	int			last_exit;
@@ -124,6 +131,7 @@ void	initialize_cmd(t_cmd *cmd);
 void	nullify_array(char	**arr, int size);
 void	clean_double_arr(char **arr, int size);
 char	**duplicate_arr(t_shell *shell, char **arr, int *new_size);
+char	*safe_strjoin(t_shell *shell, char *s1, char *s2);
 //parsing functions
 void	get_cmd_line(t_shell *shell);
 void	mark_quotes(t_shell *shell, char *str);
@@ -155,12 +163,19 @@ void	exec_or_exit(t_shell *shell, int i);
 
 //variable manipulation
 int		find_var_index(char **arr, char *var, int size, int len);
-void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size);
-void	take_out_var(char **arr, char *var, int size, int len);
+void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size);
+void	take_out_var(char **arr, char *var, int *size, int len);
 char	*get_var_value(char **arr, char *var, int size, int len);
 void	expand_dollars(t_shell *shell, char **str, char **q_str);
 int		check_assignment(char *arg, char *q_type);
 char	*insert_str_to_str(char **str, char *ins, int start, int len);
 void	transform_env(t_shell *shell, t_cmd *cmd);
+
+//builtins
+void	bin_export(t_shell *shell, char **args);
+void	bin_unset(t_shell *shell, char **args);
+void	bin_exit(t_shell *shell, char **args);
+int		is_var_name(char *str);
+void	var_name_error(t_shell *shell, char *function, char *var);
 
 #endif

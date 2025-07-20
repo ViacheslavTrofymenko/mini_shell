@@ -14,7 +14,7 @@ NAME		= minishell
 
 MAIN		= minishell_main.c prompter.c
 
-BINS		= export.c
+BINS		= export.c unset.c exit.c env.c
 
 UTIL		= basics_simple.c initializer.c cleaners.c exceptors.c\
 			basics_advanced.c variable_manipulations.c

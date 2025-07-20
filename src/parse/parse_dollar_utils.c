@@ -36,7 +36,6 @@ char	*insert_str_to_str(char **str, char *ins, int start, int len)
 	return (*str);
 }
 
-
 int	check_assignment(char *arg, char *q_type)
 {
 	int	index;
@@ -48,7 +47,12 @@ int	check_assignment(char *arg, char *q_type)
 		return (0);
 	while (ft_isalnum_(arg[index]))
 		index++;
-	if (arg[index] == '=' && q_type[index] == Q_NORMAL && index > 0)
-		return (index);
+	if (q_type != NULL)
+	{
+		if (arg[index] == '=' && q_type[index] == Q_NORMAL && index > 0)
+			return (index);
+	}
+	else if (arg[index] == '=')
+			return (index);
 	return (0);
 }

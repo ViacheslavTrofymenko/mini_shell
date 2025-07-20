@@ -55,6 +55,18 @@ char	**duplicate_arr(t_shell *shell, char **arr, int *new_size)
 	return (result);
 }
 
+char	*safe_strjoin(t_shell *shell, char *s1, char *s2)
+{
+	char	*result;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	result = ft_strjoin(s1, s2);
+	if (result == NULL)
+		crit_except(shell, ER_MALLOC);
+	return (result);
+}
+
 void	safe_free(char **s)
 {
 	if (s != NULL && *s != NULL)

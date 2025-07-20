@@ -19,16 +19,19 @@ void		expand_error(t_shell *shell, char **str, char **q_type, int start);
 
 void	expand_dollars(t_shell *shell, char **str, char **q_str)
 {
-	int		index;
+	int	index;
+	int	len;
 
 	index = 0;
-	while ((*str)[index])
+	len = ft_strlen(*str);
+	while (index <= len && (*str)[index])
 	{
 		if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE
 			&& (*str)[index + 1] == Q_QUEST)
 			expand_error(shell, str, q_str, index);
 		else if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE)
 			expand_var(shell, str, q_str, index);
+		len = ft_strlen(*str);
 		index++;
 	}
 	remove_quote_marks(*str);
@@ -54,8 +57,6 @@ void	expand_var(t_shell *shell, char **str, char **q_str, int start)
 	else
 		len = 2;
 	find = insert_var(shell, str, len - 1, start);
-	if (find == NULL)
-		crit_except(shell, ER_MALLOC);
 	find = insert_dummy(q_str, find, len - 1, start);
 	if (find == NULL)
 		crit_except(shell, ER_MALLOC);

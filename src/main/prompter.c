@@ -13,24 +13,35 @@
 #include "minishell.h"
 
 static void	schedule_jobs(t_shell *shell);
+static char	*make_fancy_prompt(t_shell *shell);
 
 void	get_cmd_line(t_shell *shell)
 {
 	char	*line;
 
-	line = readline("minishell: ");
-	while (ft_strcmp(line, "exit") != 0)
+	shell->prompt = make_fancy_prompt(shell);
+	line = readline(shell->prompt);
+	while (1/*ft_strcmp(line, "exit") != 0*/)
 	{
 		add_history(line);
 		rl_on_new_line();
 		mark_quotes(shell, line);
 		create_cmd_vars(shell, line);
-		schedule_jobs(shell);
+		if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "export") == 0)
+			bin_export(shell, shell->cmds[0].args);
+		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
+			bin_unset(shell, shell->cmds[0].args);
+		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
+			bin_exit(shell, shell->cmds[0].args);
+		else
+			schedule_jobs(shell);
 		crit_except(shell, 0);
-		line = readline("minishell: ");
+		shell->prompt = make_fancy_prompt(shell);
+		line = readline(shell->prompt);
 	}
 	clean_double_arr(shell->vars, shell->size_vars);
 	clean_double_arr(shell->envp, shell->size_env);
+	free(shell->prompt);
 	free(line);
 }
 
@@ -41,6 +52,35 @@ static void	schedule_jobs(t_shell *shell)
 	if (shell->num_cmds == 1 && shell->cmds[0].num_args == 0)
 		transform_env(shell, &(shell->cmds[0]));
 	execute_cmds(shell);
+}
+
+static char	*make_fancy_prompt(t_shell *shell)
+{
+	char	*find;
+	char	*temp1;
+	char	*temp2;
+	char	buffer[BUFFER_SIZE];
+
+	find = get_var_value(shell->envp, "USER", shell->size_env, 4);
+	temp1 = C_GRN;
+	if (find)
+		temp1 = safe_strjoin(shell, C_GRN, find);
+	temp2 = safe_strjoin(shell, temp1, "@");
+	if (find)
+		free(temp1);
+	find = get_var_value(shell->envp, "NAME", shell->size_env, 4);
+	if (find)
+		temp1 = safe_strjoin(shell, temp2, find);
+	if (find)
+		free(temp2);
+	temp2 = safe_strjoin(shell, temp1, C_RESET":"C_BLU);
+	if (find)
+		free(temp1);
+	getcwd(buffer, BUFFER_SIZE);
+	temp1 = safe_strjoin(shell, temp2, buffer);
+	free(temp2);
+	temp2 = safe_strjoin(shell, temp1, C_RESET"$ ");
+	return (free(temp1), temp2);
 }
 
 /*	DEBUG FUNCTIONS

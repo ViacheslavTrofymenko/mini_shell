@@ -20,6 +20,7 @@ void	crit_except(t_shell *data, int error_code)
 	if (data->qts.q_marker_str != NULL)
 		free(data->qts.q_marker_str);
 	data->qts.q_marker_str = NULL;
+	safe_free(&(data->prompt));
 	clean_cmds(data);
 	clean_cmd_p(&(data->cmd_p), M_TOTAL);
 	if (error_code != 0)

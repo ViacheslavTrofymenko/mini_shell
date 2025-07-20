@@ -14,6 +14,22 @@
 
 static void	add_one_slot(t_shell *shell, char ***arr, int *size);
 
+int	is_var_name(char *str)
+{
+	int	len;
+	
+	len = 0;
+	if (str == NULL)
+		return (0);
+	if (ft_isdigit(str[0]))
+		return (0);
+	while (ft_isalnum_(str[len]))
+		len++;
+	if (str[len] == '\0')
+		return (len);
+	return (0);
+}
+
 int	find_var_index(char **arr, char *var, int size, int len)
 {
 	int	index;
@@ -33,29 +49,30 @@ int	find_var_index(char **arr, char *var, int size, int len)
 	return (V_NFOUND);
 }
 
-void	replace_var_in_arr(t_shell *shell, char ***arr, char **var, int *size)
+void	replace_var_in_arr(t_shell *shell, char ***arr, char *var, int *size)
 {
 	int	index;
 	int	len;
 
 	index = 0;
 	len = 0;
-	while ((*var)[len] && (*var)[len] != '=')
+	while (var[len] && var[len] != '=')
 		len++;
-	if ((*var)[len] != '=')
+	if (var[len] != '=')
 		return ;
-	index = find_var_index(*arr, *var, *size, len);
+	index = find_var_index(*arr, var, *size, len);
 	if (index >= 0)
 	{
-		free((*arr)[index]);
-		(*arr)[index] = *var;
-		*var = NULL;
+		if (var != (*arr)[index])
+		{
+			free((*arr)[index]);
+			(*arr)[index] = safe_strdup(shell, var);
+		}
 	}
 	else
 	{
 		add_one_slot(shell, arr, size);
-		(*arr)[*size - 2] = *var;
-		*var = NULL;
+		(*arr)[*size - 2] = safe_strdup(shell, var);
 	}
 }
 
@@ -79,20 +96,6 @@ static void	add_one_slot(t_shell *shell, char ***arr, int *size)
 	(*size)++;
 }
 
-void	take_out_var(char **arr, char *var, int size, int len)
-{
-	int	index;
-
-	index = find_var_index(arr, var, size, len);
-	if (index == V_NFOUND)
-		return ;
-	free(arr[index]);
-	while (index < size - 1)
-	{
-		arr[index] = arr[index + 1];
-		index++;
-	}
-}
 
 char	*get_var_value(char **arr, char *var, int size, int len)
 {

@@ -6,13 +6,13 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:31:53 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 14:46:00 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:53:22 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	bin_pwd(void)
+void	bin_pwd(void)
 {
 	char	*cwd;
 
@@ -23,5 +23,5 @@ int	bin_pwd(void)
 	ft_putstr_fd(cwd, 1);
 	ft_putstr_fd("\n", 1);
 	free(cwd);
-	return (0);
+	return ;
 }

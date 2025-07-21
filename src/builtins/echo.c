@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:26:36 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 14:29:08 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:53:35 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_check_option(char *s);
 
-int	bin_echo(char **args)
+void	bin_echo(char **args)
 {
 	int	i;
 	int	opt;
@@ -35,7 +35,7 @@ int	bin_echo(char **args)
 	}
 	if (opt == 0)
 		ft_putstr_fd("\n", 1);
-	return (0);
+	return ;
 }
 
 static int	ft_check_option(char *s)

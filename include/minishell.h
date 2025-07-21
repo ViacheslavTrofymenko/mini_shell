@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 14:37:56 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:53:53 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ void	transform_env(t_shell *shell, t_cmd *cmd);
 void	bin_export(t_shell *shell, char **args);
 void	bin_unset(t_shell *shell, char **args);
 void	bin_exit(t_shell *shell, char **args);
-int		bin_echo(char **args);
-int		bin_pwd(void);
+void	bin_echo(char **args);
+void	bin_pwd(void);
 int		is_var_name(char *str);
 void	var_name_error(t_shell *shell, char *function, char *var);
 

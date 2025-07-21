@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 19:18:21 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/21 20:00:59 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,14 @@ void	get_cmd_line(t_shell *shell)
 	shell->cmd_line = readline(shell->prompt);
 	while (1/*ft_strcmp(line, "exit") != 0*/)
 	{
-		add_history(shell->cmd_line);
-		rl_on_new_line();
-		mark_quotes(shell, shell->cmd_line);
-		create_cmd_vars(shell, shell->cmd_line);
-		if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "export") == 0)
-			bin_export(shell, shell->cmds[0].args);
-		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "unset") == 0)
-			bin_unset(shell, shell->cmds[0].args);
-		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
-			bin_exit(shell, shell->cmds[0].args);
-		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "echo") == 0)
-			bin_echo(shell->cmds[0].args);
-		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "pwd") == 0)
-			bin_pwd();
-		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "cd") == 0)
-			bin_cd(shell, shell->cmds[0].args);
-		else
+		if (ft_strlen(shell->cmd_line))
+		{
+			add_history(shell->cmd_line);
+			rl_on_new_line();
+			mark_quotes(shell, shell->cmd_line);
+			create_cmd_vars(shell, shell->cmd_line);
 			schedule_jobs(shell);
+		}
 		crit_except(shell, 0);
 		shell->prompt = make_fancy_prompt(shell);
 		shell->cmd_line = readline(shell->prompt);
@@ -53,7 +43,11 @@ static void	schedule_jobs(t_shell *shell)
 		return ;
 	if (shell->num_cmds == 1 && shell->cmds[0].num_args == 0)
 		transform_env(shell, &(shell->cmds[0]));
-	execute_cmds(shell);
+	//PLACEHOLDER, SHOULD BE RUN WITHIN EXECUTE_CMDS
+	if (shell->num_cmds == 1 && check_builtin(shell->cmds[0].args))
+		run_builtin(shell, shell->cmds[0].args);
+	else
+		execute_cmds(shell);
 }
 
 static char	*make_fancy_prompt(t_shell *shell)

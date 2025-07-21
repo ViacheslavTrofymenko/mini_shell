@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 19:20:59 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/21 19:48:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ char	*insert_str_to_str(char **str, char *ins, int start, int len);
 void	transform_env(t_shell *shell, t_cmd *cmd);
 
 //builtins
+int		check_builtin(char **args);
+void	run_builtin(t_shell *shell, char **args);
 void	bin_export(t_shell *shell, char **args);
 void	bin_unset(t_shell *shell, char **args);
 void	bin_exit(t_shell *shell, char **args);

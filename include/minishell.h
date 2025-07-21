@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 15:22:15 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:20:59 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@
 # define M_ADDEQUAL 1
 # define M_AS_IS 0
 # define V_NFOUND -1
-# define C_GRN   "\x1B[32m"
-# define C_BLU   "\x1B[34m"
-# define C_RESET "\x1B[0m"
+# define C_GRN   "\001\x1B[32m\002"
+# define C_BLU   "\001\x1B[34m\002"
+# define C_RESET "\001\x1B[0m\002"
 
 typedef struct s_one_cmd
 {

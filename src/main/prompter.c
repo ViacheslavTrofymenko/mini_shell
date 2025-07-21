@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 15:15:45 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:18:21 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	schedule_jobs(t_shell *shell);
 static char	*make_fancy_prompt(t_shell *shell);
+static char	*get_username(t_shell *shell);
+static void	add_addr(t_shell *shell, char **temp1, char **temp2, char *find);
 
 void	get_cmd_line(t_shell *shell)
 {
@@ -59,28 +61,71 @@ static char	*make_fancy_prompt(t_shell *shell)
 	char	*find;
 	char	*temp1;
 	char	*temp2;
-	char	buffer[BUFFER_SIZE];
+
+	temp2 = get_username(shell);
+	find = get_var_value(shell->envp, "HOME", shell->size_env, 4);
+	add_addr(shell, &temp1, &temp2, find);
+	free(temp2);
+	temp2 = safe_strjoin(shell, temp1, C_RESET"$ ");
+	free(temp1);
+	return (temp2);
+}
+
+static char	*get_username(t_shell *shell)
+{
+	char	*find;
+	char	*temp1;
+	char	*temp2;
 
 	find = get_var_value(shell->envp, "USER", shell->size_env, 4);
-	temp1 = C_GRN;
+	temp1 = ""C_GRN;
 	if (find)
-		temp1 = safe_strjoin(shell, C_GRN, find);
+		temp1 = safe_strjoin(shell, temp1, find);
 	temp2 = safe_strjoin(shell, temp1, "@");
 	if (find)
 		free(temp1);
-	find = get_var_value(shell->envp, "NAME", shell->size_env, 4);
+	find = get_var_value(shell->envp, "SESSION_MANAGER", shell->size_env, 15);
 	if (find)
-		temp1 = safe_strjoin(shell, temp2, find);
-	if (find)
+	{
+		temp1 = malloc ((ft_strlen(temp2) + 7) * sizeof(char));
+		if (temp1 == NULL)
+			crit_except(shell, ER_MALLOC);
+		ft_strlcpy(temp1, temp2, ft_strlen(temp2) + 1);
+		ft_strlcat(&(temp1[ft_strlen(temp2) - 1]), &(find[6]), 8);
 		free(temp2);
+	}
+	else
+		temp1 = temp2;
 	temp2 = safe_strjoin(shell, temp1, C_RESET":"C_BLU);
-	if (find)
-		free(temp1);
-	getcwd(buffer, BUFFER_SIZE);
-	temp1 = safe_strjoin(shell, temp2, buffer);
-	free(temp2);
-	temp2 = safe_strjoin(shell, temp1, C_RESET"$ ");
 	return (free(temp1), temp2);
+}
+
+static void	add_addr(t_shell *shell, char **temp1, char **temp2, char *find)
+{
+	int		index;
+	char	buffer[BUFFER_SIZE];
+
+	index = 0;
+	getcwd(buffer, BUFFER_SIZE);
+	while (find && find[index] == buffer[index] && buffer[index])
+		index++;
+	if (buffer[index])
+	{
+		if (find)
+		{
+			*temp1 = *temp2;
+			*temp2 = safe_strjoin(shell, *temp2, "~");
+			free(*temp1);
+		}
+		*temp1 = safe_strjoin(shell, *temp2, &(buffer[index]));
+	}
+	else
+	{
+		if (find && (int)ft_strlen(find) == index)
+			*temp1 = safe_strjoin(shell, *temp2, "~");
+		else
+			*temp1 = safe_strjoin(shell, *temp2, buffer);
+	}
 }
 
 /*	DEBUG FUNCTIONS

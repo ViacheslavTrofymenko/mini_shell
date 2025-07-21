@@ -3,12 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/21 15:23:12 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/21 17:29:06 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+BOLD = \033[1m
+RED = \033[31;2m
+GREEN = \033[32m
+YELLOW = \033[33m
+RESET = \033[0m
 
 NAME		= minishell
 
@@ -47,18 +53,30 @@ OBJS		= $(SRCS:src/%.c=obj/%.o)
 CFLAGS		= -Wall -Wextra -Werror -g3
 MFLAGS		= -lreadline -L libft -lft
 INCLUDES	= -I$(INCLUDE)
+TOTAL_SRCS	= $(words $(MAINSRC) $(PARSESRC) $(EXECSRC) $(UTILSRC) $(BINSRC))
+SRC_NUM		= 0
 
 RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(MAKE) -C libft
-	cc $(OBJS) $(LIBRARY) $(INCLUDES) $(MFLAGS) -o $(NAME)
+	@$(MAKE) -C libft > /dev/null 2>&1
+	@cc $(OBJS) $(LIBRARY) $(INCLUDES) $(MFLAGS) -o $(NAME)
+	@echo
 
 $(OBJDIR)/%.o: $(SRCSDIR)/%.c
 	@mkdir -p $(dir $@)
-	cc $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))
+	@$(eval PERCENT := $(shell printf "%.0f" $(shell echo "scale=4; $(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc)))
+	@printf "$(BOLD)\rCompiling $(NAME): ["
+	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))
+	@printf "$(GREEN)%0.s#$(RESET)$(BOLD)" $(shell seq 1 $(PROGRESS))
+	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi
+	@printf "] "
+	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi
+	@printf "%d%% $(RESET)" $(PERCENT)
+	@cc $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)

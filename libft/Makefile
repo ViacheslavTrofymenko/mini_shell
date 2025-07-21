@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/08 17:46:53 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/04/08 17:46:55 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/21 17:19:57 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,8 @@ bonus: $(OBJS) $(BONUS_OBJS)
 
 # Compile the object files
 %.o: %.c
-	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
+# @echo "Compiling $<"
 
 # Clean object files
 clean:

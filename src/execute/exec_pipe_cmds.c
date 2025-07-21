@@ -6,13 +6,14 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/18 14:51:21 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:47:00 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i);
+static	void	wait_for_children(t_shell *shell);
 
 void	exec_pipe_cmds(t_shell *shell)
 {
@@ -39,8 +40,7 @@ void	exec_pipe_cmds(t_shell *shell)
 		}
 		i++;
 	}
-	while (waitpid(-1, NULL, 0) != -1)
-		continue ;
+	wait_for_children(shell);
 }
 
 void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
@@ -57,4 +57,17 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 		close(pipe_fd[1]);
 	}
 	exec_or_exit(shell, i);
+}
+
+static void	wait_for_children(t_shell *shell)
+{
+	int status;
+
+	while (waitpid(-1, &status, 0) != -1)
+	{
+		if (WIFEXITED(status))
+			shell->last_exit = WEXITSTATUS(status);
+		else
+			shell->last_exit = 1;
+	}
 }

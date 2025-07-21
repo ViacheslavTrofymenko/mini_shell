@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/18 19:40:59 by ikulik           ###   ########.fr        #
+#    Updated: 2025/07/21 12:11:05 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ UTIL		= basics_simple.c initializer.c cleaners.c exceptors.c\
 			basics_advanced.c variable_manipulations.c
 
 EXEC		= execute.c execute_utils.c handle_heredocs.c apply_redirections.c\
-			exec_pipe_cmds.c
+			exec_pipe_cmds.c error_msg.c
 
 PARSE		= handle_assignments.c parse_dollar_utils.c parse_quotes.c\
 			parse_cmd.c parse_stream_names.c parse_pipes.c parse_split_cmd.c\

@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/18 14:56:44 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:32:13 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,22 @@ void	exec_or_exit(t_shell *shell, int i)
 static void	exec_one_cmd(t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
 		exec_or_exit(shell, 0);
 	else if (pid > 0)
-		waitpid(pid, NULL, 0);
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				shell->last_exit = WEXITSTATUS(status);
+			else
+				shell->last_exit = 1;
+		}
 	else
+	{
+		shell->last_exit = 1;
 		ft_perror_custom("fork", errno);
+	}
 }

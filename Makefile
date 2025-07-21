@@ -6,7 +6,7 @@
 #    By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/21 12:11:05 by vtrofyme         ###   ########.fr        #
+#    Updated: 2025/07/21 14:25:46 by vtrofyme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		= minishell
 
 MAIN		= minishell_main.c prompter.c
 
-BINS		= export.c unset.c exit.c env.c
+BINS		= export.c unset.c exit.c env.c echo.c
 
 UTIL		= basics_simple.c initializer.c cleaners.c exceptors.c\
 			basics_advanced.c variable_manipulations.c

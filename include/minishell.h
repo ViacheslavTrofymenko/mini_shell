@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 19:33:54 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:33:56 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	transform_env(t_shell *shell, t_cmd *cmd);
 void	bin_export(t_shell *shell, char **args);
 void	bin_unset(t_shell *shell, char **args);
 void	bin_exit(t_shell *shell, char **args);
+int		bin_echo(char **args);
 int		is_var_name(char *str);
 void	var_name_error(t_shell *shell, char *function, char *var);
 

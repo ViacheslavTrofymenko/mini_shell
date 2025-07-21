@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 19:52:16 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:34:08 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	get_cmd_line(t_shell *shell)
 			bin_unset(shell, shell->cmds[0].args);
 		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "exit") == 0)
 			bin_exit(shell, shell->cmds[0].args);
+		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "echo") == 0)
+			bin_echo(shell->cmds[0].args);
 		else
 			schedule_jobs(shell);
 		crit_except(shell, 0);
@@ -94,7 +96,7 @@ static char	*make_fancy_prompt(t_shell *shell)
 		printf("%s ", shell->cmds[0].args[i]);
 	printf("\nNumber of assign: %d\n", shell->cmds[0].num_assign);
 	for (int i=0;i<shell->cmds[0].num_assign; i++)
-		printf("%s ", shell->cmds[0].assign[i]);		
+		printf("%s ", shell->cmds[0].assign[i]);
 	printf("\nCurrent vars: ");
 	for (int i=0;i<shell->size_vars; i++)
 		printf("%s ", shell->vars[i]);

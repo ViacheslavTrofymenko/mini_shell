@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 14:45:15 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:15:45 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	get_cmd_line(t_shell *shell)
 			bin_echo(shell->cmds[0].args);
 		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "pwd") == 0)
 			bin_pwd();
+		else if (shell->cmds[0].num_args > 0 && ft_strcmp(shell->cmds[0].args[0], "cd") == 0)
+			bin_cd(shell, shell->cmds[0].args);
 		else
 			schedule_jobs(shell);
 		crit_except(shell, 0);

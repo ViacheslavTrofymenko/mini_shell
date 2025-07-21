@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:31:53 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 14:53:22 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:22:51 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	bin_pwd(void)
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
 	if (!cwd)
-		return (1);
+		return ;
 	ft_putstr_fd(cwd, 1);
 	ft_putstr_fd("\n", 1);
 	free(cwd);

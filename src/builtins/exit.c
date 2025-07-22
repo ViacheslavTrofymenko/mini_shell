@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:15:44 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/20 16:15:44 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/22 15:12:43 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	bin_exit(t_shell *shell, char **args)
 static int	is_number(char *str)
 {
 	int	index;
-	
+
 	index = 0;
 	if (str == NULL)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 20:00:59 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/22 17:08:39 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ static void	schedule_jobs(t_shell *shell)
 		return ;
 	if (shell->num_cmds == 1 && shell->cmds[0].num_args == 0)
 		transform_env(shell, &(shell->cmds[0]));
-	//PLACEHOLDER, SHOULD BE RUN WITHIN EXECUTE_CMDS
-	if (shell->num_cmds == 1 && check_builtin(shell->cmds[0].args))
-		run_builtin(shell, shell->cmds[0].args);
-	else
-		execute_cmds(shell);
+	execute_cmds(shell);
 }
 
 static char	*make_fancy_prompt(t_shell *shell)

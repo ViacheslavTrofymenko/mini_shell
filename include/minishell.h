@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 19:48:13 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/22 22:22:44 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,7 @@ void	bin_pwd(void);
 void	bin_cd(t_shell *shell, char **args);
 int		is_var_name(char *str);
 void	var_name_error(t_shell *shell, char *function, char *var);
+int		is_builtin_parent_only(char *cmd);
+
 
 #endif

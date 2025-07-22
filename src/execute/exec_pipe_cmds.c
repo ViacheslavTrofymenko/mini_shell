@@ -6,14 +6,14 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/22 17:23:53 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/22 23:06:55 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i);
-static	void	wait_for_children(t_shell *shell);
+static	void	wait_for_children(t_shell *shell, pid_t last_pid);
 
 void	exec_pipe_cmds(t_shell *shell)
 {
@@ -21,9 +21,11 @@ void	exec_pipe_cmds(t_shell *shell)
 	int		pipe_fd[2];
 	int		prev_fd;
 	pid_t	pid;
+	pid_t	last_pid;
 
 	i = 0;
 	prev_fd = -1;
+	last_pid = -1;
 	while (i < shell->num_cmds)
 	{
 		if (i < shell->num_cmds - 1 && pipe(pipe_fd) == -1)
@@ -31,6 +33,8 @@ void	exec_pipe_cmds(t_shell *shell)
 		pid = fork();
 		if (pid == 0)
 			child_process(shell, prev_fd, pipe_fd, i);
+		else if (i == shell->num_cmds - 1)
+			last_pid = pid;
 		if (prev_fd != -1)
 			close(prev_fd);
 		if (i < shell->num_cmds - 1)
@@ -40,7 +44,7 @@ void	exec_pipe_cmds(t_shell *shell)
 		}
 		i++;
 	}
-	wait_for_children(shell);
+	wait_for_children(shell, last_pid);
 }
 
 void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
@@ -71,15 +75,21 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 	}
 }
 
-static void	wait_for_children(t_shell *shell)
+static void	wait_for_children(t_shell *shell, pid_t last_pid)
 {
-	int status;
+	int		status;
+	pid_t	pid;
 
-	while (waitpid(-1, &status, 0) != -1)
+	while ((pid = waitpid(-1, &status, 0)) != -1)
 	{
-		if (WIFEXITED(status))
-			shell->last_exit = WEXITSTATUS(status);
-		else
-			shell->last_exit = 1;
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				shell->last_exit = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->last_exit = 128 + WTERMSIG(status);
+			else
+				shell->last_exit = 1;
+		}
 	}
 }

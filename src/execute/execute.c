@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 12:32:13 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:23:34 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	exec_or_exit(t_shell *shell, int i)
 	cmd = &shell->cmds[i];
 	if (!cmd || !cmd->args[0] || cmd->args[0][0] == '\0')
 		return ;
-	apply_redirs(shell, i);
 	path_cmd = ft_get_path_command(shell, i);
 	if (path_cmd)
 	{
@@ -48,11 +47,20 @@ static void	exec_one_cmd(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
+	t_cmd	*cmd;
 
-	pid = fork();
-	if (pid == 0)
-		exec_or_exit(shell, 0);
-	else if (pid > 0)
+	cmd = &shell->cmds[0];
+	if (check_builtin(cmd->args))
+		run_builtin(shell, cmd->args);
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			apply_redirs(shell, 0);
+			exec_or_exit(shell, 0);
+		}
+		else if (pid > 0)
 		{
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
@@ -60,9 +68,10 @@ static void	exec_one_cmd(t_shell *shell)
 			else
 				shell->last_exit = 1;
 		}
-	else
-	{
-		shell->last_exit = 1;
-		ft_perror_custom("fork", errno);
+		else
+		{
+			shell->last_exit = 1;
+			ft_perror_custom("fork", errno);
+		}
 	}
 }

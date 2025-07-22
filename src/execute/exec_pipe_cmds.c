@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 12:47:00 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:23:53 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	exec_pipe_cmds(t_shell *shell)
 
 void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 {
+	t_cmd	*cmd;
+
+	cmd = &shell->cmds[i];
 	if (i > 0)
 	{
 		dup2(prev_fd, STDIN_FILENO);
@@ -56,7 +59,16 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 	}
-	exec_or_exit(shell, i);
+	apply_redirs(shell, i);
+	if (check_builtin(cmd->args))
+	{
+		run_builtin(shell, cmd->args);
+		exit(0);
+	}
+	else
+	{
+		exec_or_exit(shell, i);
+	}
 }
 
 static void	wait_for_children(t_shell *shell)

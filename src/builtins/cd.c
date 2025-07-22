@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:50:57 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 15:48:18 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:26:20 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void bin_cd(t_shell *shell, char **args)
 	char cwd[1024];
 	char *oldpwd;
 
+	if (args[2])
+	{
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+		shell->last_exit = 1;
+		return ;
+	}
 	if (!args[1])
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);

@@ -13,11 +13,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _XOPEN_SOURCE 700
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -117,6 +119,8 @@ typedef struct s_shell_metadata
 	int			last_exit;
 }				t_shell;
 
+int		g_signal;
+
 int		ft_is_mol(char c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_is_space(char c);
@@ -184,5 +188,10 @@ void	bin_pwd(void);
 void	bin_cd(t_shell *shell, char **args);
 int		is_var_name(char *str);
 void	var_name_error(t_shell *shell, char *function, char *var);
+
+//signals
+void	interactive_signal_handler(void);
+void	noninteractive_signal_handler(void);
+void	handle_ctrl_d(t_shell *shell);
 
 #endif

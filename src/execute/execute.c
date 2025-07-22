@@ -49,6 +49,7 @@ static void	exec_one_cmd(t_shell *shell)
 	int		status;
 	t_cmd	*cmd;
 
+	status = 0;
 	cmd = &shell->cmds[0];
 	if (check_builtin(cmd->args))
 		run_builtin(shell, cmd->args);

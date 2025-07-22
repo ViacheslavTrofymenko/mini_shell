@@ -18,7 +18,7 @@ RESET = \033[0m
 
 NAME		= minishell
 
-MAIN		= minishell_main.c prompter.c
+MAIN		= minishell_main.c prompter.c signals.c
 
 BINS		= export.c unset.c exit.c env.c echo.c pwd.c cd.c builtins.c
 

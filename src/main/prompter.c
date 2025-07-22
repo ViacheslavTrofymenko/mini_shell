@@ -20,9 +20,11 @@ static void	add_addr(t_shell *shell, char **temp1, char **temp2, char *find);
 void	get_cmd_line(t_shell *shell)
 {
 	shell->prompt = make_fancy_prompt(shell);
+	interactive_signal_handler();
 	shell->cmd_line = readline(shell->prompt);
-	while (1/*ft_strcmp(line, "exit") != 0*/)
+	while (1)
 	{
+		handle_ctrl_d(shell);
 		if (ft_strlen(shell->cmd_line))
 		{
 			add_history(shell->cmd_line);
@@ -33,7 +35,9 @@ void	get_cmd_line(t_shell *shell)
 		}
 		crit_except(shell, 0);
 		shell->prompt = make_fancy_prompt(shell);
+		interactive_signal_handler();
 		shell->cmd_line = readline(shell->prompt);
+		noninteractive_signal_handler();
 	}
 }
 

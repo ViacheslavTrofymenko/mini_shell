@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:25:35 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 19:46:02 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/22 22:22:25 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,16 @@ void	run_builtin(t_shell *shell, char **args)
 		bin_pwd();
 	else if (ft_strcmp(args[0], "cd") == 0)
 		bin_cd(shell, args);
+}
+
+int	is_builtin_parent_only(char *cmd)
+{
+	if (!cmd)
+		return (0);
+	return (
+		ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "exit") == 0
+	);
 }

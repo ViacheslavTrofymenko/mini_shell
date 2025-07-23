@@ -72,7 +72,7 @@ void	alloc_source_arrays(t_shell *shell, t_cmd_p *cmd)
 		if (cmd->f_names == NULL || cmd->f_mode == NULL
 			|| cmd->rw_type == NULL)
 			crit_except(shell, ER_MALLOC);
-		nullify_array(cmd->f_names, cmd->num_output);
+		nullify_array(cmd->f_names, cmd->num_files);
 	}
 	cmd->split_io = malloc(cmd->num_splits * sizeof(char));
 	if (cmd->split_io == NULL)

@@ -92,8 +92,7 @@ void	clean_double_arr(char **arr, int size)
 		return ;
 	while (index < size)
 	{
-		if (arr[index] != NULL)
-			safe_free(&(arr[index]));
+		safe_free(&(arr[index]));
 		index++;
 	}
 	free(arr);

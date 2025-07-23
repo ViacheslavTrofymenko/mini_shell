@@ -34,6 +34,7 @@ void	get_cmd_line(t_shell *shell)
 			schedule_jobs(shell);
 		}
 		crit_except(shell, 0);
+		update_error_on_signal(shell);
 		shell->prompt = make_fancy_prompt(shell);
 		interactive_signal_handler();
 		shell->cmd_line = readline(shell->prompt);

@@ -27,47 +27,8 @@ void	initialize_shell(t_shell *shell, char **envp)
 	g_last_signal = 0;
 	create_start_env(shell, envp);
 	ft_bzero(&(shell->cmd_p), sizeof(t_cmd_p));
-	//initialize_cmd_p(&(shell->cmd_p));
 	set_shell_vars(shell);
 }
-
-/*void	initialize_cmd_p(t_cmd_p *cmd)
-{
-	ft_bzero(cmd, sizeof(t_cmd_p));
-	cmd->args = NULL;
-	cmd->line = NULL;
-	cmd->q_type = NULL;
-	cmd->f_names = NULL;
-	cmd->f_mode = NULL;
-	cmd->rw_type = NULL;
-	cmd->splits = NULL;
-	cmd->split_qs = NULL;
-	cmd->split_io = NULL;
-	cmd->assign = NULL;
-	cmd->num_input = 0;
-	cmd->num_output = 0;
-	cmd->num_splits = 0;
-	cmd->num_args = 0;
-	cmd->num_assign = 0;
-	cmd->ind_arg = 0;
-	cmd->ind_start = 0;
-	cmd->len = 0;
-	cmd->er_synt_char = NULL;
-	cmd->error = 0;
-}*/
-
-/* void	initialize_cmd(t_cmd *cmd)
-{
-	cmd->args = NULL;
-	cmd->assign = NULL;
-	cmd->f_names = NULL;
-	cmd->f_mode = NULL;
-	cmd->rw_type = NULL;
-	cmd->num_input = 0;
-	cmd->num_output = 0;
-	cmd->er_synt_char = '\0';
-	cmd->error = 0;
-} */
 
 static void	create_start_env(t_shell *shell, char **envp)
 {
@@ -99,7 +60,7 @@ static void	set_shell_vars(t_shell *shell)
 	if (temp2 == NULL)
 		crit_except(shell, ER_MALLOC);
 	replace_var_in_arr(shell, &(shell->envp), temp2, &(shell->size_env));
-	//replace_var_in_arr(shell, &(shell->envp),
-	//	"SHELL=minishell", &(shell->size_env));
+	replace_var_in_arr(shell, &(shell->envp),
+		"SHELL=minishell", &(shell->size_env));
 	free(temp2);
 }

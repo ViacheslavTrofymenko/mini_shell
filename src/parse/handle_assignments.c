@@ -21,10 +21,13 @@ void	create_assignments(t_shell *shell, t_cmd_p *cmd)
 	index = 0;
 	cmd->ind_arg = 0;
 	find_assignments(cmd);
-	cmd->assign = malloc(cmd->num_assign * sizeof(char *));
-	if (cmd->assign == NULL)
-		crit_except(shell, ER_MALLOC);
-	nullify_array(cmd->assign, cmd->num_assign);
+	if (cmd->num_assign > 0)
+	{
+		cmd->assign = malloc(cmd->num_assign * sizeof(char *));
+		if (cmd->assign == NULL)
+			crit_except(shell, ER_MALLOC);
+		nullify_array(cmd->assign, cmd->num_assign);
+	}
 	while (index < cmd->num_splits)
 	{
 		if (cmd->split_io[index] == IO_ASSIGN)

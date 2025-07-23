@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/23 19:36:37 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 20:16:17 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	exec_one_cmd(t_shell *shell);
 
 void	execute_cmds(t_shell *shell)
 {
+	//shell->last_exit = 0;
 	handle_heredocs(shell);
 	if (!shell->cmds[0].args || !shell->cmds[0].args[0])
 		return ;

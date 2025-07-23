@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:59 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 19:00:52 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:46:02 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	set_shell_vars(t_shell *shell)
 	if (temp2 == NULL)
 		crit_except(shell, ER_MALLOC);
 	replace_var_in_arr(shell, &(shell->envp), temp2, &(shell->size_env));
-	replace_var_in_arr(shell, &(shell->envp),
-		"SHELL=minishell", &(shell->size_env));
+	//replace_var_in_arr(shell, &(shell->envp),
+	//	"SHELL=minishell", &(shell->size_env));
 	free(temp2);
 }

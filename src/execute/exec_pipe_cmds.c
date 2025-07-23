@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/23 19:36:23 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:38:59 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 static void	wait_for_children(t_shell *shell, pid_t last_pid)
 {
 	int	status;
+	int	pid;
 
 	while ((pid = waitpid(-1, &status, 0)) != -1)
 	{

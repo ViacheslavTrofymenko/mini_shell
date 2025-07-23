@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 16:52:54 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 20:30:19 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 	cmd->args = malloc((cmd->num_args + 1) * sizeof(char *));
 	if (cmd->args == NULL)
 		crit_except(shell, ER_MALLOC);
-	index = 0;
+	nullify_array(cmd->args, cmd->num_args);
 	cmd->ind_arg = 0;
 	while (index < cmd->num_splits)
 	{
@@ -97,8 +97,13 @@ void	create_args(t_shell *shell, t_cmd_p *cmd)
 		{
 			expand_dollars(shell, &(cmd->splits[index]),
 				&(cmd->split_qs[index]));
-			cmd->args[cmd->ind_arg] = cmd->splits[index];
-			(cmd->ind_arg)++;
+			if (ft_strlen(cmd->splits[index]) == 0)
+				free(cmd->splits[index]);
+			else
+			{
+				cmd->args[cmd->ind_arg] = cmd->splits[index];
+				(cmd->ind_arg)++;
+			}
 		}
 		index++;
 	}
@@ -119,6 +124,9 @@ static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 	shell->cmds[index].num_files = shell->cmd_p.num_files;
 	shell->cmds[index].error = shell->cmd_p.error;
 	shell->cmds[index].envp = shell->envp;
-	if (shell->cmd_p.error & ER_SYNTAX)
+	if (shell->cmd_p.error & ER_SYNTAX || (shell->cmd_p.num_splits == 0))
+	{
+		shell->cmds[index].error = ER_SYNTAX;
 		correct_syntax_error(shell, index);
+	}
 }

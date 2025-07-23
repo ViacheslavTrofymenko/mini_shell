@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 19:36:10 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:38:30 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void	bin_pwd(void);
 void	bin_cd(t_shell *shell, char **args);
 int		is_var_name(char *str);
 void	var_name_error(t_shell *shell, char *function, char *var);
+int		is_builtin_parent_only(char *cmd);
 
 //signals
 void	interactive_signal_handler(void);

@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/23 19:00:11 by ikulik           ###   ########.fr       */
+/*   Created: 2025/07/23 18:47:48 by ikulik            #+#    #+#             */
+/*   Updated: 2025/07/23 18:53:21 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_last_signal;
-
-int	main(int argc, char **argv, char **envp)
+void	update_error_on_signal(t_shell *shell)
 {
-	t_shell	shell;
-
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	argv[0] = argv[0];
-	initialize_shell(&shell, envp);
-	get_cmd_line(&shell);
-	rl_clear_history();
-	return (EXIT_SUCCESS);
+	if (g_last_signal != 0)
+	{
+		shell->last_exit = SIG_SHIFT + g_last_signal;
+		g_last_signal = 0;
+	}
 }

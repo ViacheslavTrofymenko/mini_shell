@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/22 17:23:34 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:51:29 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ static void	exec_one_cmd(t_shell *shell)
 		pid = fork();
 		if (pid == 0)
 		{
+			child_signal_handler();
 			apply_redirs(shell, 0);
 			exec_or_exit(shell, 0);
 		}
 		else if (pid > 0)
 		{
+			noninteractive_signal_handler();
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
 				shell->last_exit = WEXITSTATUS(status);

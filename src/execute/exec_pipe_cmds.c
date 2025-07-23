@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/22 17:23:53 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:08:20 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 {
 	t_cmd	*cmd;
 
+	child_signal_handler();
 	cmd = &shell->cmds[i];
 	if (i > 0)
 	{
@@ -73,7 +74,7 @@ void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 
 static void	wait_for_children(t_shell *shell)
 {
-	int status;
+	int	status;
 
 	while (waitpid(-1, &status, 0) != -1)
 	{

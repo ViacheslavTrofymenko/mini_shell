@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:07:09 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:52:54 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	parse_cmd(t_shell *shell, int index)
 	create_args(shell, &(shell->cmd_p));
 	copy_from_temp_to_cmd(shell, index);
 	clean_cmd_p(&(shell->cmd_p), M_PARTIAL);
-	initialize_cmd_p(&(shell->cmd_p));
+	ft_bzero(&(shell->cmd_p), sizeof(t_cmd_p));
+	//initialize_cmd_p(&(shell->cmd_p));
 }
 
 /*

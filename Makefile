@@ -6,7 +6,7 @@
 #    By: ikulik <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 13:34:13 by vtrofyme          #+#    #+#              #
-#    Updated: 2025/07/21 19:57:27 by ikulik           ###   ########.fr        #
+#    Updated: 2025/07/23 19:02:44 by ikulik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RESET = \033[0m
 
 NAME		= minishell
 
-MAIN		= minishell_main.c prompter.c signals.c
+MAIN		= minishell_main.c prompter.c signals.c signals_utils.c
 
 BINS		= export.c unset.c exit.c env.c echo.c pwd.c cd.c builtins.c
 

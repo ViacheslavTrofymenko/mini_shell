@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:50:57 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/22 15:26:20 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:46:16 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static int	change_directory(t_shell *shell, char *path, char *oldpwd);
 static void	update_env_var(t_shell *shell, char *key, char *value);
 
-void bin_cd(t_shell *shell, char **args)
+void	bin_cd(t_shell *shell, char **args)
 {
-	char cwd[1024];
-	char *oldpwd;
+	char	cwd[1024];
+	char	*oldpwd;
 
 	if (args[2])
 	{
@@ -70,7 +70,7 @@ static int	change_directory(t_shell *shell, char *path, char *oldpwd)
 	return (0);
 }
 
-static void update_env_var(t_shell *shell, char *key, char *value)
+static void	update_env_var(t_shell *shell, char *key, char *value)
 {
 	char	*full_var;
 

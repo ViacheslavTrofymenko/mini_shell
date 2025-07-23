@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/21 19:48:13 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:01:26 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define C_GRN   "\001\x1B[32m\002"
 # define C_BLU   "\001\x1B[34m\002"
 # define C_RESET "\001\x1B[0m\002"
+# define SIG_SHIFT 128
 
 typedef struct s_one_cmd
 {
@@ -119,7 +120,7 @@ typedef struct s_shell_metadata
 	int			last_exit;
 }				t_shell;
 
-int		g_signal;
+extern int		g_last_signal;
 
 int		ft_is_mol(char c);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -192,6 +193,8 @@ void	var_name_error(t_shell *shell, char *function, char *var);
 //signals
 void	interactive_signal_handler(void);
 void	noninteractive_signal_handler(void);
+void	child_signal_handler(void);
+void	update_error_on_signal(t_shell *shell);
 void	handle_ctrl_d(t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:18:29 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:32:33 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:56:32 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	create_cmd_vars(t_shell *shell, char *str)
 		crit_except(shell, ER_MALLOC);
 	while (index < shell->num_cmds)
 	{
-		initialize_cmd(&(shell->cmds[index]));
+		ft_bzero(&(shell->cmds[index]), sizeof(t_cmd));
 		index++;
 	}
 	index = 0;

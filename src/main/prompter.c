@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/22 17:08:39 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/23 19:02:23 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	get_cmd_line(t_shell *shell)
 		shell->prompt = make_fancy_prompt(shell);
 		interactive_signal_handler();
 		shell->cmd_line = readline(shell->prompt);
+		update_error_on_signal(shell);
 		noninteractive_signal_handler();
 	}
 }

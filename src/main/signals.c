@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 20:14:37 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/22 20:14:37 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:04:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	interactive_signal_handler(void)
 {
 	struct sigaction	handler;
 
+	g_last_signal = 0;
 	ft_bzero(&handler, sizeof(handler));
 	sigemptyset(&(handler.sa_mask));
 	sigaddset(&(handler.sa_mask), SIGINT);
@@ -34,8 +35,18 @@ void	noninteractive_signal_handler(void)
 	ft_bzero(&handler, sizeof(handler));
 	sigemptyset(&(handler.sa_mask));
 	sigaddset(&(handler.sa_mask), SIGINT);
-	sigaddset(&(handler.sa_mask), SIGQUIT);
 	handler.sa_handler = &sigint_noninteractive;
+	sigaction(SIGINT, &handler, NULL);
+}
+
+void	child_signal_handler(void)
+{
+	struct sigaction	handler;
+
+	ft_bzero(&handler, sizeof(handler));
+	sigemptyset(&(handler.sa_mask));
+	handler.sa_handler = SIG_DFL;
+	handler.sa_flags = SA_RESETHAND;
 	sigaction(SIGINT, &handler, NULL);
 }
 
@@ -47,13 +58,22 @@ static void	sigint_interactive(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_last_signal = SIGINT;
 	}
 }
+
 static void	sigint_noninteractive(int signal)
 {
+	struct sigaction	handler;
+
+	ft_bzero(&handler, sizeof(handler));
+	sigemptyset(&(handler.sa_mask));
+	handler.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &handler, NULL);
 	if (signal == SIGINT)
 	{
-		interactive_signal_handler();
+		printf("\n");
+		g_last_signal = SIGINT;
 		kill(0, SIGINT);
 	}
 }

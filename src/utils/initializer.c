@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 19:33:59 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 19:43:58 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:00:52 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->prompt = NULL;
 	shell->num_cmds = 0;
 	shell->last_exit = 0;
+	g_last_signal = 0;
 	create_start_env(shell, envp);
-	initialize_cmd_p(&(shell->cmd_p));
+	ft_bzero(&(shell->cmd_p), sizeof(t_cmd_p));
+	//initialize_cmd_p(&(shell->cmd_p));
 	set_shell_vars(shell);
 }
 
-void	initialize_cmd_p(t_cmd_p *cmd)
+/*void	initialize_cmd_p(t_cmd_p *cmd)
 {
+	ft_bzero(cmd, sizeof(t_cmd_p));
 	cmd->args = NULL;
 	cmd->line = NULL;
 	cmd->q_type = NULL;
@@ -51,9 +54,9 @@ void	initialize_cmd_p(t_cmd_p *cmd)
 	cmd->len = 0;
 	cmd->er_synt_char = NULL;
 	cmd->error = 0;
-}
+}*/
 
-void	initialize_cmd(t_cmd *cmd)
+/* void	initialize_cmd(t_cmd *cmd)
 {
 	cmd->args = NULL;
 	cmd->assign = NULL;
@@ -64,7 +67,7 @@ void	initialize_cmd(t_cmd *cmd)
 	cmd->num_output = 0;
 	cmd->er_synt_char = '\0';
 	cmd->error = 0;
-}
+} */
 
 static void	create_start_env(t_shell *shell, char **envp)
 {
@@ -96,6 +99,7 @@ static void	set_shell_vars(t_shell *shell)
 	if (temp2 == NULL)
 		crit_except(shell, ER_MALLOC);
 	replace_var_in_arr(shell, &(shell->envp), temp2, &(shell->size_env));
-	replace_var_in_arr(shell, &(shell->envp), "SHELL=minishell", &(shell->size_env));
+	replace_var_in_arr(shell, &(shell->envp),
+		"SHELL=minishell", &(shell->size_env));
 	free(temp2);
 }

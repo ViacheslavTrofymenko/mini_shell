@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 22:17:37 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 19:48:02 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/23 19:26:34 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void	expand_dollars(t_shell *shell, char **str, char **q_str)
 		if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE
 			&& (*str)[index + 1] == Q_QUEST)
 			expand_error(shell, str, q_str, index);
-		else if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE)
+		else if ((*str)[index] == Q_DOLLAR && (*q_str)[index] != Q_SINGLE
+				&& ft_is_space((*str)[index + 1]) == 0
+				&& (*str)[index + 1])
 			expand_var(shell, str, q_str, index);
 		len = ft_strlen(*str);
 		index++;

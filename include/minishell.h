@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 19:38:30 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:54:52 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <errno.h>
+# include <dirent.h>
 # define BUFFER_SIZE 300
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1
@@ -159,7 +160,7 @@ int		check_syntax_except(t_shell *shell);
 // execute cmds
 void	execute_cmds(t_shell *shell);
 void	handle_heredocs(t_shell *shell);
-int		ft_error(char *str);
+int		ft_error(char *str, int saved_errno);
 int		ft_perror_custom(char *str, int saved_errno);
 char	*ft_check_command(char **path_list, char *cmd);
 void	ft_free_str_array(char **str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 16:15:44 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/22 15:12:43 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:09:33 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	bin_exit(t_shell *shell, char **args)
 	{
 		if (is_number(args[1]) == 0)
 		{
-			ft_putstr_fd("minishell: exit: " , STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(args[1], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n" , STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			crit_except(shell, ER_SYNTAX);
 		}
 		shell->last_exit = (unsigned char)ft_atoi(args[1]);

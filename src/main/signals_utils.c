@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 18:47:48 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 18:53:21 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:37:40 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	child_signal_handler(void)
 	handler.sa_flags = SA_RESETHAND;
 	sigaction(SIGINT, &handler, NULL);
 }
+
 void	handle_ctrl_d(t_shell *shell)
 {
 	if (shell->cmd_line == NULL)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_dollar copy.c                                :+:      :+:    :+:   */
+/*   parse_dollar_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 22:17:37 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/18 18:12:28 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:37:29 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	check_assignment(char *arg, char *q_type)
 			return (index);
 	}
 	else if (arg[index] == '=')
-			return (index);
+		return (index);
 	return (0);
 }

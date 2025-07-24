@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 19:48:08 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/19 19:48:08 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:11:24 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,18 @@ static void	print_sorted_env(t_shell *shell)
 		ft_putendl_fd(temp_arr[i], STDOUT_FILENO);
 	clean_double_arr(temp_arr, size);
 }
+
 static void	check_for_export(t_shell *shell, char *var)
 {
 	int	find;
-	int	len;	
-	
+	int	len;
+
 	len = is_var_name(var);
 	find = check_assignment(var, NULL);
 	if (len > 0)
 	{
 		find = find_var_index(shell->vars, var,
-			shell->size_vars, len);
+				shell->size_vars, len);
 		if (find >= 0)
 			export_var(shell, shell->vars[find], M_AS_IS);
 		else
@@ -81,6 +82,7 @@ static void	check_for_export(t_shell *shell, char *var)
 	else
 		var_name_error(shell, "export", var);
 }
+
 static void	export_var(t_shell *shell, char *var, int mode)
 {
 	char	*temp;

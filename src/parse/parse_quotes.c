@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 12:59:09 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/12 23:00:41 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:37:14 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
  * @param qts	Quotes-parsing struct
  * @return		Pointer to the array of strings
  */
-
 
 static void	handle_quote(t_shell *shell, int *index, char quote_type);
 
@@ -60,7 +59,6 @@ static void	handle_quote(t_shell *shell, int *index, char quote_type)
 	}
 	else if (shell->qts.q_flag == quote_type)
 		shell->qts.q_flag = Q_NORMAL;
-
 }
 
 void	remove_quote_marks(char *str)

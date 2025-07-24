@@ -6,13 +6,13 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 13:33:06 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/23 19:00:11 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:28:06 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_last_signal;
+int	g_last_signal;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,6 +23,5 @@ int	main(int argc, char **argv, char **envp)
 	argv[0] = argv[0];
 	initialize_shell(&shell, envp);
 	get_cmd_line(&shell);
-	rl_clear_history();
 	return (EXIT_SUCCESS);
 }

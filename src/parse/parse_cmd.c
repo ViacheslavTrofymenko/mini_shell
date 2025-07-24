@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 20:30:19 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:42:53 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,7 @@ void	parse_cmd(t_shell *shell, int index)
 	copy_from_temp_to_cmd(shell, index);
 	clean_cmd_p(&(shell->cmd_p), M_PARTIAL);
 	ft_bzero(&(shell->cmd_p), sizeof(t_cmd_p));
-	//initialize_cmd_p(&(shell->cmd_p));
 }
-
-/*
- *  FOR DEBUG PURPOSES
- * 	for(int j=0; j<shell->cmd_p.num_splits; j++)
-		printf("\"%s\" ", shell->cmd_p.splits[j]);
-	printf("\n");
-	for(int i=0; i<shell->cmd_p.num_splits; i++)
-		printf("\"%s\" ", shell->cmd_p.split_qs[i]);
-	printf("\n");
-	if (shell->cmds[0].er_synt_char != '\0')
-		printf("Syntax error: %c\n", shell->cmds[0].er_synt_char);
- */
 
 void	count_sources(t_cmd_p *cmd)
 {
@@ -130,3 +117,15 @@ static void	copy_from_temp_to_cmd(t_shell *shell, int index)
 		correct_syntax_error(shell, index);
 	}
 }
+
+/*
+ *  FOR DEBUG PURPOSES
+ * 	for(int j=0; j<shell->cmd_p.num_splits; j++)
+		printf("\"%s\" ", shell->cmd_p.splits[j]);
+	printf("\n");
+	for(int i=0; i<shell->cmd_p.num_splits; i++)
+		printf("\"%s\" ", shell->cmd_p.split_qs[i]);
+	printf("\n");
+	if (shell->cmds[0].er_synt_char != '\0')
+		printf("Syntax error: %c\n", shell->cmds[0].er_synt_char);
+ */

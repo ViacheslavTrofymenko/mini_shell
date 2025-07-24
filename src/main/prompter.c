@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:11:50 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 19:02:23 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:37:54 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	get_cmd_line(t_shell *shell)
 	sigterm_handler();
 	shell->cmd_line = readline(shell->prompt);
 	while (1)
-	{		
+	{
+		update_error_on_signal(shell);
 		noninteractive_signal_handler();
 		handle_ctrl_d(shell);
 		if (ft_strlen(shell->cmd_line))
@@ -40,7 +41,6 @@ void	get_cmd_line(t_shell *shell)
 		shell->prompt = make_fancy_prompt(shell);
 		interactive_signal_handler();
 		shell->cmd_line = readline(shell->prompt);
-		update_error_on_signal(shell);
 	}
 }
 
@@ -124,4 +124,3 @@ static void	add_addr(t_shell *shell, char **temp1, char **temp2, char *find)
 			*temp1 = safe_strjoin(shell, *temp2, buffer);
 	}
 }
-

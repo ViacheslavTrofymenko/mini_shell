@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_main.c                                   :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 12:09:51 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/04 14:53:47 by ikulik           ###   ########.fr       */
+/*   Created: 2025/04/14 12:25:01 by vtrofyme          #+#    #+#             */
+/*   Updated: 2025/04/14 12:25:05 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_lstsize(t_list *lst)
 {
-	char	*line;
+	int	count;
 
-	if (argc > 1)
-		return (EXIT_FAILURE);
-	line = readline("input");
-	free(line);
-	return (0);
+	count = 0;
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
 }

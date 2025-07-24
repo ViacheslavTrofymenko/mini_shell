@@ -1,0 +1,15 @@
+{
+	##valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+	suppress_readline_leaks
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:*
+	obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+{
+	suppress_tinfo_leaks
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:*
+	obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.*
+}

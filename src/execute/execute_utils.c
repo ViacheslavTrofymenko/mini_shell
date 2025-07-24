@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:54 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/21 12:06:52 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:22:10 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_get_path_command(t_shell *shell, int i)
 	if (ft_strchr(cmd->args[0], '/'))
 	{
 		if (access(cmd->args[0], X_OK) == -1)
-			crit_except(shell, ft_perror_custom(cmd->args[0], errno));
+			crit_except(shell, ft_error(cmd->args[0], errno));
 		else
 			return (ft_strdup(cmd->args[0]));
 	}

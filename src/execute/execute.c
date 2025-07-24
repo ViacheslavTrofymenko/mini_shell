@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/23 20:16:17 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:03:31 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	exec_one_cmd(t_shell *shell);
+static void	exec_one_child_or_parent(t_shell *shell, t_cmd *cmd);
 
 void	execute_cmds(t_shell *shell)
 {
-	//shell->last_exit = 0;
 	handle_heredocs(shell);
 	if (!shell->cmds[0].args || !shell->cmds[0].args[0])
 		return ;
@@ -40,17 +40,13 @@ void	exec_or_exit(t_shell *shell, int i)
 		execve(path_cmd, cmd->args, cmd->envp);
 		free(path_cmd);
 	}
-	ft_error(cmd->args[0]);
-	crit_except(shell, ER_CMD_NOT_FOUND);
+	crit_except(shell, ft_error(cmd->args[0], errno));
 }
 
 static void	exec_one_cmd(t_shell *shell)
 {
 	t_cmd	*cmd;
-	pid_t	pid;
-	int		status;
 
-	status = 0;
 	cmd = &shell->cmds[0];
 	if (!cmd->args || !cmd->args[0])
 		return ;
@@ -60,28 +56,34 @@ static void	exec_one_cmd(t_shell *shell)
 		run_builtin(shell, cmd->args);
 	}
 	else
+		exec_one_child_or_parent(shell, cmd);
+}
+
+static void	exec_one_child_or_parent(t_shell *shell, t_cmd *cmd)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			child_signal_handler();
-			apply_redirs(shell, 0);
-			if (check_builtin(cmd->args))
-				run_builtin(shell, cmd->args);
-			else
-				exec_or_exit(shell, 0);
-			exit(0);
-		}
-		else if (pid > 0)
-		{
-			noninteractive_signal_handler();
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				shell->last_exit = WEXITSTATUS(status);
-			else
-				shell->last_exit = 1;
-		}
+		child_signal_handler();
+		apply_redirs(shell, 0);
+		if (check_builtin(cmd->args))
+			run_builtin(shell, cmd->args);
 		else
-			ft_perror_custom("fork", errno);
+			exec_or_exit(shell, 0);
+		exit(0);
 	}
+	else if (pid > 0)
+	{
+		noninteractive_signal_handler();
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			shell->last_exit = WEXITSTATUS(status);
+		else
+			shell->last_exit = 1;
+	}
+	else
+		ft_perror_custom("fork", errno);
 }

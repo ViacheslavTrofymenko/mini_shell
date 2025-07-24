@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:26:55 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/22 22:37:03 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:54:47 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,26 @@ int	ft_perror_custom(char *str, int saved_errno)
 	return (1);
 }
 
-int	ft_error(char *str)
+int	ft_error(char *str, int saved_errno)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	return (ER_CMD_NOT_FOUND);
+	ft_putstr_fd(": ", 2);
+	if (saved_errno == ENOENT)
+	{
+		if (ft_strchr(str, '/'))
+			ft_putstr_fd("No such file or directory\n", 2);
+		else
+			ft_putstr_fd("command not found\n", 2);
+		return (ER_CMD_NOT_FOUND);
+	}
+	if (saved_errno == EACCES)
+	{
+		if (opendir(str) != 0)
+			ft_putstr_fd("Is a directory\n", 2);
+		else
+			ft_putstr_fd("Permission denied\n", 2);
+		return (ER_CMD_NOT_EXEC);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/24 19:03:31 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:21:22 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	exec_one_child_or_parent(t_shell *shell, t_cmd *cmd)
 			run_builtin(shell, cmd->args);
 		else
 			exec_or_exit(shell, 0);
-		exit(0);
+		main_clean_exit(shell);
 	}
 	else if (pid > 0)
 	{

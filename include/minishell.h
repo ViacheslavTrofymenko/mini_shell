@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:00:23 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 19:38:30 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:26:05 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <errno.h>
+# include <dirent.h>
 # define BUFFER_SIZE 300
 # define Q_M_CHECK 0
 # define Q_M_WRITE 1

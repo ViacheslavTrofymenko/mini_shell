@@ -6,7 +6,7 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:43:40 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/23 20:22:54 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:41:13 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	correct_syntax_error(t_shell *shell, int index)
 {
 	if (shell->cmd_p.er_synt_char != NULL)
 		shell->cmds[index].er_synt_char = *(shell->cmd_p.er_synt_char);
-	if (shell->cmd_p.er_synt_char != NULL && *(shell->cmd_p.er_synt_char) == '\0')
+	if (shell->cmd_p.er_synt_char != NULL
+		&& *(shell->cmd_p.er_synt_char) == '\0')
 	{
 		if (index < shell->num_cmds - 1)
 			shell->cmds[index].er_synt_char = '|';
@@ -60,7 +61,7 @@ int	check_syntax_except(t_shell *shell)
 	int	index;
 
 	index = 0;
-	while(index < shell->num_cmds)
+	while (index < shell->num_cmds)
 	{
 		if (shell->cmds[index].error & ER_SYNTAX)
 		{

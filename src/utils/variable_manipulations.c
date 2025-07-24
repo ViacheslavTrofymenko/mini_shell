@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basics_variables.c                                 :+:      :+:    :+:   */
+/*   variable_manipulations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 22:02:22 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 18:53:19 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:41:42 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	add_one_slot(t_shell *shell, char ***arr, int *size);
 int	is_var_name(char *str)
 {
 	int	len;
-	
+
 	len = 0;
 	if (str == NULL)
 		return (0);
@@ -95,7 +95,6 @@ static void	add_one_slot(t_shell *shell, char ***arr, int *size)
 	*arr = temp;
 	(*size)++;
 }
-
 
 char	*get_var_value(char **arr, char *var, int size, int len)
 {

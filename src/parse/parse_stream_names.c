@@ -6,14 +6,14 @@
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 18:59:14 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/17 17:48:49 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:27:36 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input);
-void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input);
+void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_inp);
+void	next_output_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_inp);
 void	create_output_name(t_shell *shell, t_cmd_p *cmd, int index);
 void	create_input_name(t_shell *shell, t_cmd_p *cmd, int index);
 
@@ -78,7 +78,7 @@ void	next_input_split(t_shell *shell, t_cmd_p *cmd, int index, int ind_input)
 		return ;
 	if (cmd->f_mode[cmd->ind_arg] == IO_SINGLE)
 		expand_dollars(shell, &(cmd->splits[index + 1]),
-		&(cmd->split_qs[index + 1]));
+			&(cmd->split_qs[index + 1]));
 	else
 		remove_quote_marks(cmd->splits[index + 1]);
 	len = ft_strlen(cmd->splits[index + 1]);

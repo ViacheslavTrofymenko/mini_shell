@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_split_count.c                                :+:      :+:    :+:   */
+/*   parse_split_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikulik <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 23:23:09 by ikulik            #+#    #+#             */
-/*   Updated: 2025/07/15 23:23:09 by ikulik           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:31:57 by ikulik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	count_splits(t_shell *shell, t_cmd_p *cmd)
 		while (ft_is_mol(cmd->line[ind]) && cmd->q_type[ind] == Q_NORMAL)
 			ind++;
 		while (cmd->line[ind] && !((cmd->q_type[ind] == Q_NORMAL && (ft_is_space
-				(cmd->line[ind]) || ft_is_mol(cmd->line[ind])))))
+						(cmd->line[ind]) || ft_is_mol(cmd->line[ind])))))
 			ind++;
 	}
 	cmd->splits = malloc((cmd->num_splits + 1) * sizeof(char *));
@@ -58,7 +58,7 @@ void	cmd_split(t_shell *shell, t_cmd_p *cmd)
 			ind++;
 		while (cmd->line[ind] && !(cmd->q_type[ind] == Q_NORMAL
 				&& (ft_is_space(cmd->line[ind])
-				|| ft_is_mol(cmd->line[ind]))))
+					|| ft_is_mol(cmd->line[ind]))))
 			ind++;
 		if (ind > cmd->ind_start)
 			form_new_split(shell, cmd, ind);
@@ -74,11 +74,11 @@ static void	form_new_split(t_shell *shell, t_cmd_p *cmd, int index)
 	cmd->splits[cmd->ind_arg] = malloc (size * sizeof(char));
 	cmd->split_qs[cmd->ind_arg] = malloc (size * sizeof(char));
 	if (cmd->splits[cmd->ind_arg] == NULL
-			|| cmd->split_qs[cmd->ind_arg] == NULL)
+		|| cmd->split_qs[cmd->ind_arg] == NULL)
 		crit_except(shell, ER_MALLOC);
 	ft_strlcpy(cmd->splits[cmd->ind_arg], &(cmd->line[cmd->ind_start]), size);
 	ft_strlcpy(cmd->split_qs[cmd->ind_arg],
-			&(cmd->q_type[cmd->ind_start]), size);
+		&(cmd->q_type[cmd->ind_start]), size);
 	(cmd->ind_arg)++;
 }
 
@@ -90,10 +90,10 @@ static void	catch_syntax_error(t_cmd_p *cmd)
 	ind_sp = 0;
 	while (ind_sp < cmd->num_splits)
 	{
-		ind = 0;
-		if (ft_is_mol(cmd->splits[ind_sp][0]) && cmd->split_qs[ind_sp][0] == Q_NORMAL)
+		if (ft_is_mol(cmd->splits[ind_sp][0])
+			&& cmd->split_qs[ind_sp][0] == Q_NORMAL)
 		{
-			ind++;
+			ind = 1;
 			if (cmd->splits[ind_sp][1] == cmd->splits[ind_sp][0])
 				ind++;
 			if (ft_is_mol(cmd->splits[ind_sp][ind])

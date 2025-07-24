@@ -39,17 +39,6 @@ void	noninteractive_signal_handler(void)
 	sigaction(SIGINT, &handler, NULL);
 }
 
-void	child_signal_handler(void)
-{
-	struct sigaction	handler;
-
-	ft_bzero(&handler, sizeof(handler));
-	sigemptyset(&(handler.sa_mask));
-	handler.sa_handler = SIG_DFL;
-	handler.sa_flags = SA_RESETHAND;
-	sigaction(SIGINT, &handler, NULL);
-}
-
 static void	sigint_interactive(int signal)
 {
 	if (signal == SIGINT)
@@ -78,11 +67,13 @@ static void	sigint_noninteractive(int signal)
 	}
 }
 
-void	handle_ctrl_d(t_shell *shell)
+void	sigterm_handler(void)
 {
-	if (shell->cmd_line == NULL)
-	{
-		write(STDOUT_FILENO, "exit\n", 5);
-		main_clean_exit(shell);
-	}
+	struct sigaction	handler;
+
+	ft_bzero(&handler, sizeof(handler));
+	sigemptyset(&(handler.sa_mask));
+	sigaddset(&(handler.sa_mask), SIGTERM);
+	handler.sa_handler = SIG_IGN;
+	sigaction(SIGTERM, &handler, NULL);
 }

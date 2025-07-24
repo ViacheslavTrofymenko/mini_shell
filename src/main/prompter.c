@@ -21,9 +21,11 @@ void	get_cmd_line(t_shell *shell)
 {
 	shell->prompt = make_fancy_prompt(shell);
 	interactive_signal_handler();
+	sigterm_handler();
 	shell->cmd_line = readline(shell->prompt);
 	while (1)
-	{
+	{		
+		noninteractive_signal_handler();
 		handle_ctrl_d(shell);
 		if (ft_strlen(shell->cmd_line))
 		{
@@ -39,7 +41,6 @@ void	get_cmd_line(t_shell *shell)
 		interactive_signal_handler();
 		shell->cmd_line = readline(shell->prompt);
 		update_error_on_signal(shell);
-		noninteractive_signal_handler();
 	}
 }
 
@@ -123,27 +124,4 @@ static void	add_addr(t_shell *shell, char **temp1, char **temp2, char *find)
 			*temp1 = safe_strjoin(shell, *temp2, buffer);
 	}
 }
-
-/*	DEBUG FUNCTIONS
-	printf("Line: %s\nMark: %s\n", line, shell->qts.q_marker_str);
-	printf("\nNumber of files:%d\n", shell->cmds[0].num_files);
-	for (int i=0;i<shell->cmds[0].num_files; i++)
-		printf("%s ", shell->cmds[0].f_names[i]);
-	printf("\nFile types:%d\n", shell->cmds[0].num_files);
-	for (int i=0;i<shell->cmds[0].num_files; i++)
-		printf("%d ", shell->cmds[0].rw_type[i]);
-	printf("\nFile modes:%d\n", shell->cmds[0].num_files);
-		for (int i=0;i<shell->cmds[0].num_files; i++)
-			printf("%d ", shell->cmds[0].f_mode[i]);
-	printf("\nNumber of outputs:%d\n", shell->cmds[0].num_output);
-	printf("\nNumber of args: %d\n", shell->cmds[0].num_args);
-	for (int i=0;i<shell->cmds[0].num_args; i++)
-		printf("%s ", shell->cmds[0].args[i]);
-	printf("\nNumber of assign: %d\n", shell->cmds[0].num_assign);
-	for (int i=0;i<shell->cmds[0].num_assign; i++)
-		printf("%s ", shell->cmds[0].assign[i]);
-	printf("\nCurrent vars: ");
-	for (int i=0;i<shell->size_vars; i++)
-		printf("%s ", shell->vars[i]);
-	printf("\n");*/
 

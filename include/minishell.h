@@ -195,6 +195,7 @@ int		is_builtin_parent_only(char *cmd);
 void	interactive_signal_handler(void);
 void	noninteractive_signal_handler(void);
 void	child_signal_handler(void);
+void	sigterm_handler(void);
 void	update_error_on_signal(t_shell *shell);
 void	handle_ctrl_d(t_shell *shell);
 

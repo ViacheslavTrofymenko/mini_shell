@@ -39,11 +39,7 @@ void	bin_cd(t_shell *shell, char **args)
 		return ;
 	}
 	oldpwd = safe_strdup(shell, cwd);
-	if (change_directory(shell, args[1], oldpwd))
-	{
-		free(oldpwd);
-		return ;
-	}
+	change_directory(shell, args[1], oldpwd);
 	free(oldpwd);
 }
 
@@ -73,9 +69,11 @@ static int	change_directory(t_shell *shell, char *path, char *oldpwd)
 static void	update_env_var(t_shell *shell, char *key, char *value)
 {
 	char	*full_var;
+	char	*temp;
 
-	full_var = safe_strjoin(shell, key, "=");
-	full_var = safe_strjoin(shell, full_var, value);
+	temp = safe_strjoin(shell, key, "=");
+	full_var = safe_strjoin(shell, temp, value);
+	free(temp);
 	replace_var_in_arr(shell, &(shell->envp), full_var, &(shell->size_env));
 	free(full_var);
 }

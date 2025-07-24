@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/24 19:02:02 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:18:03 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	child_process(t_shell *shell, int prev_fd, int *pipe_fd, int i)
 	if (check_builtin(cmd->args))
 	{
 		run_builtin(shell, cmd->args);
-		exit(0);
+		main_clean_exit(shell);
 	}
 	else
 	{

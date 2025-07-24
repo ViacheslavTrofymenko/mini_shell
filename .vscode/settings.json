@@ -3,7 +3,9 @@
 	"files.associations": {
 		"alloca.h": "c",
 		"minishell.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"stdio.h": "c",
+		"libft.h": "c"
 	}
 
 }

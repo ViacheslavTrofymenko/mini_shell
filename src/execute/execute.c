@@ -6,13 +6,14 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 23:04:08 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/24 18:21:57 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:03:31 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	exec_one_cmd(t_shell *shell);
+static void	exec_one_child_or_parent(t_shell *shell, t_cmd *cmd);
 
 void	execute_cmds(t_shell *shell)
 {
@@ -45,10 +46,7 @@ void	exec_or_exit(t_shell *shell, int i)
 static void	exec_one_cmd(t_shell *shell)
 {
 	t_cmd	*cmd;
-	pid_t	pid;
-	int		status;
 
-	status = 0;
 	cmd = &shell->cmds[0];
 	if (!cmd->args || !cmd->args[0])
 		return ;
@@ -58,28 +56,34 @@ static void	exec_one_cmd(t_shell *shell)
 		run_builtin(shell, cmd->args);
 	}
 	else
+		exec_one_child_or_parent(shell, cmd);
+}
+
+static void	exec_one_child_or_parent(t_shell *shell, t_cmd *cmd)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			child_signal_handler();
-			apply_redirs(shell, 0);
-			if (check_builtin(cmd->args))
-				run_builtin(shell, cmd->args);
-			else
-				exec_or_exit(shell, 0);
-			exit(0);
-		}
-		else if (pid > 0)
-		{
-			noninteractive_signal_handler();
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				shell->last_exit = WEXITSTATUS(status);
-			else
-				shell->last_exit = 1;
-		}
+		child_signal_handler();
+		apply_redirs(shell, 0);
+		if (check_builtin(cmd->args))
+			run_builtin(shell, cmd->args);
 		else
-			ft_perror_custom("fork", errno);
+			exec_or_exit(shell, 0);
+		exit(0);
 	}
+	else if (pid > 0)
+	{
+		noninteractive_signal_handler();
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			shell->last_exit = WEXITSTATUS(status);
+		else
+			shell->last_exit = 1;
+	}
+	else
+		ft_perror_custom("fork", errno);
 }

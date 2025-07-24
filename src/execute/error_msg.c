@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:26:55 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/24 18:27:59 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:54:47 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_perror_custom(char *str, int saved_errno)
 
 int	ft_error(char *str, int saved_errno)
 {
-	// printf("PERRR %d\n", saved_errno);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);

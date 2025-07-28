@@ -6,7 +6,7 @@
 /*   By: vtrofyme <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:22:12 by vtrofyme          #+#    #+#             */
-/*   Updated: 2025/07/24 19:18:03 by vtrofyme         ###   ########.fr       */
+/*   Updated: 2025/07/28 09:05:56 by vtrofyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ static void	exec_single_cmd(t_shell *shell, int i,
 {
 	int		pipe_fd[2];
 	pid_t	pid;
+	t_cmd	*cmd;
 
+	cmd = &shell->cmds[i];
+	if (!cmd || !cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
+		return ;
 	if (i < shell->num_cmds - 1 && pipe(pipe_fd) == -1)
 		crit_except(shell, ft_perror_custom("pipe", errno));
 	pid = fork();

@@ -67,13 +67,13 @@ static void	sigint_noninteractive(int signal)
 	}
 }
 
-void	sigterm_handler(void)
+void	sigquit_handler(void)
 {
 	struct sigaction	handler;
 
 	ft_bzero(&handler, sizeof(handler));
 	sigemptyset(&(handler.sa_mask));
-	sigaddset(&(handler.sa_mask), SIGTERM);
+	sigaddset(&(handler.sa_mask), SIGQUIT);
 	handler.sa_handler = SIG_IGN;
-	sigaction(SIGTERM, &handler, NULL);
+	sigaction(SIGQUIT, &handler, NULL);
 }

@@ -21,7 +21,7 @@ void	get_cmd_line(t_shell *shell)
 {
 	shell->prompt = make_fancy_prompt(shell);
 	interactive_signal_handler();
-	sigterm_handler();
+	sigquit_handler();
 	shell->cmd_line = readline(shell->prompt);
 	while (1)
 	{
